@@ -243,9 +243,9 @@ drivers:
         configuration: {}
   SPI_0:
     user_label: SPI_0
-    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::SPI1::driver_config_definition::SPI.Master::HAL:Driver:SPI.Master.Sync
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::SPI1::driver_config_definition::SPI.Master::HAL:Driver:SPI.Master.DMA
     functionality: SPI
-    api: HAL:Driver:SPI_Master_Sync
+    api: HAL:Driver:SPI_Master_DMA
     configuration:
       spi_master_advanced: true
       spi_master_arch_cpha: Data is captured on the leading edge of SPCK and changed
@@ -255,7 +255,10 @@ drivers:
       spi_master_character_size: 16 bits
       spi_master_dlybct: 1000
       spi_master_dlybs: 1000
+      spi_master_dma_rx_channel: 1
+      spi_master_dma_tx_channel: 0
       spi_master_dummybyte: 65535
+      spi_master_rx_channel: true
     optional_signals: []
     variant:
       specification: default
@@ -308,6 +311,32 @@ drivers:
       definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::optional_signal_definition::TWIHS0.TWD.0
       name: TWIHS0/TWD/0
       label: TWD/0
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: TWIHS
+          input: Master Clock (MCK)
+        configuration:
+          twihs_clock_source: Master Clock (MCK)
+  I2C_INSTANCE:
+    user_label: I2C_INSTANCE
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::TWIHS1::driver_config_definition::I2C.Master.Standard~2FFast-mode::HAL:Driver:I2C.Master.Sync
+    functionality: I2C
+    api: HAL:Driver:I2C_Master_Sync
+    configuration:
+      i2c_master_advanced: false
+      i2c_master_baud_rate: 100000
+      i2c_master_digital_filter_enable: false
+      i2c_master_filter_threshold: Disabled
+      i2c_master_packet_error_check: false
+      i2c_master_pad_filter_enable: false
+      i2c_master_smbus_clock_prescaler: Divide by 2
+      i2c_master_smbus_enable: false
+      i2c_master_thigh_max: 0
+      i2c_master_tlow_mext: 0
+      i2c_master_tlow_sext: 0
+    optional_signals: []
     variant: null
     clocks:
       domain_group:
@@ -545,7 +574,7 @@ drivers:
       dmac_channel_17_settings: false
       dmac_channel_18_settings: false
       dmac_channel_19_settings: false
-      dmac_channel_1_settings: false
+      dmac_channel_1_settings: true
       dmac_channel_20_settings: false
       dmac_channel_21_settings: false
       dmac_channel_22_settings: false

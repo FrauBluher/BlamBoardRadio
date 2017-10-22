@@ -31,6 +31,28 @@
 #define CONF_SPI_1_PCSDEC 0x0
 #endif
 
+//<o> SPI DMA TX Channel <0-23>
+//<i> This defines DMA channel to be used
+//<id> spi_master_dma_tx_channel
+#ifndef CONF_SPI_1_M_DMA_TX_CHANNEL
+#define CONF_SPI_1_M_DMA_TX_CHANNEL 0
+#endif
+
+// <e> SPI RX Channel Enable
+// <id> spi_master_rx_channel
+#ifndef CONF_SPI_1_RX_CHANNEL
+#define CONF_SPI_1_RX_CHANNEL 1
+#endif
+
+//<o> DMA Channel <0-23>
+//<i> This defines DMA channel to be used
+//<id> spi_master_dma_rx_channel
+#ifndef CONF_SPI_1_M_DMA_RX_CHANNEL
+#define CONF_SPI_1_M_DMA_RX_CHANNEL 1
+#endif
+
+// </e>
+
 // <h> Basic Configuration
 
 // <o> Character Size

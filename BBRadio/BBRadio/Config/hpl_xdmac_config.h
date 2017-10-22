@@ -196,7 +196,7 @@
 // <e> Channel 1 settings
 // <id> dmac_channel_1_settings
 #ifndef CONF_DMAC_CHANNEL_1_SETTINGS
-#define CONF_DMAC_CHANNEL_1_SETTINGS 0
+#define CONF_DMAC_CHANNEL_1_SETTINGS 1
 #endif
 
 // <o> Burst Size

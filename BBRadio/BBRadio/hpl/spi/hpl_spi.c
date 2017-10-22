@@ -45,6 +45,8 @@
 #include <hpl_dma.h>
 #include <hpl_spi_config.h>
 #include <hpl_spi_m_async.h>
+#include <hpl_spi_m_dma.h>
+
 #include <hpl_spi_m_sync.h>
 #include <hpl_spi_s_async.h>
 #include <hpl_spi_s_sync.h>
@@ -273,6 +275,31 @@ static uint8_t _spi_get_hardware_index(const void *const hw)
 		return 0;
 	}
 }
+/** \brief Return the SPI TX DMA channel index
+ *  \param[in] hw_addr The hardware register base address.
+ *  \return SPI TX DMA channel index.
+ */
+static uint8_t _spi_get_tx_dma_channel(const void *const hw)
+{
+	if (_spi_get_hardware_index(hw) == 0) {
+		return CONF_SPI_0_M_DMA_TX_CHANNEL;
+	} else {
+		return CONF_SPI_1_M_DMA_TX_CHANNEL;
+	}
+}
+
+/** \brief Return the SPI RX DMA channel index
+ *  \param[in] hw_addr The hardware register base address.
+ *  \return SPI RX DMA channel index.
+ */
+static uint8_t _spi_get_rx_dma_channel(const void *const hw)
+{
+	if (_spi_get_hardware_index(hw) == 0) {
+		return CONF_SPI_0_M_DMA_RX_CHANNEL;
+	} else {
+		return CONF_SPI_1_M_DMA_RX_CHANNEL;
+	}
+}
 
 /** \brief Return the pointer to register settings of specific SPI
  *  \param[in] hw_addr The hardware register base address.
@@ -361,6 +388,97 @@ int32_t _spi_m_async_init(struct _spi_m_async_dev *dev, void *const hw)
 
 	return ERR_NONE;
 }
+/**
+ *  \brief Callback for RX
+ *  \param[in, out] dev Pointer to the SPI device instance.
+ */
+static void _spi_dma_rx_complete(struct _dma_resource *resource)
+{
+	struct _spi_m_dma_dev *dev = (struct _spi_m_dma_dev *)resource->back;
+
+	if (dev->callbacks.rx) {
+		dev->callbacks.rx(resource);
+	}
+}
+
+/**
+ *  \brief Callback for TX
+ *  \param[in, out] dev Pointer to the SPI device instance.
+ */
+static void _spi_dma_tx_complete(struct _dma_resource *resource)
+{
+	struct _spi_m_dma_dev *dev = (struct _spi_m_dma_dev *)resource->back;
+
+	if (dev->callbacks.tx) {
+		dev->callbacks.tx(resource);
+	}
+}
+
+/**
+ *  \brief Callback for ERROR
+ *  \param[in, out] dev Pointer to the SPI device instance.
+ */
+static void _spi_dma_error_occured(struct _dma_resource *resource)
+{
+	struct _spi_m_dma_dev *dev = (struct _spi_m_dma_dev *)resource->back;
+
+	if (dev->callbacks.error) {
+		dev->callbacks.error(resource);
+	}
+}
+
+static uint32_t _spi_m_get_source_for_dma(void *const hw)
+{
+	return (uint32_t) & (((Spi *)hw)->SPI_RDR);
+}
+
+static uint32_t _spi_m_get_destination_for_dma(void *const hw)
+{
+	return (uint32_t) & (((Spi *)hw)->SPI_TDR);
+}
+
+int32_t _spi_m_dma_init(struct _spi_m_dma_dev *dev, void *const hw)
+{
+	struct _spi_m_dma_dev *    spid = dev;
+	const struct spi_regs_cfg *regs = _spi_get_regs((uint32_t)hw);
+
+	/* Do hardware initialize. */
+	if (hri_spi_get_SR_SPIENS_bit(hw)) {
+		return ERR_DENIED;
+	}
+
+	spid->prvt = hw;
+	hri_spi_write_CR_reg(hw, SPI_CR_SWRST);
+	hri_spi_write_CR_reg(hw, (regs->cr & ~(SPI_CR_SPIEN | SPI_CR_SPIDIS | SPI_CR_SWRST | SPI_CR_LASTXFER)));
+	hri_spi_write_MR_reg(hw, ((regs->mr | SPI_MR_PCS(0x0E) | SPI_MR_MODFDIS) & ~SPI_MR_LLB));
+	hri_spi_write_CSR_reg(hw, 0, regs->csr);
+
+	/* Initialize callbacks: must use them */
+	spid->callbacks.error = NULL;
+	spid->callbacks.rx    = NULL;
+	spid->callbacks.tx    = NULL;
+
+	/* Initialize DMA rx channel */
+	_dma_get_channel_resource(&dev->resource, _spi_get_rx_dma_channel(hw));
+	dev->resource->back                 = dev;
+	dev->resource->dma_cb.transfer_done = _spi_dma_rx_complete;
+	dev->resource->dma_cb.error         = _spi_dma_error_occured;
+	/* Initialize DMA tx channel */
+	_dma_get_channel_resource(&dev->resource, _spi_get_tx_dma_channel(hw));
+	dev->resource->back                 = dev;
+	dev->resource->dma_cb.transfer_done = _spi_dma_tx_complete;
+	dev->resource->dma_cb.error         = _spi_dma_error_occured;
+
+	return ERR_NONE;
+}
+
+int32_t _spi_m_dma_deinit(struct _spi_m_dma_dev *dev)
+{
+	NVIC_DisableIRQ(_spi_get_irq_num(dev->prvt));
+	NVIC_ClearPendingIRQ(_spi_get_irq_num(dev->prvt));
+
+	return _spi_deinit(dev->prvt);
+}
 
 int32_t _spi_m_sync_deinit(struct _spi_m_sync_dev *dev)
 {
@@ -392,6 +510,12 @@ int32_t _spi_m_async_enable(struct _spi_m_async_dev *dev)
 
 	return _spi_async_enable(dev->prvt);
 }
+int32_t _spi_m_dma_enable(struct _spi_m_dma_dev *dev)
+{
+	ASSERT(dev && dev->prvt);
+
+	return _spi_async_enable(dev->prvt);
+}
 
 int32_t _spi_m_sync_disable(struct _spi_m_sync_dev *dev)
 {
@@ -406,6 +530,12 @@ int32_t _spi_m_async_disable(struct _spi_m_async_dev *dev)
 
 	return _spi_async_disable(dev->prvt);
 }
+int32_t _spi_m_dma_disable(struct _spi_m_dma_dev *dev)
+{
+	ASSERT(dev && dev->prvt);
+
+	return _spi_async_disable(dev->prvt);
+}
 
 int32_t _spi_m_sync_set_mode(struct _spi_m_sync_dev *dev, const enum spi_transfer_mode mode)
 {
@@ -415,6 +545,12 @@ int32_t _spi_m_sync_set_mode(struct _spi_m_sync_dev *dev, const enum spi_transfe
 }
 
 int32_t _spi_m_async_set_mode(struct _spi_m_async_dev *dev, const enum spi_transfer_mode mode)
+{
+	ASSERT(dev && dev->prvt);
+
+	return _spi_set_mode(dev->prvt, mode);
+}
+int32_t _spi_m_dma_set_mode(struct _spi_m_dma_dev *dev, const enum spi_transfer_mode mode)
 {
 	ASSERT(dev && dev->prvt);
 
@@ -453,6 +589,12 @@ int32_t _spi_m_async_set_baudrate(struct _spi_m_async_dev *dev, const uint32_t b
 
 	return _spi_set_baudrate(dev->prvt, baud_val);
 }
+int32_t _spi_m_dma_set_baudrate(struct _spi_m_dma_dev *dev, const uint32_t baud_val)
+{
+	ASSERT(dev && dev->prvt);
+
+	return _spi_set_baudrate(dev->prvt, baud_val);
+}
 
 int32_t _spi_m_sync_set_data_order(struct _spi_m_sync_dev *dev, const enum spi_data_order dord)
 {
@@ -463,6 +605,13 @@ int32_t _spi_m_sync_set_data_order(struct _spi_m_sync_dev *dev, const enum spi_d
 }
 
 int32_t _spi_m_async_set_data_order(struct _spi_m_async_dev *dev, const enum spi_data_order dord)
+{
+	ASSERT(dev && dev->prvt);
+	(void)dord;
+
+	return ERR_UNSUPPORTED_OP;
+}
+int32_t _spi_m_dma_set_data_order(struct _spi_m_dma_dev *dev, const enum spi_data_order dord)
 {
 	ASSERT(dev && dev->prvt);
 	(void)dord;
@@ -482,6 +631,14 @@ int32_t _spi_m_async_set_char_size(struct _spi_m_async_dev *dev, const enum spi_
 	ASSERT(dev && dev->prvt);
 
 	return _spi_set_char_size(dev->prvt, char_size, &dev->char_size);
+}
+int32_t _spi_m_dma_set_char_size(struct _spi_m_dma_dev *dev, const enum spi_char_size char_size)
+{
+	ASSERT(dev && dev->prvt);
+
+	hri_spi_write_CSR_BITS_bf(dev->prvt, 0, char_size);
+
+	return (char_size == SPI_CHAR_SIZE_8) ? 1 : 2;
 }
 
 /** Wait until SPI bus idle. */
@@ -699,6 +856,57 @@ void _spi_m_async_set_irq_state(struct _spi_m_async_dev *const device, const enu
 			hri_spi_clear_IMR_OVRES_bit(device->prvt);
 		}
 	}
+}
+void _spi_m_dma_register_callback(struct _spi_m_dma_dev *dev, enum _spi_dma_dev_cb_type type, _spi_dma_cb_t func)
+{
+	switch (type) {
+	case SPI_DEV_CB_DMA_TX:
+		dev->callbacks.tx = func;
+		_dma_set_irq_state(_spi_get_tx_dma_channel(dev->prvt), DMA_TRANSFER_COMPLETE_CB, func != NULL);
+		break;
+	case SPI_DEV_CB_DMA_RX:
+		dev->callbacks.rx = func;
+		_dma_set_irq_state(_spi_get_rx_dma_channel(dev->prvt), DMA_TRANSFER_COMPLETE_CB, func != NULL);
+		break;
+	case SPI_DEV_CB_DMA_ERROR:
+		dev->callbacks.error = func;
+		_dma_set_irq_state(_spi_get_rx_dma_channel(dev->prvt), DMA_TRANSFER_ERROR_CB, func != NULL);
+		_dma_set_irq_state(_spi_get_tx_dma_channel(dev->prvt), DMA_TRANSFER_ERROR_CB, func != NULL);
+		break;
+	case SPI_DEV_CB_DMA_N:
+		break;
+	}
+}
+
+int32_t _spi_m_dma_transfer(struct _spi_m_dma_dev *dev, uint8_t const *txbuf, uint8_t *const rxbuf,
+                            const uint16_t length)
+{
+	const struct spi_regs_cfg *regs  = _spi_get_regs((uint32_t)dev->prvt);
+	uint8_t                    rx_ch = _spi_get_rx_dma_channel(dev->prvt);
+	uint8_t                    tx_ch = _spi_get_tx_dma_channel(dev->prvt);
+
+	if (rxbuf) {
+		/* Enable spi rx */
+		_dma_set_source_address(rx_ch, (void *)_spi_m_get_source_for_dma(dev->prvt));
+		_dma_set_destination_address(rx_ch, rxbuf);
+		_dma_set_data_amount(rx_ch, length);
+		_dma_enable_transaction(rx_ch, false);
+	}
+
+	if (txbuf) {
+		/* Enable spi tx */
+		_dma_set_source_address(tx_ch, txbuf);
+		_dma_set_destination_address(tx_ch, (void *)_spi_m_get_destination_for_dma(dev->prvt));
+		_dma_set_data_amount(tx_ch, length);
+	} else {
+		_dma_set_source_address(tx_ch, &regs->dummy_byte);
+		_dma_set_destination_address(tx_ch, (void *)_spi_m_get_destination_for_dma(dev->prvt));
+		_dma_srcinc_enable(tx_ch, false);
+		_dma_set_data_amount(tx_ch, length);
+	}
+	_dma_enable_transaction(tx_ch, false);
+
+	return ERR_NONE;
 }
 
 int32_t _spi_s_sync_init(struct _spi_s_sync_dev *dev, void *const hw)

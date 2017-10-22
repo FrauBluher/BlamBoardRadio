@@ -15,14 +15,17 @@
 /*! The buffer size for USART */
 #define USART_1_BUFFER_SIZE 16
 
-struct spi_m_sync_descriptor  SPI_0;
 struct usart_async_descriptor USART_1;
 
 static uint8_t USART_1_buffer[USART_1_BUFFER_SIZE];
 
 struct dac_sync_descriptor DAC_0;
 
+struct spi_m_dma_descriptor SPI_0;
+
 struct i2c_m_sync_desc I2C_0;
+
+struct i2c_m_sync_desc I2C_INSTANCE;
 
 struct usart_sync_descriptor USART_0;
 
@@ -82,9 +85,7 @@ void SPI_0_CLOCK_init(void)
 void SPI_0_init(void)
 {
 	SPI_0_CLOCK_init();
-
-	spi_m_sync_init(&SPI_0, SPI1);
-
+	spi_m_dma_init(&SPI_0, SPI1);
 	SPI_0_PORT_init();
 }
 
@@ -108,6 +109,24 @@ void I2C_0_init(void)
 	i2c_m_sync_init(&I2C_0, TWIHS0);
 
 	I2C_0_PORT_init();
+}
+
+void I2C_INSTANCE_PORT_init(void)
+{
+}
+
+void I2C_INSTANCE_CLOCK_init(void)
+{
+	_pmc_enable_periph_clock(ID_TWIHS1);
+}
+
+void I2C_INSTANCE_init(void)
+{
+	I2C_INSTANCE_CLOCK_init();
+
+	i2c_m_sync_init(&I2C_INSTANCE, TWIHS1);
+
+	I2C_INSTANCE_PORT_init();
 }
 
 void USART_0_PORT_init(void)
@@ -252,6 +271,8 @@ void system_init(void)
 	SPI_0_init();
 
 	I2C_0_init();
+
+	I2C_INSTANCE_init();
 
 	USART_0_init();
 	USART_1_init();

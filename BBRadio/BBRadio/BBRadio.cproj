@@ -18,7 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <CacheFlash>true</CacheFlash>
+    <CacheFlash>false</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
@@ -198,14 +198,14 @@
         </AcmeActionInfos>
       </AcmeProjectConfig>
     </AcmeProjectConfig>
-    <AtzipPath>.atmel-start-backup\Atmel_Start_1.atzip</AtzipPath>
+    <AtzipPath>.atmel-start-backup\Atmel_Start_11.atzip</AtzipPath>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
     <avrtoolserialnumber>J41800007536</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0xA1120E00</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <SwdClock>4000000</SwdClock>
+          <SwdClock>2000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
@@ -214,7 +214,8 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>SWD</avrtoolinterface>
-    <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
+    <UseGdbCustomPath>False</UseGdbCustomPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -250,7 +251,6 @@
       <Value>../hri</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
-  <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
   <armgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -mfloat-abi=softfp -mfpu=fpv4-sp-d16</armgcc.compiler.miscellaneous.OtherFlags>
@@ -266,6 +266,7 @@
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
+  <armgcc.linker.memorysettings.ExternalRAM />
   <armgcc.linker.miscellaneous.LinkerFlags>-Tsams70q21_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
@@ -329,8 +330,8 @@
     <ListValues>
       <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.1.72\include</Value>
       <Value>%24(PackRepoDir)\arm\CMSIS\4.2.0\CMSIS\Include\</Value>
+      <Value>..</Value>
       <Value>../Config</Value>
-      <Value>../</Value>
       <Value>../examples</Value>
       <Value>../hal/include</Value>
       <Value>../hal/utils/include</Value>
@@ -346,6 +347,7 @@
       <Value>../hri</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
@@ -412,6 +414,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AT86_Impl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="AT86_Impl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="atmel_start.c">
       <SubType>compile</SubType>
     </Compile>
@@ -469,6 +477,12 @@
     <Compile Include="examples\driver_examples.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Glue.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Glue.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\include\hal_atomic.h">
       <SubType>compile</SubType>
     </Compile>
@@ -496,7 +510,7 @@
     <Compile Include="hal\include\hal_sleep.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hal\include\hal_spi_m_sync.h">
+    <Compile Include="hal\include\hal_spi_m_dma.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\include\hal_usart_async.h">
@@ -631,7 +645,7 @@
     <Compile Include="hal\src\hal_sleep.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hal\src\hal_spi_m_sync.c">
+    <Compile Include="hal\src\hal_spi_m_dma.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\src\hal_usart_async.c">

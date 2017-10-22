@@ -24,7 +24,9 @@ extern "C" {
 #include <hal_dac_sync.h>
 #include <hal_ext_irq.h>
 
-#include <hal_spi_m_sync.h>
+#include <hal_spi_m_dma.h>
+
+#include <hal_i2c_m_sync.h>
 
 #include <hal_i2c_m_sync.h>
 
@@ -35,10 +37,13 @@ extern "C" {
 
 #include "hal_usb_device.h"
 
-extern struct dac_sync_descriptor   DAC_0;
-extern struct spi_m_sync_descriptor SPI_0;
+extern struct dac_sync_descriptor DAC_0;
+
+extern struct spi_m_dma_descriptor SPI_0;
 
 extern struct i2c_m_sync_desc I2C_0;
+
+extern struct i2c_m_sync_desc I2C_INSTANCE;
 
 extern struct usart_sync_descriptor  USART_0;
 extern struct usart_async_descriptor USART_1;
@@ -54,6 +59,10 @@ void SPI_0_init(void);
 void I2C_0_CLOCK_init(void);
 void I2C_0_init(void);
 void I2C_0_PORT_init(void);
+
+void I2C_INSTANCE_CLOCK_init(void);
+void I2C_INSTANCE_init(void);
+void I2C_INSTANCE_PORT_init(void);
 
 void USART_0_PORT_init(void);
 void USART_0_CLOCK_init(void);

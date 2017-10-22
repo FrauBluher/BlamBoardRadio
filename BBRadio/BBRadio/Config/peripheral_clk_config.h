@@ -100,6 +100,24 @@
 #define CONF_TWIHS0_FREQUENCY 150000000
 #endif
 
+// <h> TWIHS Clock Settings
+// <y> TWIHS Clock source
+// <CONF_SRC_MCK"> Master Clock (MCK)
+// <i> This defines the clock source for the TWIHS
+// <id> twihs_clock_source
+#ifndef CONF_TWIHS1_SRC
+#define CONF_TWIHS1_SRC CONF_SRC_MCK
+#endif
+// </h>
+
+/**
+ * \def TWIHS FREQUENCY
+ * \brief TWIHS's Clock frequency
+ */
+#ifndef CONF_TWIHS1_FREQUENCY
+#define CONF_TWIHS1_FREQUENCY 150000000
+#endif
+
 // <h> UART Clock Settings
 // <o> UART Clock source
 // <0=> Master Clock (MCK)

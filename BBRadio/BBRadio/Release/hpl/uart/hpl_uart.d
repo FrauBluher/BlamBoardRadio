@@ -1,6 +1,5 @@
-hal/src/hal_spi_m_sync.d hal/src/hal_spi_m_sync.o: \
- ../hal/src/hal_spi_m_sync.c ../hal/include/hal_spi_m_sync.h \
- ../hal/include/hal_io.h ../hal/utils/include/compiler.h \
+hpl/uart/hpl_uart.d hpl/uart/hpl_uart.o: ../hpl/uart/hpl_uart.c \
+ ../hal/utils/include/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.2.1\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.2.1\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdint.h \
@@ -117,13 +116,11 @@ hal/src/hal_spi_m_sync.d hal/src/hal_spi_m_sync.o: \
  ../hri/hri_tc_s70.h ../hri/hri_trng_s70.h ../hri/hri_twihs_s70.h \
  ../hri/hri_uart_s70.h ../hri/hri_usart_s70.h ../hri/hri_usbhs_s70.h \
  ../hri/hri_utmi_s70.h ../hri/hri_wdt_s70.h ../hri/hri_xdmac_s70.h \
- ../hal/utils/include/err_codes.h ../hal/include/hpl_spi_m_sync.h \
- ../hal/include/hpl_spi.h ../hal/utils/include/utils.h \
- ../hal/include/hpl_spi_sync.h ../hal/utils/include/utils_assert.h
-
-../hal/include/hal_spi_m_sync.h:
-
-../hal/include/hal_io.h:
+ ../hal/utils/include/err_codes.h ../Config/hpl_uart_config.h \
+ ../Config/peripheral_clk_config.h ../hal/include/hpl_usart_async.h \
+ ../hal/include/hpl_usart.h ../hal/include/hpl_irq.h \
+ ../hal/include/hpl_usart_sync.h ../hal/include/hpl_usart.h \
+ ../hal/utils/include/utils.h ../hal/utils/include/utils_assert.h
 
 ../hal/utils/include/compiler.h:
 
@@ -415,12 +412,20 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.1.72\include/
 
 ../hal/utils/include/err_codes.h:
 
-../hal/include/hpl_spi_m_sync.h:
+../Config/hpl_uart_config.h:
 
-../hal/include/hpl_spi.h:
+../Config/peripheral_clk_config.h:
+
+../hal/include/hpl_usart_async.h:
+
+../hal/include/hpl_usart.h:
+
+../hal/include/hpl_irq.h:
+
+../hal/include/hpl_usart_sync.h:
+
+../hal/include/hpl_usart.h:
 
 ../hal/utils/include/utils.h:
-
-../hal/include/hpl_spi_sync.h:
 
 ../hal/utils/include/utils_assert.h:

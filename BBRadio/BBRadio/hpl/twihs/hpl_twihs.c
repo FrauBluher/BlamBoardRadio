@@ -101,13 +101,19 @@ struct _i2cm_sync_cfg {
 /**
  * \brief Array of I2C Master Sync configurations
  */
-static const struct _i2cm_sync_cfg _i2cm_sync_cfgs[1] = {
+static const struct _i2cm_sync_cfg _i2cm_sync_cfgs[2] = {
     {(void *)TWIHS0,
      CONF_TWIHS0_CR_REG,
      CONF_TWIHS0_SMBTR_REG,
      CONF_TWIHS0_FILTR_REG,
      CONF_TWIHS0_CWGR_REG,
      CONF_TWIHS0_FREQUENCY / 1000},
+    {(void *)TWIHS1,
+     CONF_TWIHS1_CR_REG,
+     CONF_TWIHS1_SMBTR_REG,
+     CONF_TWIHS1_FILTR_REG,
+     CONF_TWIHS1_CWGR_REG,
+     CONF_TWIHS1_FREQUENCY / 1000},
 };
 
 /**

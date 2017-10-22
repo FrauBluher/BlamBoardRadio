@@ -48,7 +48,6 @@
 #include <utils_assert.h>
 #include <utils_repeat_macro.h>
 
-#if CONF_DMA_ENABLE
 #define DMAC_CH_NUM 24
 
 /* Array containing callbacks for DMAC channels */
@@ -212,5 +211,3 @@ void XDMAC_Handler(void)
 		tmp_resource->dma_cb.transfer_done(tmp_resource);
 	}
 }
-
-#endif /* CONF_DMA_ENABLE */

@@ -24,6 +24,8 @@ void SPI_0_example(void);
 
 void I2C_0_example(void);
 
+void I2C_INSTANCE_example(void);
+
 void USART_0_example(void);
 
 void USART_1_example(void);
