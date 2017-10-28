@@ -34,6 +34,9 @@
 //Glue together the generic External Interrupt IRQCallbackFcn.
 typedef ext_irq_cb_t IrqCallbackFcn;
 
+//Glue together the generic External Interrupt IRQCallbackFcn.
+typedef spi_m_dma_cb_t SpiIrqCallbackFcn;
+
 //Glue together the generic SpiDevice and the hardware specific descriptor.
 //typedef spi_m_dma_descriptor SpiDevice;
 
@@ -47,7 +50,7 @@ typedef struct
 //Placeholder.
 typedef struct
 {
-	void *deviceDriver;
+	spi_m_dma_descriptor *deviceDriver;
 } SpiDevice;
 
 void glue_init(void);
@@ -72,6 +75,14 @@ static inline void glue_crash_and_burn(void)
 		}
 	}
 }
+
+/*
+ *
+ * SPI0 HAL-AL
+ *
+ */
+void glue_spi0_dma_send_bytes(SpiDevice* spi, uint16_t *buf, uint16_t numBytes);
+
 
 #else
 #error "We don't support other blamboard hardware yet."
