@@ -1,3 +1,4 @@
+
 /**
  * \file
  *
@@ -164,17 +165,20 @@ int32_t _dma_get_channel_resource(struct _dma_resource **resource, const uint8_t
 
 void _dma_set_irq_state(const uint8_t channel, const enum _dma_callback_type type, const bool state)
 {
-	hri_xdmac_gim_reg_t val;
-
-	if (DMA_TRANSFER_COMPLETE_CB == type) {
-		hri_xdmac_write_CIM_reg(XDMAC, channel, XDMAC_CIE_BIE);
-	} else if (DMA_TRANSFER_ERROR_CB == type) {
-		hri_xdmac_write_CIM_reg(XDMAC, channel, XDMAC_CIE_RBIE | XDMAC_CIE_WBIE | XDMAC_CIE_ROIE);
-	}
-
 	if (state) {
-		val = hri_xdmac_read_GIM_reg(XDMAC);
-		hri_xdmac_write_GIM_reg(XDMAC, val | (1 << channel));
+		if (type == DMA_TRANSFER_COMPLETE_CB) {
+			hri_xdmac_set_CIM_reg(XDMAC, channel, XDMAC_CIE_BIE);
+		} else if (type == DMA_TRANSFER_ERROR_CB) {
+			hri_xdmac_set_CIM_reg(XDMAC, channel, XDMAC_CIE_RBIE | XDMAC_CIE_WBIE | XDMAC_CIE_ROIE);
+		}
+		hri_xdmac_set_GIM_reg(XDMAC, (1 << channel));
+	} else {
+		if (type == DMA_TRANSFER_COMPLETE_CB) {
+			hri_xdmac_clear_CIM_reg(XDMAC, channel, XDMAC_CID_BID);
+		} else if (type == DMA_TRANSFER_ERROR_CB) {
+			hri_xdmac_clear_CIM_reg(XDMAC, channel, XDMAC_CID_RBEID | XDMAC_CID_WBEID | XDMAC_CID_ROID);
+		}
+		hri_xdmac_clear_GIM_reg(XDMAC, (1 << channel));
 	}
 }
 

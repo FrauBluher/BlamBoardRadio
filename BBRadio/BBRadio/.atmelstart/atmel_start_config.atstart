@@ -444,7 +444,7 @@ drivers:
     api: HAL:HPL:DMAC
     configuration:
       dma_des_interface_0: AHB_IF0
-      dma_des_interface_1: AHB_IF0
+      dma_des_interface_1: AHB_IF1
       dma_des_interface_10: AHB_IF0
       dma_des_interface_11: AHB_IF0
       dma_des_interface_12: AHB_IF0
@@ -492,7 +492,7 @@ drivers:
       dma_src_interface_8: AHB_IF0
       dma_src_interface_9: AHB_IF0
       dma_trans_type_0: Memory to Memory Transfer
-      dma_trans_type_1: Memory to Memory Transfer
+      dma_trans_type_1: Memory to Peripheral Transfer
       dma_trans_type_10: Memory to Memory Transfer
       dma_trans_type_11: Memory to Memory Transfer
       dma_trans_type_12: Memory to Memory Transfer
@@ -660,7 +660,7 @@ drivers:
       dmac_srcinc_8: false
       dmac_srcinc_9: false
       dmac_trifsrc_0: Software Trigger
-      dmac_trifsrc_1: Software Trigger
+      dmac_trifsrc_1: SPI0 RX Trigger
       dmac_trifsrc_10: Software Trigger
       dmac_trifsrc_11: Software Trigger
       dmac_trifsrc_12: Software Trigger
@@ -683,7 +683,7 @@ drivers:
       dmac_trifsrc_7: Software Trigger
       dmac_trifsrc_8: Software Trigger
       dmac_trifsrc_9: Software Trigger
-      xdmac_enable: false
+      xdmac_enable: true
     optional_signals: []
     variant: null
     clocks:

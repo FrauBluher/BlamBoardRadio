@@ -24,34 +24,29 @@
 
 #ifdef BLAMBOARD_V_1_RADIO
 
-#include "hal_spi_m_dma.h"
-#include "hal_ext_irq.h"
-#include "hal_gpio.h"
-#include "hal_delay.h"
+#include <driver_init.h>
 #include "atmel_start_pins.h"
-#include "AT86_Impl.h"
 
 //Glue together the generic External Interrupt IRQCallbackFcn.
 typedef ext_irq_cb_t IrqCallbackFcn;
 
 //Glue together the generic External Interrupt IRQCallbackFcn.
-typedef spi_m_dma_cb_t SpiIrqCallbackFcn;
+//typedef spi_m_dma_cb_t SpiIrqCallbackFcn;
 
 //Glue together the generic SpiDevice and the hardware specific descriptor.
-//typedef spi_m_dma_descriptor SpiDevice;
+typedef struct 
+{
+	void *halSpiDriver;
+	void *deviceDriver;
+}SpiDevice;
 
 //Placeholder.
 typedef struct
 {
+	void *halIRQDriver;
 	void *deviceDriver;
 	IrqCallbackFcn callback;
 } IRQDevice;
-
-//Placeholder.
-typedef struct
-{
-	spi_m_dma_descriptor *deviceDriver;
-} SpiDevice;
 
 void glue_init(void);
 
@@ -81,11 +76,43 @@ static inline void glue_crash_and_burn(void)
  * SPI0 HAL-AL
  *
  */
-void glue_spi0_dma_send_bytes(SpiDevice* spi, uint16_t *buf, uint16_t numBytes);
+void glue_spi0_dma_send_bytes(SpiDevice* spi, uint8_t *buf, uint16_t numBytes);
+
+void SPI_0_example1(void);
+
+void EXTERNAL_IRQ_0_example1(void);
 
 
 #else
 #error "We don't support other blamboard hardware yet."
 #endif
+
+/************************************************************************/
+/* XDMAC Should be configured on the ATSAM(E/V/S)7x series with the     */
+/* following flags for SPI/DMA for channels 1/0.                        */
+/* 
+xdmac_tx_cfg.mbr_cfg = XDMAC_CC_TYPE_PER_TRAN |
+		XDMAC_CC_MBSIZE_SINGLE |
+		XDMAC_CC_DSYNC_MEM2PER |
+		XDMAC_CC_CSIZE_CHK_1 |
+		XDMAC_CC_DWIDTH_BYTE |
+		XDMAC_CC_SIF_AHB_IF0 |/
+		XDMAC_CC_DIF_AHB_IF1 |/
+		XDMAC_CC_SAM_INCREMENTED_AM |
+		XDMAC_CC_DAM_FIXED_AM |
+		XDMAC_CC_PERID(SPI0_XDMAC_TX_CH_NUM);
+		
+		xdmac_rx_cfg.mbr_cfg = XDMAC_CC_TYPE_PER_TRAN |
+		XDMAC_CC_MBSIZE_SINGLE |
+		XDMAC_CC_DSYNC_PER2MEM |
+		XDMAC_CC_CSIZE_CHK_1 |
+		XDMAC_CC_DWIDTH_BYTE|
+		XDMAC_CC_SIF_AHB_IF1 |/
+		XDMAC_CC_DIF_AHB_IF0 |/
+		XDMAC_CC_SAM_FIXED_AM |
+		XDMAC_CC_DAM_INCREMENTED_AM |/
+		XDMAC_CC_PERID(SPI0_XDMAC_RX_CH_NUM);
+/************************************************************************/
+
 
 #endif /* GLUE_H_ */

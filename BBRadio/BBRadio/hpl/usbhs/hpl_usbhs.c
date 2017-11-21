@@ -552,8 +552,8 @@ static inline void _usb_d_dev_wakeup(void)
 {
 	Usbhs *hw = USBHS;
 
-	hri_usbhs_write_DEVICR_reg(hw, USBHS_DEVICR_WAKEUPC);
-	hri_usbhs_clear_DEVIMR_WAKEUPE_bit(hw);
+	hri_usbhs_write_DEVICR_reg(hw, USB_D_WAKEUP_INT_FLAGS);
+	hri_usbhs_clear_DEVIMR_reg(hw, USB_D_WAKEUP_INT_FLAGS);
 	hri_usbhs_set_DEVIMR_SUSPE_bit(hw);
 
 	dev_inst.callbacks.event(USB_EV_WAKEUP, 0);
@@ -1296,7 +1296,7 @@ void _usb_d_dev_ep_deinit(uint8_t ep)
 	_usb_d_dev_trans_stop(ept, dir, USB_TRANS_RESET);
 
 	/* Disable the endpoint. */
-	hri_usbhs_clear_DEVEPT_reg(hw, USBHS_DEVEPT_EPEN(epn));
+	hri_usbhs_clear_DEVEPT_reg(hw, USBHS_DEVEPT_EPEN0 << epn);
 	ept->flags.u8 = 0;
 	ept->ep       = 0xFF;
 }

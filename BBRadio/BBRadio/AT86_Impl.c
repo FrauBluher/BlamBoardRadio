@@ -19,7 +19,15 @@
  */
 
 #include "AT86_Impl.h"
+#include <stdint.h>
 
+/**
+ * We statically allocate our AT86 instances because we're not monsters.
+ *
+ * When initializing the driver, we use these AT86 instances, they can't
+ * exist anywhere else.
+ */
+static AT86_Instance Instance[MAX_AT86_INSTANCES] = {};
 static uint8_t currentInstances = 0;
 
 /**
@@ -342,4 +350,13 @@ void AT86_IRQ_Handler(uint8_t atDev)
 	//Kick off SPI transaction here.  (Should be DMA'd)
 }
 
-
+void AT86_Test_Comms(uint8_t atDev)
+{
+	//READ = b15/b14 = 0
+	//WRITE = B15 = 1 B14 = 0
+	static uint8_t testBuf[10] = {};
+	testBuf[0] = 0x00 | 0x03;
+	testBuf[1] = 0x00;
+	
+	glue_spi0_dma_send_bytes(Instance[atDev].spiDev, testBuf, 10);
+}

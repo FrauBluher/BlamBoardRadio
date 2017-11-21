@@ -58,9 +58,8 @@ void _init_chip(void)
 	_fpu_enable();
 	hri_efc_write_EEFC_FMR_FWS_bf(EFC, CONF_EFC_WAIT_STATE);
 
-#if CONF_DMA_ENABLE
 	_pmc_enable_periph_clock(ID_XDMAC);
 	_dma_init();
-#endif
+
 	_pmc_init();
 }

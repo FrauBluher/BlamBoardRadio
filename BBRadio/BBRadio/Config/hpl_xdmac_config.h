@@ -8,7 +8,7 @@
 // <i> Indicates whether xdmac is enabled or not
 // <id> xdmac_enable
 #ifndef CONF_DMA_ENABLE
-#define CONF_DMA_ENABLE 0
+#define CONF_DMA_ENABLE 1
 #endif
 
 // <e> Channel 0 settings
@@ -65,14 +65,14 @@
 // <i> Define the data is written through the system bus interface 0 or 1
 // <id> dma_des_interface_0
 #ifndef CONF_DMAC_DES_INTERFACE_0
-#define CONF_DMAC_DES_INTERFACE_0 0x0
+#define CONF_DMAC_DES_INTERFACE_0 0x1
 #endif
 
 // <q> Source Address Increment
 // <i> Indicates whether the source address incremented as beat size or not
 // <id> dmac_srcinc_0
 #ifndef CONF_DMAC_SRCINC_0
-#define CONF_DMAC_SRCINC_0 0
+#define CONF_DMAC_SRCINC_0 1
 #endif
 
 // <q> Destination Address Increment
@@ -89,7 +89,7 @@
 // <i> Define the data transfer type
 // <id> dma_trans_type_0
 #ifndef CONF_DMAC_TRANS_TYPE_0
-#define CONF_DMAC_TRANS_TYPE_0 0x0
+#define CONF_DMAC_TRANS_TYPE_0 0x2
 #endif
 
 // <o> Trigger source
@@ -148,7 +148,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_0
 #ifndef CONF_DMAC_TRIGSRC_0
-#define CONF_DMAC_TRIGSRC_0 0xff
+#define CONF_DMAC_TRIGSRC_0 0x03
 #endif
 
 // </e>
@@ -238,7 +238,7 @@
 // <i> Define the data is read through the system bus interface 0 or 1
 // <id> dma_src_interface_1
 #ifndef CONF_DMAC_SRC_INTERFACE_1
-#define CONF_DMAC_SRC_INTERFACE_1 0x0
+#define CONF_DMAC_SRC_INTERFACE_1 0x1
 #endif
 
 // <o> Destination Interface Identifier
@@ -261,7 +261,7 @@
 // <i> Indicates whether the destination address incremented as beat size or not
 // <id> dmac_dstinc_1
 #ifndef CONF_DMAC_DSTINC_1
-#define CONF_DMAC_DSTINC_1 0
+#define CONF_DMAC_DSTINC_1 1
 #endif
 
 // <o> Transfer Type
@@ -271,7 +271,7 @@
 // <i> Define the data transfer type
 // <id> dma_trans_type_1
 #ifndef CONF_DMAC_TRANS_TYPE_1
-#define CONF_DMAC_TRANS_TYPE_1 0x0
+#define CONF_DMAC_TRANS_TYPE_1 0x1
 #endif
 
 // <o> Trigger source
@@ -330,7 +330,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_1
 #ifndef CONF_DMAC_TRIGSRC_1
-#define CONF_DMAC_TRIGSRC_1 0xff
+#define CONF_DMAC_TRIGSRC_1 0x4
 #endif
 
 // </e>

@@ -136,7 +136,8 @@ main.d main.o: .././main.c ../atmel_start.h ../driver_init.h \
  ../hal/utils/include/utils_ringbuffer.h ../hal/utils/include/compiler.h \
  ../hal/utils/include/utils_assert.h ../hal/include/hal_usb_device.h \
  ../hal/include/hpl_usb_device.h ../hal/include/hpl_usb.h \
- ../Config/hpl_usb_config.h .././Glue.h .././atmel_start_pins.h
+ ../Config/hpl_usb_config.h .././Glue.h ../driver_init.h \
+ .././atmel_start_pins.h .././AT86_Impl.h
 
 ../atmel_start.h:
 
@@ -516,4 +517,8 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.1.72\include/
 
 .././Glue.h:
 
+../driver_init.h:
+
 .././atmel_start_pins.h:
+
+.././AT86_Impl.h:

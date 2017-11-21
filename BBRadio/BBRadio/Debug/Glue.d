@@ -6,8 +6,8 @@ Glue.d Glue.o: .././Glue.c .././Glue.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_newlib_version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_intsup.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h \
- ../hal/include/hal_spi_m_dma.h ../hal/include/hal_io.h \
- ../hal/utils/include/compiler.h \
+ ../driver_init.h ../atmel_start_pins.h ../hal/include/hal_gpio.h \
+ ../hal/include/hpl_gpio.h ../hal/utils/include/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.2.1\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.2.1\include\stdbool.h \
  ../hal/utils/include/parts.h \
@@ -117,15 +117,26 @@ Glue.d Glue.o: .././Glue.c .././Glue.h \
  ../hri/hri_tc_s70.h ../hri/hri_trng_s70.h ../hri/hri_twihs_s70.h \
  ../hri/hri_uart_s70.h ../hri/hri_usart_s70.h ../hri/hri_usbhs_s70.h \
  ../hri/hri_utmi_s70.h ../hri/hri_wdt_s70.h ../hri/hri_xdmac_s70.h \
- ../hal/utils/include/err_codes.h ../hal/include/hpl_spi_m_dma.h \
- ../hal/include/hpl_spi.h ../hal/utils/include/utils.h \
- ../hal/include/hpl_spi_dma.h ../hal/include/hpl_irq.h \
- ../hal/include/hpl_dma.h ../hal/include/hal_ext_irq.h \
- ../hal/include/hpl_ext_irq.h ../hal/include/hal_gpio.h \
- ../hal/include/hpl_gpio.h ../hpl/pio/hpl_gpio_base.h \
+ ../hal/utils/include/err_codes.h ../hpl/pio/hpl_gpio_base.h \
  ../hal/utils/include/utils_assert.h ../hal/include/hal_delay.h \
- ../hal/include/hpl_reset.h ../hal/include/hpl_sleep.h \
- .././atmel_start_pins.h
+ ../hal/include/hpl_irq.h ../hal/include/hpl_reset.h \
+ ../hal/include/hpl_sleep.h ../hal/include/hal_init.h \
+ ../hal/include/hpl_init.h ../hal/include/hal_io.h \
+ ../hal/include/hal_sleep.h ../hal/include/hal_dac_sync.h \
+ ../hal/include/hpl_dac_sync.h ../hal/include/hpl_irq.h \
+ ../hal/include/hal_ext_irq.h ../hal/include/hpl_ext_irq.h \
+ ../hal/include/hal_spi_m_dma.h ../hal/include/hpl_spi_m_dma.h \
+ ../hal/include/hpl_spi.h ../hal/utils/include/utils.h \
+ ../hal/include/hpl_spi_dma.h ../hal/include/hpl_dma.h \
+ ../hal/include/hal_i2c_m_sync.h ../hal/include/hpl_i2c_m_sync.h \
+ ../hal/include/hal_usart_sync.h ../hal/include/hal_io.h \
+ ../hal/include/hpl_usart_sync.h ../hal/include/hpl_usart.h \
+ ../hpl/uart/hpl_uart_base.h ../hal/include/hpl_usart_async.h \
+ ../hal/include/hpl_usart.h ../hal/include/hal_usart_async.h \
+ ../hal/utils/include/utils_ringbuffer.h ../hal/utils/include/compiler.h \
+ ../hal/utils/include/utils_assert.h ../hal/include/hal_usb_device.h \
+ ../hal/include/hpl_usb_device.h ../hal/include/hpl_usb.h \
+ ../Config/hpl_usb_config.h .././atmel_start_pins.h .././AT86_Impl.h
 
 .././Glue.h:
 
@@ -143,9 +154,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_stdint.h:
 
-../hal/include/hal_spi_m_dma.h:
+../driver_init.h:
 
-../hal/include/hal_io.h:
+../atmel_start_pins.h:
+
+../hal/include/hal_gpio.h:
+
+../hal/include/hpl_gpio.h:
 
 ../hal/utils/include/compiler.h:
 
@@ -423,6 +438,38 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.1.72\include/
 
 ../hal/utils/include/err_codes.h:
 
+../hpl/pio/hpl_gpio_base.h:
+
+../hal/utils/include/utils_assert.h:
+
+../hal/include/hal_delay.h:
+
+../hal/include/hpl_irq.h:
+
+../hal/include/hpl_reset.h:
+
+../hal/include/hpl_sleep.h:
+
+../hal/include/hal_init.h:
+
+../hal/include/hpl_init.h:
+
+../hal/include/hal_io.h:
+
+../hal/include/hal_sleep.h:
+
+../hal/include/hal_dac_sync.h:
+
+../hal/include/hpl_dac_sync.h:
+
+../hal/include/hpl_irq.h:
+
+../hal/include/hal_ext_irq.h:
+
+../hal/include/hpl_ext_irq.h:
+
+../hal/include/hal_spi_m_dma.h:
+
 ../hal/include/hpl_spi_m_dma.h:
 
 ../hal/include/hpl_spi.h:
@@ -431,26 +478,42 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.1.72\include/
 
 ../hal/include/hpl_spi_dma.h:
 
-../hal/include/hpl_irq.h:
-
 ../hal/include/hpl_dma.h:
 
-../hal/include/hal_ext_irq.h:
+../hal/include/hal_i2c_m_sync.h:
 
-../hal/include/hpl_ext_irq.h:
+../hal/include/hpl_i2c_m_sync.h:
 
-../hal/include/hal_gpio.h:
+../hal/include/hal_usart_sync.h:
 
-../hal/include/hpl_gpio.h:
+../hal/include/hal_io.h:
 
-../hpl/pio/hpl_gpio_base.h:
+../hal/include/hpl_usart_sync.h:
+
+../hal/include/hpl_usart.h:
+
+../hpl/uart/hpl_uart_base.h:
+
+../hal/include/hpl_usart_async.h:
+
+../hal/include/hpl_usart.h:
+
+../hal/include/hal_usart_async.h:
+
+../hal/utils/include/utils_ringbuffer.h:
+
+../hal/utils/include/compiler.h:
 
 ../hal/utils/include/utils_assert.h:
 
-../hal/include/hal_delay.h:
+../hal/include/hal_usb_device.h:
 
-../hal/include/hpl_reset.h:
+../hal/include/hpl_usb_device.h:
 
-../hal/include/hpl_sleep.h:
+../hal/include/hpl_usb.h:
+
+../Config/hpl_usb_config.h:
 
 .././atmel_start_pins.h:
+
+.././AT86_Impl.h:

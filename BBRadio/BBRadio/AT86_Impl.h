@@ -119,14 +119,6 @@ struct _AT86_Instance
 	uint8_t initialized;
 };
 
-/**
- * We statically allocate our AT86 instances because we're not monsters.
- *
- * When initializing the driver, we use these AT86 instances, they can't
- * exist anywhere else.
- */
-AT86_Instance Instance[MAX_AT86_INSTANCES] = {};
-
 uint8_t AT86_Init(SpiDevice *spi_dev, IRQDevice *irq_dev, uint8_t atDev);
 
 uint8_t AT86_FSM(AT86_Instance *atDev);
@@ -134,6 +126,8 @@ uint8_t AT86_FSM(AT86_Instance *atDev);
 // TODO: Maybe make these Private Functions
 void AT86_IRQ_Handler(uint8_t atDev);
 uint8_t AT86_BB_FSM(baseband_info_t *bb);
+
+void AT86_Test_Comms(uint8_t atDev);
 
 
 #endif /* AT86_IMPL_H_ */
