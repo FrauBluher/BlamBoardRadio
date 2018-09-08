@@ -3,39 +3,29 @@
  *
  * \brief SAM TC
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -300,11 +290,118 @@ static inline void hri_tcchannel_clear_IMR_reg(const void *const hw, hri_tc_imr_
 	((TcChannel *)hw)->TC_IDR = mask;
 }
 
-static inline void hri_tcchannel_write_CCR_reg(const void *const hw, hri_tc_ccr_reg_t data)
+static inline hri_tc_rab_reg_t hri_tcchannel_get_RAB_RAB_bf(const void *const hw, hri_tc_rab_reg_t mask)
 {
-	TC_CRITICAL_SECTION_ENTER();
-	((TcChannel *)hw)->TC_CCR = data;
-	TC_CRITICAL_SECTION_LEAVE();
+	return (((TcChannel *)hw)->TC_RAB & TC_RAB_RAB(mask)) >> TC_RAB_RAB_Pos;
+}
+
+static inline hri_tc_rab_reg_t hri_tcchannel_read_RAB_RAB_bf(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_RAB & TC_RAB_RAB_Msk) >> TC_RAB_RAB_Pos;
+}
+
+static inline hri_tc_rab_reg_t hri_tcchannel_get_RAB_reg(const void *const hw, hri_tc_rab_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((TcChannel *)hw)->TC_RAB;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_rab_reg_t hri_tcchannel_read_RAB_reg(const void *const hw)
+{
+	return ((TcChannel *)hw)->TC_RAB;
+}
+
+static inline hri_tc_cv_reg_t hri_tcchannel_get_CV_CV_bf(const void *const hw, hri_tc_cv_reg_t mask)
+{
+	return (((TcChannel *)hw)->TC_CV & TC_CV_CV(mask)) >> TC_CV_CV_Pos;
+}
+
+static inline hri_tc_cv_reg_t hri_tcchannel_read_CV_CV_bf(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_CV & TC_CV_CV_Msk) >> TC_CV_CV_Pos;
+}
+
+static inline hri_tc_cv_reg_t hri_tcchannel_get_CV_reg(const void *const hw, hri_tc_cv_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((TcChannel *)hw)->TC_CV;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_cv_reg_t hri_tcchannel_read_CV_reg(const void *const hw)
+{
+	return ((TcChannel *)hw)->TC_CV;
+}
+
+static inline bool hri_tcchannel_get_SR_COVFS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_COVFS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_LOVRS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_LOVRS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_CPAS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_CPAS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_CPBS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_CPBS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_CPCS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_CPCS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_LDRAS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_LDRAS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_LDRBS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_LDRBS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_ETRGS_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_ETRGS) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_CLKSTA_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_CLKSTA) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_MTIOA_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_MTIOA) > 0;
+}
+
+static inline bool hri_tcchannel_get_SR_MTIOB_bit(const void *const hw)
+{
+	return (((TcChannel *)hw)->TC_SR & TC_SR_MTIOB) > 0;
+}
+
+static inline hri_tc_sr_reg_t hri_tcchannel_get_SR_reg(const void *const hw, hri_tc_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((TcChannel *)hw)->TC_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_sr_reg_t hri_tcchannel_read_SR_reg(const void *const hw)
+{
+	return ((TcChannel *)hw)->TC_SR;
 }
 
 static inline void hri_tcchannel_set_CMR_CLKI_bit(const void *const hw)
@@ -1441,118 +1538,11 @@ static inline hri_tc_emr_reg_t hri_tcchannel_read_EMR_reg(const void *const hw)
 	return ((TcChannel *)hw)->TC_EMR;
 }
 
-static inline hri_tc_rab_reg_t hri_tcchannel_get_RAB_RAB_bf(const void *const hw, hri_tc_rab_reg_t mask)
+static inline void hri_tcchannel_write_CCR_reg(const void *const hw, hri_tc_ccr_reg_t data)
 {
-	return (((TcChannel *)hw)->TC_RAB & TC_RAB_RAB(mask)) >> TC_RAB_RAB_Pos;
-}
-
-static inline hri_tc_rab_reg_t hri_tcchannel_read_RAB_RAB_bf(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_RAB & TC_RAB_RAB_Msk) >> TC_RAB_RAB_Pos;
-}
-
-static inline hri_tc_rab_reg_t hri_tcchannel_get_RAB_reg(const void *const hw, hri_tc_rab_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((TcChannel *)hw)->TC_RAB;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_rab_reg_t hri_tcchannel_read_RAB_reg(const void *const hw)
-{
-	return ((TcChannel *)hw)->TC_RAB;
-}
-
-static inline hri_tc_cv_reg_t hri_tcchannel_get_CV_CV_bf(const void *const hw, hri_tc_cv_reg_t mask)
-{
-	return (((TcChannel *)hw)->TC_CV & TC_CV_CV(mask)) >> TC_CV_CV_Pos;
-}
-
-static inline hri_tc_cv_reg_t hri_tcchannel_read_CV_CV_bf(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_CV & TC_CV_CV_Msk) >> TC_CV_CV_Pos;
-}
-
-static inline hri_tc_cv_reg_t hri_tcchannel_get_CV_reg(const void *const hw, hri_tc_cv_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((TcChannel *)hw)->TC_CV;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_cv_reg_t hri_tcchannel_read_CV_reg(const void *const hw)
-{
-	return ((TcChannel *)hw)->TC_CV;
-}
-
-static inline bool hri_tcchannel_get_SR_COVFS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_COVFS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_LOVRS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_LOVRS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_CPAS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_CPAS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_CPBS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_CPBS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_CPCS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_CPCS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_LDRAS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_LDRAS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_LDRBS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_LDRBS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_ETRGS_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_ETRGS) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_CLKSTA_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_CLKSTA) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_MTIOA_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_MTIOA) > 0;
-}
-
-static inline bool hri_tcchannel_get_SR_MTIOB_bit(const void *const hw)
-{
-	return (((TcChannel *)hw)->TC_SR & TC_SR_MTIOB) > 0;
-}
-
-static inline hri_tc_sr_reg_t hri_tcchannel_get_SR_reg(const void *const hw, hri_tc_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((TcChannel *)hw)->TC_SR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_sr_reg_t hri_tcchannel_read_SR_reg(const void *const hw)
-{
-	return ((TcChannel *)hw)->TC_SR;
+	TC_CRITICAL_SECTION_ENTER();
+	((TcChannel *)hw)->TC_CCR = data;
+	TC_CRITICAL_SECTION_LEAVE();
 }
 
 static inline void hri_tc_set_IMR_COVFS_bit(const void *const hw, uint8_t submodule_index)
@@ -1776,11 +1766,119 @@ static inline void hri_tc_clear_IMR_reg(const void *const hw, uint8_t submodule_
 	((Tc *)hw)->TC_CHANNEL[submodule_index].TC_IDR = mask;
 }
 
-static inline void hri_tc_write_CCR_reg(const void *const hw, uint8_t submodule_index, hri_tc_ccr_reg_t data)
+static inline hri_tc_rab_reg_t hri_tc_get_RAB_RAB_bf(const void *const hw, uint8_t submodule_index,
+                                                     hri_tc_rab_reg_t mask)
 {
-	TC_CRITICAL_SECTION_ENTER();
-	((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CCR = data;
-	TC_CRITICAL_SECTION_LEAVE();
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB & TC_RAB_RAB(mask)) >> TC_RAB_RAB_Pos;
+}
+
+static inline hri_tc_rab_reg_t hri_tc_read_RAB_RAB_bf(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB & TC_RAB_RAB_Msk) >> TC_RAB_RAB_Pos;
+}
+
+static inline hri_tc_rab_reg_t hri_tc_get_RAB_reg(const void *const hw, uint8_t submodule_index, hri_tc_rab_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_rab_reg_t hri_tc_read_RAB_reg(const void *const hw, uint8_t submodule_index)
+{
+	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB;
+}
+
+static inline hri_tc_cv_reg_t hri_tc_get_CV_CV_bf(const void *const hw, uint8_t submodule_index, hri_tc_cv_reg_t mask)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV & TC_CV_CV(mask)) >> TC_CV_CV_Pos;
+}
+
+static inline hri_tc_cv_reg_t hri_tc_read_CV_CV_bf(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV & TC_CV_CV_Msk) >> TC_CV_CV_Pos;
+}
+
+static inline hri_tc_cv_reg_t hri_tc_get_CV_reg(const void *const hw, uint8_t submodule_index, hri_tc_cv_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_cv_reg_t hri_tc_read_CV_reg(const void *const hw, uint8_t submodule_index)
+{
+	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV;
+}
+
+static inline bool hri_tc_get_SR_COVFS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_COVFS) > 0;
+}
+
+static inline bool hri_tc_get_SR_LOVRS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LOVRS) > 0;
+}
+
+static inline bool hri_tc_get_SR_CPAS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPAS) > 0;
+}
+
+static inline bool hri_tc_get_SR_CPBS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPBS) > 0;
+}
+
+static inline bool hri_tc_get_SR_CPCS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPCS) > 0;
+}
+
+static inline bool hri_tc_get_SR_LDRAS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LDRAS) > 0;
+}
+
+static inline bool hri_tc_get_SR_LDRBS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LDRBS) > 0;
+}
+
+static inline bool hri_tc_get_SR_ETRGS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_ETRGS) > 0;
+}
+
+static inline bool hri_tc_get_SR_CLKSTA_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CLKSTA) > 0;
+}
+
+static inline bool hri_tc_get_SR_MTIOA_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_MTIOA) > 0;
+}
+
+static inline bool hri_tc_get_SR_MTIOB_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_MTIOB) > 0;
+}
+
+static inline hri_tc_sr_reg_t hri_tc_get_SR_reg(const void *const hw, uint8_t submodule_index, hri_tc_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_tc_sr_reg_t hri_tc_read_SR_reg(const void *const hw, uint8_t submodule_index)
+{
+	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR;
 }
 
 static inline void hri_tc_set_CMR_CLKI_bit(const void *const hw, uint8_t submodule_index)
@@ -2926,140 +3024,72 @@ static inline hri_tc_emr_reg_t hri_tc_read_EMR_reg(const void *const hw, uint8_t
 	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_EMR;
 }
 
-static inline hri_tc_rab_reg_t hri_tc_get_RAB_RAB_bf(const void *const hw, uint8_t submodule_index,
-                                                     hri_tc_rab_reg_t mask)
+static inline void hri_tc_write_CCR_reg(const void *const hw, uint8_t submodule_index, hri_tc_ccr_reg_t data)
 {
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB & TC_RAB_RAB(mask)) >> TC_RAB_RAB_Pos;
+	TC_CRITICAL_SECTION_ENTER();
+	((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CCR = data;
+	TC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_tc_rab_reg_t hri_tc_read_RAB_RAB_bf(const void *const hw, uint8_t submodule_index)
+static inline bool hri_tc_get_QIMR_IDX_bit(const void *const hw)
 {
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB & TC_RAB_RAB_Msk) >> TC_RAB_RAB_Pos;
+	return (((Tc *)hw)->TC_QIMR & TC_QIMR_IDX) > 0;
 }
 
-static inline hri_tc_rab_reg_t hri_tc_get_RAB_reg(const void *const hw, uint8_t submodule_index, hri_tc_rab_reg_t mask)
+static inline bool hri_tc_get_QIMR_DIRCHG_bit(const void *const hw)
+{
+	return (((Tc *)hw)->TC_QIMR & TC_QIMR_DIRCHG) > 0;
+}
+
+static inline bool hri_tc_get_QIMR_QERR_bit(const void *const hw)
+{
+	return (((Tc *)hw)->TC_QIMR & TC_QIMR_QERR) > 0;
+}
+
+static inline hri_tc_qimr_reg_t hri_tc_get_QIMR_reg(const void *const hw, hri_tc_qimr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB;
+	tmp = ((Tc *)hw)->TC_QIMR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_tc_rab_reg_t hri_tc_read_RAB_reg(const void *const hw, uint8_t submodule_index)
+static inline hri_tc_qimr_reg_t hri_tc_read_QIMR_reg(const void *const hw)
 {
-	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_RAB;
+	return ((Tc *)hw)->TC_QIMR;
 }
 
-static inline hri_tc_cv_reg_t hri_tc_get_CV_CV_bf(const void *const hw, uint8_t submodule_index, hri_tc_cv_reg_t mask)
+static inline bool hri_tc_get_QISR_IDX_bit(const void *const hw)
 {
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV & TC_CV_CV(mask)) >> TC_CV_CV_Pos;
+	return (((Tc *)hw)->TC_QISR & TC_QISR_IDX) > 0;
 }
 
-static inline hri_tc_cv_reg_t hri_tc_read_CV_CV_bf(const void *const hw, uint8_t submodule_index)
+static inline bool hri_tc_get_QISR_DIRCHG_bit(const void *const hw)
 {
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV & TC_CV_CV_Msk) >> TC_CV_CV_Pos;
+	return (((Tc *)hw)->TC_QISR & TC_QISR_DIRCHG) > 0;
 }
 
-static inline hri_tc_cv_reg_t hri_tc_get_CV_reg(const void *const hw, uint8_t submodule_index, hri_tc_cv_reg_t mask)
+static inline bool hri_tc_get_QISR_QERR_bit(const void *const hw)
+{
+	return (((Tc *)hw)->TC_QISR & TC_QISR_QERR) > 0;
+}
+
+static inline bool hri_tc_get_QISR_DIR_bit(const void *const hw)
+{
+	return (((Tc *)hw)->TC_QISR & TC_QISR_DIR) > 0;
+}
+
+static inline hri_tc_qisr_reg_t hri_tc_get_QISR_reg(const void *const hw, hri_tc_qisr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV;
+	tmp = ((Tc *)hw)->TC_QISR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_tc_cv_reg_t hri_tc_read_CV_reg(const void *const hw, uint8_t submodule_index)
+static inline hri_tc_qisr_reg_t hri_tc_read_QISR_reg(const void *const hw)
 {
-	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_CV;
-}
-
-static inline bool hri_tc_get_SR_COVFS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_COVFS) > 0;
-}
-
-static inline bool hri_tc_get_SR_LOVRS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LOVRS) > 0;
-}
-
-static inline bool hri_tc_get_SR_CPAS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPAS) > 0;
-}
-
-static inline bool hri_tc_get_SR_CPBS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPBS) > 0;
-}
-
-static inline bool hri_tc_get_SR_CPCS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CPCS) > 0;
-}
-
-static inline bool hri_tc_get_SR_LDRAS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LDRAS) > 0;
-}
-
-static inline bool hri_tc_get_SR_LDRBS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_LDRBS) > 0;
-}
-
-static inline bool hri_tc_get_SR_ETRGS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_ETRGS) > 0;
-}
-
-static inline bool hri_tc_get_SR_CLKSTA_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_CLKSTA) > 0;
-}
-
-static inline bool hri_tc_get_SR_MTIOA_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_MTIOA) > 0;
-}
-
-static inline bool hri_tc_get_SR_MTIOB_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR & TC_SR_MTIOB) > 0;
-}
-
-static inline hri_tc_sr_reg_t hri_tc_get_SR_reg(const void *const hw, uint8_t submodule_index, hri_tc_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_sr_reg_t hri_tc_read_SR_reg(const void *const hw, uint8_t submodule_index)
-{
-	return ((Tc *)hw)->TC_CHANNEL[submodule_index].TC_SR;
-}
-
-static inline void hri_tc_write_BCR_reg(const void *const hw, hri_tc_bcr_reg_t data)
-{
-	TC_CRITICAL_SECTION_ENTER();
-	((Tc *)hw)->TC_BCR = data;
-	TC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_tc_write_QIER_reg(const void *const hw, hri_tc_qier_reg_t data)
-{
-	TC_CRITICAL_SECTION_ENTER();
-	((Tc *)hw)->TC_QIER = data;
-	TC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_tc_write_QIDR_reg(const void *const hw, hri_tc_qidr_reg_t data)
-{
-	TC_CRITICAL_SECTION_ENTER();
-	((Tc *)hw)->TC_QIDR = data;
-	TC_CRITICAL_SECTION_LEAVE();
+	return ((Tc *)hw)->TC_QISR;
 }
 
 static inline void hri_tc_set_BMR_QDEN_bit(const void *const hw)
@@ -3945,65 +3975,25 @@ static inline hri_tc_wpmr_reg_t hri_tc_read_WPMR_reg(const void *const hw)
 	return ((Tc *)hw)->TC_WPMR;
 }
 
-static inline bool hri_tc_get_QIMR_IDX_bit(const void *const hw)
+static inline void hri_tc_write_BCR_reg(const void *const hw, hri_tc_bcr_reg_t data)
 {
-	return (((Tc *)hw)->TC_QIMR & TC_QIMR_IDX) > 0;
+	TC_CRITICAL_SECTION_ENTER();
+	((Tc *)hw)->TC_BCR = data;
+	TC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_tc_get_QIMR_DIRCHG_bit(const void *const hw)
+static inline void hri_tc_write_QIER_reg(const void *const hw, hri_tc_qier_reg_t data)
 {
-	return (((Tc *)hw)->TC_QIMR & TC_QIMR_DIRCHG) > 0;
+	TC_CRITICAL_SECTION_ENTER();
+	((Tc *)hw)->TC_QIER = data;
+	TC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_tc_get_QIMR_QERR_bit(const void *const hw)
+static inline void hri_tc_write_QIDR_reg(const void *const hw, hri_tc_qidr_reg_t data)
 {
-	return (((Tc *)hw)->TC_QIMR & TC_QIMR_QERR) > 0;
-}
-
-static inline hri_tc_qimr_reg_t hri_tc_get_QIMR_reg(const void *const hw, hri_tc_qimr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Tc *)hw)->TC_QIMR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_qimr_reg_t hri_tc_read_QIMR_reg(const void *const hw)
-{
-	return ((Tc *)hw)->TC_QIMR;
-}
-
-static inline bool hri_tc_get_QISR_IDX_bit(const void *const hw)
-{
-	return (((Tc *)hw)->TC_QISR & TC_QISR_IDX) > 0;
-}
-
-static inline bool hri_tc_get_QISR_DIRCHG_bit(const void *const hw)
-{
-	return (((Tc *)hw)->TC_QISR & TC_QISR_DIRCHG) > 0;
-}
-
-static inline bool hri_tc_get_QISR_QERR_bit(const void *const hw)
-{
-	return (((Tc *)hw)->TC_QISR & TC_QISR_QERR) > 0;
-}
-
-static inline bool hri_tc_get_QISR_DIR_bit(const void *const hw)
-{
-	return (((Tc *)hw)->TC_QISR & TC_QISR_DIR) > 0;
-}
-
-static inline hri_tc_qisr_reg_t hri_tc_get_QISR_reg(const void *const hw, hri_tc_qisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Tc *)hw)->TC_QISR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_tc_qisr_reg_t hri_tc_read_QISR_reg(const void *const hw)
-{
-	return ((Tc *)hw)->TC_QISR;
+	TC_CRITICAL_SECTION_ENTER();
+	((Tc *)hw)->TC_QIDR = data;
+	TC_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

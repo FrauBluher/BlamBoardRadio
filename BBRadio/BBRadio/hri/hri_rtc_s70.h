@@ -3,39 +3,29 @@
  *
  * \brief SAM RTC
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -244,11 +234,80 @@ static inline void hri_rtc_clear_IMR_reg(const void *const hw, hri_rtc_imr_reg_t
 	((Rtc *)hw)->RTC_IDR = mask;
 }
 
-static inline void hri_rtc_write_SCCR_reg(const void *const hw, hri_rtc_sccr_reg_t data)
+static inline bool hri_rtc_get_SR_ACKUPD_bit(const void *const hw)
 {
-	RTC_CRITICAL_SECTION_ENTER();
-	((Rtc *)hw)->RTC_SCCR = data;
-	RTC_CRITICAL_SECTION_LEAVE();
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_ACKUPD) > 0;
+}
+
+static inline bool hri_rtc_get_SR_ALARM_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_ALARM) > 0;
+}
+
+static inline bool hri_rtc_get_SR_SEC_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_SEC) > 0;
+}
+
+static inline bool hri_rtc_get_SR_TIMEV_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_TIMEV) > 0;
+}
+
+static inline bool hri_rtc_get_SR_CALEV_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_CALEV) > 0;
+}
+
+static inline bool hri_rtc_get_SR_TDERR_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_SR & RTC_SR_TDERR) > 0;
+}
+
+static inline hri_rtc_sr_reg_t hri_rtc_get_SR_reg(const void *const hw, hri_rtc_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Rtc *)hw)->RTC_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_rtc_sr_reg_t hri_rtc_read_SR_reg(const void *const hw)
+{
+	return ((Rtc *)hw)->RTC_SR;
+}
+
+static inline bool hri_rtc_get_VER_NVTIM_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVTIM) > 0;
+}
+
+static inline bool hri_rtc_get_VER_NVCAL_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVCAL) > 0;
+}
+
+static inline bool hri_rtc_get_VER_NVTIMALR_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVTIMALR) > 0;
+}
+
+static inline bool hri_rtc_get_VER_NVCALALR_bit(const void *const hw)
+{
+	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVCALALR) > 0;
+}
+
+static inline hri_rtc_ver_reg_t hri_rtc_get_VER_reg(const void *const hw, hri_rtc_ver_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Rtc *)hw)->RTC_VER;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_rtc_ver_reg_t hri_rtc_read_VER_reg(const void *const hw)
+{
+	return ((Rtc *)hw)->RTC_VER;
 }
 
 static inline void hri_rtc_set_CR_UPDTIM_bit(const void *const hw)
@@ -2106,80 +2165,11 @@ static inline hri_rtc_wpmr_reg_t hri_rtc_read_WPMR_reg(const void *const hw)
 	return ((Rtc *)hw)->RTC_WPMR;
 }
 
-static inline bool hri_rtc_get_SR_ACKUPD_bit(const void *const hw)
+static inline void hri_rtc_write_SCCR_reg(const void *const hw, hri_rtc_sccr_reg_t data)
 {
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_ACKUPD) > 0;
-}
-
-static inline bool hri_rtc_get_SR_ALARM_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_ALARM) > 0;
-}
-
-static inline bool hri_rtc_get_SR_SEC_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_SEC) > 0;
-}
-
-static inline bool hri_rtc_get_SR_TIMEV_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_TIMEV) > 0;
-}
-
-static inline bool hri_rtc_get_SR_CALEV_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_CALEV) > 0;
-}
-
-static inline bool hri_rtc_get_SR_TDERR_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_SR & RTC_SR_TDERR) > 0;
-}
-
-static inline hri_rtc_sr_reg_t hri_rtc_get_SR_reg(const void *const hw, hri_rtc_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Rtc *)hw)->RTC_SR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_rtc_sr_reg_t hri_rtc_read_SR_reg(const void *const hw)
-{
-	return ((Rtc *)hw)->RTC_SR;
-}
-
-static inline bool hri_rtc_get_VER_NVTIM_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVTIM) > 0;
-}
-
-static inline bool hri_rtc_get_VER_NVCAL_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVCAL) > 0;
-}
-
-static inline bool hri_rtc_get_VER_NVTIMALR_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVTIMALR) > 0;
-}
-
-static inline bool hri_rtc_get_VER_NVCALALR_bit(const void *const hw)
-{
-	return (((Rtc *)hw)->RTC_VER & RTC_VER_NVCALALR) > 0;
-}
-
-static inline hri_rtc_ver_reg_t hri_rtc_get_VER_reg(const void *const hw, hri_rtc_ver_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Rtc *)hw)->RTC_VER;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_rtc_ver_reg_t hri_rtc_read_VER_reg(const void *const hw)
-{
-	return ((Rtc *)hw)->RTC_VER;
+	RTC_CRITICAL_SECTION_ENTER();
+	((Rtc *)hw)->RTC_SCCR = data;
+	RTC_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

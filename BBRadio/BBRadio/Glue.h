@@ -55,6 +55,8 @@ void glue_set_peripherals_inited(void);
 //Returns if glue_set_peripherals_inited was called before.  Crashes otherwise.
 void glue_enforce_driver_init(void);
 
+bool glue_spi_in_process(SpiDevice *spi_dev);
+
 //For use during debugging.  Mainly used to check that things don't return zero.
 static inline void glue_crash_and_burn(void)
 {
@@ -73,15 +75,10 @@ static inline void glue_crash_and_burn(void)
 
 /*
  *
- * SPI0 HAL-AL
+ * SPI HAL-AL
  *
  */
-void glue_spi0_dma_send_bytes(SpiDevice* spi, uint8_t *buf, uint16_t numBytes);
-
-void SPI_0_example1(void);
-
-void EXTERNAL_IRQ_0_example1(void);
-
+void glue_spi_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint16_t numBytes);
 
 #else
 #error "We don't support other blamboard hardware yet."

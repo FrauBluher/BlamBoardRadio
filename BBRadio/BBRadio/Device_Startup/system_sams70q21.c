@@ -3,7 +3,7 @@
  *
  * \brief System configuration file for ATSAMS70Q21
  *
- * Copyright (c) 2017 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
+ * Copyright (c) 2018 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
  *
  * \license_start
  *
@@ -39,7 +39,7 @@ extern "C" {
  * Initial system clock frequency. The System RC Oscillator (RCSYS) provides
  *  the source for the main clock at chip startup.
  */
-#define __SYSTEM_CLOCK    (4000000)
+#define __SYSTEM_CLOCK    (12000000)
 
 uint32_t SystemCoreClock = __SYSTEM_CLOCK;  /*!< System Clock Frequency (Core Clock)*/
 

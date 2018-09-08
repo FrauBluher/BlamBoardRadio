@@ -3,7 +3,7 @@
  *
  * \brief GCC startup file for ATSAMS70Q21
  *
- * Copyright (c) 2017 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
+ * Copyright (c) 2018 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
  *
  * \license_start
  *
@@ -44,17 +44,20 @@ int main(void);
 
 void __libc_init_array(void);
 
+/* Reset handler */
+void Reset_Handler(void);
+
 /* Default empty handler */
 void Dummy_Handler(void);
 
 /* Cortex-M7 core handlers */
-void NMI_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void NonMaskableInt_Handler ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void HardFault_Handler    ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void MemManage_Handler    ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void MemoryManagement_Handler ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void BusFault_Handler     ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void UsageFault_Handler   ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void SVC_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void DebugMon_Handler     ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void SVCall_Handler       ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void DebugMonitor_Handler ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void PendSV_Handler       ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void SysTick_Handler      ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 
@@ -111,8 +114,12 @@ void TRNG_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler"))
 void XDMAC_Handler        ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void ISI_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void PWM1_Handler         ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void FPU_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void SDRAMC_Handler       ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void RSWDT_Handler        ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void CCW_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void CCF_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+void IXC_Handler          ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 
 /* Exception Table */
 __attribute__ ((section(".vectors")))
@@ -122,18 +129,18 @@ const DeviceVectors exception_table = {
         .pvStack = (void*) (&_estack),
 
         .pfnReset_Handler              = (void*) Reset_Handler,
-        .pfnNMI_Handler                = (void*) NMI_Handler,
+        .pfnNonMaskableInt_Handler     = (void*) NonMaskableInt_Handler,
         .pfnHardFault_Handler          = (void*) HardFault_Handler,
-        .pfnMemManage_Handler          = (void*) MemManage_Handler,
+        .pfnMemoryManagement_Handler   = (void*) MemoryManagement_Handler,
         .pfnBusFault_Handler           = (void*) BusFault_Handler,
         .pfnUsageFault_Handler         = (void*) UsageFault_Handler,
-        .pfnReserved1_Handler          = (void*) (0UL), /* Reserved */
-        .pfnReserved2_Handler          = (void*) (0UL), /* Reserved */
-        .pfnReserved3_Handler          = (void*) (0UL), /* Reserved */
-        .pfnReserved4_Handler          = (void*) (0UL), /* Reserved */
-        .pfnSVC_Handler                = (void*) SVC_Handler,
-        .pfnDebugMon_Handler           = (void*) DebugMon_Handler,
-        .pfnReserved5_Handler          = (void*) (0UL), /* Reserved */
+        .pvReservedC9                  = (void*) (0UL), /* Reserved */
+        .pvReservedC8                  = (void*) (0UL), /* Reserved */
+        .pvReservedC7                  = (void*) (0UL), /* Reserved */
+        .pvReservedC6                  = (void*) (0UL), /* Reserved */
+        .pfnSVCall_Handler             = (void*) SVCall_Handler,
+        .pfnDebugMonitor_Handler       = (void*) DebugMonitor_Handler,
+        .pvReservedC3                  = (void*) (0UL), /* Reserved */
         .pfnPendSV_Handler             = (void*) PendSV_Handler,
         .pfnSysTick_Handler            = (void*) SysTick_Handler,
 
@@ -199,9 +206,14 @@ const DeviceVectors exception_table = {
         .pfnXDMAC_Handler              = (void*) XDMAC_Handler,  /* 58 Extensible DMA Controller */
         .pfnISI_Handler                = (void*) ISI_Handler,    /* 59 Image Sensor Interface */
         .pfnPWM1_Handler               = (void*) PWM1_Handler,   /* 60 Pulse Width Modulation Controller */
-        .pvReserved61                  = (void*) (0UL),          /* 61 Reserved */
+        .pfnFPU_Handler                = (void*) FPU_Handler,    /* 61 Floating Point Unit Registers */
         .pfnSDRAMC_Handler             = (void*) SDRAMC_Handler, /* 62 SDRAM Controller */
-        .pfnRSWDT_Handler              = (void*) RSWDT_Handler   /* 63 Reinforced Safety Watchdog Timer */
+        .pfnRSWDT_Handler              = (void*) RSWDT_Handler,  /* 63 Reinforced Safety Watchdog Timer */
+        .pfnCCW_Handler                = (void*) CCW_Handler,    /* 64 System Control Registers */
+        .pfnCCF_Handler                = (void*) CCF_Handler,    /* 65 System Control Registers */
+        .pvReserved66                  = (void*) (0UL),          /* 66 Reserved */
+        .pvReserved67                  = (void*) (0UL),          /* 67 Reserved */
+        .pfnIXC_Handler                = (void*) IXC_Handler     /* 68 Floating Point Unit Registers */
 };
 
 /**

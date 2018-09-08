@@ -130,8 +130,7 @@
 #ifndef CONF_TWIHS0_SMBTR_REG
 #define CONF_TWIHS0_SMBTR_REG                                                                                          \
 	((CONF_TWIHS0_SMBTR_PRESC << TWIHS_SMBTR_PRESC_Pos) | (CONF_TWIHS0_SMBTR_TLOWM << TWIHS_SMBTR_TLOWM_Pos)           \
-	 | (CONF_TWIHS0_SMBTR_TLOWS << TWIHS_SMBTR_TLOWS_Pos)                                                              \
-	 | (CONF_TWIHS0_SMBTR_THMAX << TWIHS_SMBTR_THMAX_Pos))
+	 | (CONF_TWIHS0_SMBTR_TLOWS << TWIHS_SMBTR_TLOWS_Pos) | (CONF_TWIHS0_SMBTR_THMAX << TWIHS_SMBTR_THMAX_Pos))
 #endif
 
 /* Configuration for FILTR(TWI Filter Register Register) */
@@ -335,8 +334,7 @@
 #ifndef CONF_TWIHS1_SMBTR_REG
 #define CONF_TWIHS1_SMBTR_REG                                                                                          \
 	((CONF_TWIHS1_SMBTR_PRESC << TWIHS_SMBTR_PRESC_Pos) | (CONF_TWIHS1_SMBTR_TLOWM << TWIHS_SMBTR_TLOWM_Pos)           \
-	 | (CONF_TWIHS1_SMBTR_TLOWS << TWIHS_SMBTR_TLOWS_Pos)                                                              \
-	 | (CONF_TWIHS1_SMBTR_THMAX << TWIHS_SMBTR_THMAX_Pos))
+	 | (CONF_TWIHS1_SMBTR_TLOWS << TWIHS_SMBTR_TLOWS_Pos) | (CONF_TWIHS1_SMBTR_THMAX << TWIHS_SMBTR_THMAX_Pos))
 #endif
 
 /* Configuration for FILTR(TWI Filter Register Register) */

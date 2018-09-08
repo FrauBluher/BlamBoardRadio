@@ -11,8 +11,7 @@
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.1.72\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.2.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.0.1\CMSIS\Include\</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -28,6 +27,7 @@
       <Value>../hpl/usbhs</Value>
       <Value>../hpl/xdmac</Value>
       <Value>../hri</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.3.88\sams70a\include</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -49,8 +49,7 @@
   <armgcc.linker.miscellaneous.LinkerFlags>-Tsams70q21_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.1.72\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.2.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.0.1\CMSIS\Include\</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -66,12 +65,12 @@
       <Value>../hpl/usbhs</Value>
       <Value>../hpl/xdmac</Value>
       <Value>../hri</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.3.88\sams70a\include</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
-      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.1.72\include</Value>
-      <Value>%24(PackRepoDir)\arm\CMSIS\4.2.0\CMSIS\Include\</Value>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.0.1\CMSIS\Include\</Value>
       <Value>../Config</Value>
       <Value>../</Value>
       <Value>../examples</Value>
@@ -87,6 +86,7 @@
       <Value>../hpl/usbhs</Value>
       <Value>../hpl/xdmac</Value>
       <Value>../hri</Value>
+      <Value>%24(PackRepoDir)\atmel\SAMS70_DFP\2.3.88\sams70a\include</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>

@@ -3,39 +3,29 @@
  *
  * \brief SAM PIO
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -87,6 +77,179 @@ typedef uint32_t hri_pio_scdr_reg_t;
 typedef uint32_t hri_pio_schmitt_reg_t;
 typedef uint32_t hri_pio_wpmr_reg_t;
 typedef uint32_t hri_pio_wpsr_reg_t;
+
+static inline bool hri_pio_get_ISR_P0_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P0) >> PIO_ISR_P0_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P1_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P1) >> PIO_ISR_P1_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P2_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P2) >> PIO_ISR_P2_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P3_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P3) >> PIO_ISR_P3_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P4_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P4) >> PIO_ISR_P4_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P5_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P5) >> PIO_ISR_P5_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P6_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P6) >> PIO_ISR_P6_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P7_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P7) >> PIO_ISR_P7_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P8_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P8) >> PIO_ISR_P8_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P9_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P9) >> PIO_ISR_P9_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P10_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P10) >> PIO_ISR_P10_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P11_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P11) >> PIO_ISR_P11_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P12_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P12) >> PIO_ISR_P12_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P13_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P13) >> PIO_ISR_P13_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P14_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P14) >> PIO_ISR_P14_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P15_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P15) >> PIO_ISR_P15_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P16_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P16) >> PIO_ISR_P16_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P17_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P17) >> PIO_ISR_P17_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P18_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P18) >> PIO_ISR_P18_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P19_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P19) >> PIO_ISR_P19_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P20_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P20) >> PIO_ISR_P20_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P21_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P21) >> PIO_ISR_P21_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P22_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P22) >> PIO_ISR_P22_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P23_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P23) >> PIO_ISR_P23_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P24_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P24) >> PIO_ISR_P24_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P25_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P25) >> PIO_ISR_P25_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P26_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P26) >> PIO_ISR_P26_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P27_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P27) >> PIO_ISR_P27_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P28_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P28) >> PIO_ISR_P28_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P29_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P29) >> PIO_ISR_P29_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P30_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P30) >> PIO_ISR_P30_Pos;
+}
+
+static inline bool hri_pio_get_ISR_P31_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P31) >> PIO_ISR_P31_Pos;
+}
+
+static inline hri_pio_isr_reg_t hri_pio_get_ISR_reg(const void *const hw, hri_pio_isr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_ISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_isr_reg_t hri_pio_read_ISR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_ISR;
+}
 
 static inline void hri_pio_set_PSR_P0_bit(const void *const hw)
 {
@@ -10449,191 +10612,457 @@ static inline void hri_pio_clear_FRLHSR_reg(const void *const hw, hri_pio_frlhsr
 	((Pio *)hw)->PIO_FELLSR = mask;
 }
 
-static inline bool hri_pio_get_ISR_P0_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P0_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P0) >> PIO_ISR_P0_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P0) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P1_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P1_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P1) >> PIO_ISR_P1_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P1) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P2_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P2_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P2) >> PIO_ISR_P2_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P2) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P3_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P3_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P3) >> PIO_ISR_P3_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P3) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P4_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P4_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P4) >> PIO_ISR_P4_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P4) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P5_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P5_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P5) >> PIO_ISR_P5_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P5) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P6_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P6_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P6) >> PIO_ISR_P6_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P6) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P7_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P7_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P7) >> PIO_ISR_P7_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P7) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P8_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P8_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P8) >> PIO_ISR_P8_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P8) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P9_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P9_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P9) >> PIO_ISR_P9_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P9) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P10_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P10_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P10) >> PIO_ISR_P10_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P10) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P11_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P11_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P11) >> PIO_ISR_P11_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P11) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P12_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P12_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P12) >> PIO_ISR_P12_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P12) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P13_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P13_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P13) >> PIO_ISR_P13_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P13) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P14_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P14_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P14) >> PIO_ISR_P14_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P14) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P15_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P15_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P15) >> PIO_ISR_P15_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P15) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P16_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P16_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P16) >> PIO_ISR_P16_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P16) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P17_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P17_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P17) >> PIO_ISR_P17_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P17) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P18_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P18_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P18) >> PIO_ISR_P18_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P18) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P19_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P19_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P19) >> PIO_ISR_P19_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P19) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P20_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P20_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P20) >> PIO_ISR_P20_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P20) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P21_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P21_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P21) >> PIO_ISR_P21_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P21) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P22_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P22_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P22) >> PIO_ISR_P22_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P22) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P23_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P23_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P23) >> PIO_ISR_P23_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P23) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P24_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P24_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P24) >> PIO_ISR_P24_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P24) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P25_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P25_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P25) >> PIO_ISR_P25_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P25) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P26_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P26_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P26) >> PIO_ISR_P26_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P26) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P27_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P27_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P27) >> PIO_ISR_P27_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P27) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P28_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P28_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P28) >> PIO_ISR_P28_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P28) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P29_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P29_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P29) >> PIO_ISR_P29_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P29) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P30_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P30_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P30) >> PIO_ISR_P30_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P30) > 0;
 }
 
-static inline bool hri_pio_get_ISR_P31_bit(const void *const hw)
+static inline bool hri_pio_get_PDSR_P31_bit(const void *const hw)
 {
-	return (((Pio *)hw)->PIO_ISR & PIO_ISR_P31) >> PIO_ISR_P31_Pos;
+	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P31) > 0;
 }
 
-static inline hri_pio_isr_reg_t hri_pio_get_ISR_reg(const void *const hw, hri_pio_isr_reg_t mask)
+static inline hri_pio_pdsr_reg_t hri_pio_get_PDSR_reg(const void *const hw, hri_pio_pdsr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_ISR;
+	tmp = ((Pio *)hw)->PIO_PDSR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_pio_isr_reg_t hri_pio_read_ISR_reg(const void *const hw)
+static inline hri_pio_pdsr_reg_t hri_pio_read_PDSR_reg(const void *const hw)
 {
-	return ((Pio *)hw)->PIO_ISR;
+	return ((Pio *)hw)->PIO_PDSR;
 }
 
-static inline void hri_pio_write_PCIER_reg(const void *const hw, hri_pio_pcier_reg_t data)
+static inline bool hri_pio_get_LOCKSR_P0_bit(const void *const hw)
 {
-	PIO_CRITICAL_SECTION_ENTER();
-	((Pio *)hw)->PIO_PCIER = data;
-	PIO_CRITICAL_SECTION_LEAVE();
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P0) > 0;
 }
 
-static inline void hri_pio_write_PCIDR_reg(const void *const hw, hri_pio_pcidr_reg_t data)
+static inline bool hri_pio_get_LOCKSR_P1_bit(const void *const hw)
 {
-	PIO_CRITICAL_SECTION_ENTER();
-	((Pio *)hw)->PIO_PCIDR = data;
-	PIO_CRITICAL_SECTION_LEAVE();
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P1) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P2_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P2) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P3_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P3) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P4_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P4) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P5_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P5) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P6_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P6) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P7_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P7) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P8_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P8) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P9_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P9) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P10_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P10) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P11_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P11) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P12_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P12) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P13_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P13) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P14_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P14) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P15_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P15) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P16_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P16) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P17_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P17) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P18_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P18) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P19_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P19) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P20_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P20) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P21_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P21) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P22_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P22) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P23_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P23) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P24_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P24) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P25_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P25) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P26_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P26) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P27_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P27) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P28_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P28) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P29_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P29) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P30_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P30) > 0;
+}
+
+static inline bool hri_pio_get_LOCKSR_P31_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P31) > 0;
+}
+
+static inline hri_pio_locksr_reg_t hri_pio_get_LOCKSR_reg(const void *const hw, hri_pio_locksr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_LOCKSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_locksr_reg_t hri_pio_read_LOCKSR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_LOCKSR;
+}
+
+static inline bool hri_pio_get_WPSR_WPVS_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVS) > 0;
+}
+
+static inline hri_pio_wpsr_reg_t hri_pio_get_WPSR_WPVSRC_bf(const void *const hw, hri_pio_wpsr_reg_t mask)
+{
+	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVSRC(mask)) >> PIO_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_pio_wpsr_reg_t hri_pio_read_WPSR_WPVSRC_bf(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVSRC_Msk) >> PIO_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_pio_wpsr_reg_t hri_pio_get_WPSR_reg(const void *const hw, hri_pio_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_wpsr_reg_t hri_pio_read_WPSR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_WPSR;
+}
+
+static inline bool hri_pio_get_PCIMR_DRDY_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_DRDY) > 0;
+}
+
+static inline bool hri_pio_get_PCIMR_OVRE_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_OVRE) > 0;
+}
+
+static inline bool hri_pio_get_PCIMR_ENDRX_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_ENDRX) > 0;
+}
+
+static inline bool hri_pio_get_PCIMR_RXBUFF_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_RXBUFF) > 0;
+}
+
+static inline hri_pio_pcimr_reg_t hri_pio_get_PCIMR_reg(const void *const hw, hri_pio_pcimr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_PCIMR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_pcimr_reg_t hri_pio_read_PCIMR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_PCIMR;
+}
+
+static inline bool hri_pio_get_PCISR_DRDY_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCISR & PIO_PCISR_DRDY) > 0;
+}
+
+static inline bool hri_pio_get_PCISR_OVRE_bit(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCISR & PIO_PCISR_OVRE) > 0;
+}
+
+static inline hri_pio_pcisr_reg_t hri_pio_get_PCISR_reg(const void *const hw, hri_pio_pcisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_PCISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_pcisr_reg_t hri_pio_read_PCISR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_PCISR;
+}
+
+static inline hri_pio_pcrhr_reg_t hri_pio_get_PCRHR_RDATA_bf(const void *const hw, hri_pio_pcrhr_reg_t mask)
+{
+	return (((Pio *)hw)->PIO_PCRHR & PIO_PCRHR_RDATA(mask)) >> PIO_PCRHR_RDATA_Pos;
+}
+
+static inline hri_pio_pcrhr_reg_t hri_pio_read_PCRHR_RDATA_bf(const void *const hw)
+{
+	return (((Pio *)hw)->PIO_PCRHR & PIO_PCRHR_RDATA_Msk) >> PIO_PCRHR_RDATA_Pos;
+}
+
+static inline hri_pio_pcrhr_reg_t hri_pio_get_PCRHR_reg(const void *const hw, hri_pio_pcrhr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pio *)hw)->PIO_PCRHR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pio_pcrhr_reg_t hri_pio_read_PCRHR_reg(const void *const hw)
+{
+	return ((Pio *)hw)->PIO_PCRHR;
 }
 
 static inline void hri_pio_set_ABCDSR_P0_bit(const void *const hw, uint8_t index)
@@ -15067,457 +15496,18 @@ static inline hri_pio_pcmr_reg_t hri_pio_read_PCMR_reg(const void *const hw)
 	return ((Pio *)hw)->PIO_PCMR;
 }
 
-static inline bool hri_pio_get_PDSR_P0_bit(const void *const hw)
+static inline void hri_pio_write_PCIER_reg(const void *const hw, hri_pio_pcier_reg_t data)
 {
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P0) > 0;
+	PIO_CRITICAL_SECTION_ENTER();
+	((Pio *)hw)->PIO_PCIER = data;
+	PIO_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pio_get_PDSR_P1_bit(const void *const hw)
+static inline void hri_pio_write_PCIDR_reg(const void *const hw, hri_pio_pcidr_reg_t data)
 {
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P1) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P2_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P2) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P3_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P3) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P4_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P4) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P5_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P5) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P6_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P6) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P7_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P7) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P8_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P8) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P9_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P9) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P10_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P10) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P11_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P11) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P12_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P12) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P13_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P13) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P14_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P14) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P15_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P15) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P16_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P16) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P17_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P17) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P18_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P18) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P19_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P19) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P20_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P20) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P21_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P21) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P22_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P22) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P23_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P23) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P24_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P24) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P25_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P25) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P26_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P26) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P27_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P27) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P28_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P28) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P29_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P29) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P30_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P30) > 0;
-}
-
-static inline bool hri_pio_get_PDSR_P31_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PDSR & PIO_PDSR_P31) > 0;
-}
-
-static inline hri_pio_pdsr_reg_t hri_pio_get_PDSR_reg(const void *const hw, hri_pio_pdsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_PDSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_pdsr_reg_t hri_pio_read_PDSR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_PDSR;
-}
-
-static inline bool hri_pio_get_LOCKSR_P0_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P0) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P1_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P1) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P2_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P2) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P3_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P3) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P4_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P4) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P5_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P5) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P6_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P6) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P7_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P7) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P8_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P8) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P9_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P9) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P10_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P10) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P11_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P11) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P12_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P12) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P13_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P13) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P14_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P14) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P15_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P15) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P16_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P16) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P17_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P17) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P18_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P18) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P19_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P19) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P20_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P20) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P21_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P21) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P22_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P22) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P23_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P23) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P24_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P24) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P25_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P25) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P26_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P26) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P27_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P27) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P28_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P28) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P29_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P29) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P30_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P30) > 0;
-}
-
-static inline bool hri_pio_get_LOCKSR_P31_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_LOCKSR & PIO_LOCKSR_P31) > 0;
-}
-
-static inline hri_pio_locksr_reg_t hri_pio_get_LOCKSR_reg(const void *const hw, hri_pio_locksr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_LOCKSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_locksr_reg_t hri_pio_read_LOCKSR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_LOCKSR;
-}
-
-static inline bool hri_pio_get_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVS) > 0;
-}
-
-static inline hri_pio_wpsr_reg_t hri_pio_get_WPSR_WPVSRC_bf(const void *const hw, hri_pio_wpsr_reg_t mask)
-{
-	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVSRC(mask)) >> PIO_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pio_wpsr_reg_t hri_pio_read_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_WPSR & PIO_WPSR_WPVSRC_Msk) >> PIO_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pio_wpsr_reg_t hri_pio_get_WPSR_reg(const void *const hw, hri_pio_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_wpsr_reg_t hri_pio_read_WPSR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_WPSR;
-}
-
-static inline bool hri_pio_get_PCIMR_DRDY_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_DRDY) > 0;
-}
-
-static inline bool hri_pio_get_PCIMR_OVRE_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_OVRE) > 0;
-}
-
-static inline bool hri_pio_get_PCIMR_ENDRX_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_ENDRX) > 0;
-}
-
-static inline bool hri_pio_get_PCIMR_RXBUFF_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCIMR & PIO_PCIMR_RXBUFF) > 0;
-}
-
-static inline hri_pio_pcimr_reg_t hri_pio_get_PCIMR_reg(const void *const hw, hri_pio_pcimr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_PCIMR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_pcimr_reg_t hri_pio_read_PCIMR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_PCIMR;
-}
-
-static inline bool hri_pio_get_PCISR_DRDY_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCISR & PIO_PCISR_DRDY) > 0;
-}
-
-static inline bool hri_pio_get_PCISR_OVRE_bit(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCISR & PIO_PCISR_OVRE) > 0;
-}
-
-static inline hri_pio_pcisr_reg_t hri_pio_get_PCISR_reg(const void *const hw, hri_pio_pcisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_PCISR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_pcisr_reg_t hri_pio_read_PCISR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_PCISR;
-}
-
-static inline hri_pio_pcrhr_reg_t hri_pio_get_PCRHR_RDATA_bf(const void *const hw, hri_pio_pcrhr_reg_t mask)
-{
-	return (((Pio *)hw)->PIO_PCRHR & PIO_PCRHR_RDATA(mask)) >> PIO_PCRHR_RDATA_Pos;
-}
-
-static inline hri_pio_pcrhr_reg_t hri_pio_read_PCRHR_RDATA_bf(const void *const hw)
-{
-	return (((Pio *)hw)->PIO_PCRHR & PIO_PCRHR_RDATA_Msk) >> PIO_PCRHR_RDATA_Pos;
-}
-
-static inline hri_pio_pcrhr_reg_t hri_pio_get_PCRHR_reg(const void *const hw, hri_pio_pcrhr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pio *)hw)->PIO_PCRHR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pio_pcrhr_reg_t hri_pio_read_PCRHR_reg(const void *const hw)
-{
-	return ((Pio *)hw)->PIO_PCRHR;
+	PIO_CRITICAL_SECTION_ENTER();
+	((Pio *)hw)->PIO_PCIDR = data;
+	PIO_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

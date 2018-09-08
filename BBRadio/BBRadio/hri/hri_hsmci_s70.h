@@ -3,39 +3,29 @@
  *
  * \brief SAM HSMCI
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -683,25 +673,213 @@ static inline void hri_hsmci_clear_IMR_reg(const void *const hw, hri_hsmci_imr_r
 	((Hsmci *)hw)->HSMCI_IDR = mask;
 }
 
-static inline void hri_hsmci_write_CR_reg(const void *const hw, hri_hsmci_cr_reg_t data)
+static inline hri_hsmci_rspr_reg_t hri_hsmci_get_RSPR_RSP_bf(const void *const hw, uint8_t index,
+                                                             hri_hsmci_rspr_reg_t mask)
 {
-	HSMCI_CRITICAL_SECTION_ENTER();
-	((Hsmci *)hw)->HSMCI_CR = data;
-	HSMCI_CRITICAL_SECTION_LEAVE();
+	return (((Hsmci *)hw)->HSMCI_RSPR[index] & HSMCI_RSPR_RSP(mask)) >> HSMCI_RSPR_RSP_Pos;
 }
 
-static inline void hri_hsmci_write_CMDR_reg(const void *const hw, hri_hsmci_cmdr_reg_t data)
+static inline hri_hsmci_rspr_reg_t hri_hsmci_read_RSPR_RSP_bf(const void *const hw, uint8_t index)
 {
-	HSMCI_CRITICAL_SECTION_ENTER();
-	((Hsmci *)hw)->HSMCI_CMDR = data;
-	HSMCI_CRITICAL_SECTION_LEAVE();
+	return (((Hsmci *)hw)->HSMCI_RSPR[index] & HSMCI_RSPR_RSP_Msk) >> HSMCI_RSPR_RSP_Pos;
 }
 
-static inline void hri_hsmci_write_TDR_reg(const void *const hw, hri_hsmci_tdr_reg_t data)
+static inline hri_hsmci_rspr_reg_t hri_hsmci_get_RSPR_reg(const void *const hw, uint8_t index,
+                                                          hri_hsmci_rspr_reg_t mask)
 {
-	HSMCI_CRITICAL_SECTION_ENTER();
-	((Hsmci *)hw)->HSMCI_TDR = data;
-	HSMCI_CRITICAL_SECTION_LEAVE();
+	uint32_t tmp;
+	tmp = ((Hsmci *)hw)->HSMCI_RSPR[index];
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_hsmci_rspr_reg_t hri_hsmci_read_RSPR_reg(const void *const hw, uint8_t index)
+{
+	return ((Hsmci *)hw)->HSMCI_RSPR[index];
+}
+
+static inline hri_hsmci_rdr_reg_t hri_hsmci_get_RDR_DATA_bf(const void *const hw, hri_hsmci_rdr_reg_t mask)
+{
+	return (((Hsmci *)hw)->HSMCI_RDR & HSMCI_RDR_DATA(mask)) >> HSMCI_RDR_DATA_Pos;
+}
+
+static inline hri_hsmci_rdr_reg_t hri_hsmci_read_RDR_DATA_bf(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_RDR & HSMCI_RDR_DATA_Msk) >> HSMCI_RDR_DATA_Pos;
+}
+
+static inline hri_hsmci_rdr_reg_t hri_hsmci_get_RDR_reg(const void *const hw, hri_hsmci_rdr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Hsmci *)hw)->HSMCI_RDR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_hsmci_rdr_reg_t hri_hsmci_read_RDR_reg(const void *const hw)
+{
+	return ((Hsmci *)hw)->HSMCI_RDR;
+}
+
+static inline bool hri_hsmci_get_SR_CMDRDY_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CMDRDY) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RXRDY_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RXRDY) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_TXRDY_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_TXRDY) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_BLKE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_BLKE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_DTIP_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DTIP) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_NOTBUSY_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_NOTBUSY) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_SDIOIRQA_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_SDIOIRQA) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_SDIOWAIT_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_SDIOWAIT) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_CSRCV_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CSRCV) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RINDE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RINDE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RDIRE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RDIRE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RCRCE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RCRCE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RENDE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RENDE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_RTOE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RTOE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_DCRCE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DCRCE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_DTOE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DTOE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_CSTOE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CSTOE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_BLKOVRE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_BLKOVRE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_FIFOEMPTY_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_FIFOEMPTY) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_XFRDONE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_XFRDONE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_ACKRCV_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_ACKRCV) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_ACKRCVE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_ACKRCVE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_OVRE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_OVRE) > 0;
+}
+
+static inline bool hri_hsmci_get_SR_UNRE_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_UNRE) > 0;
+}
+
+static inline hri_hsmci_sr_reg_t hri_hsmci_get_SR_reg(const void *const hw, hri_hsmci_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Hsmci *)hw)->HSMCI_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_hsmci_sr_reg_t hri_hsmci_read_SR_reg(const void *const hw)
+{
+	return ((Hsmci *)hw)->HSMCI_SR;
+}
+
+static inline bool hri_hsmci_get_WPSR_WPVS_bit(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVS) > 0;
+}
+
+static inline hri_hsmci_wpsr_reg_t hri_hsmci_get_WPSR_WPVSRC_bf(const void *const hw, hri_hsmci_wpsr_reg_t mask)
+{
+	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVSRC(mask)) >> HSMCI_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_hsmci_wpsr_reg_t hri_hsmci_read_WPSR_WPVSRC_bf(const void *const hw)
+{
+	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVSRC_Msk) >> HSMCI_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_hsmci_wpsr_reg_t hri_hsmci_get_WPSR_reg(const void *const hw, hri_hsmci_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Hsmci *)hw)->HSMCI_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_hsmci_wpsr_reg_t hri_hsmci_read_WPSR_reg(const void *const hw)
+{
+	return ((Hsmci *)hw)->HSMCI_WPSR;
 }
 
 static inline void hri_hsmci_set_MR_RDPROOF_bit(const void *const hw)
@@ -2228,213 +2406,25 @@ static inline hri_hsmci_fifo_reg_t hri_hsmci_read_FIFO_reg(const void *const hw,
 	return ((Hsmci *)hw)->HSMCI_FIFO[index];
 }
 
-static inline hri_hsmci_rspr_reg_t hri_hsmci_get_RSPR_RSP_bf(const void *const hw, uint8_t index,
-                                                             hri_hsmci_rspr_reg_t mask)
+static inline void hri_hsmci_write_CR_reg(const void *const hw, hri_hsmci_cr_reg_t data)
 {
-	return (((Hsmci *)hw)->HSMCI_RSPR[index] & HSMCI_RSPR_RSP(mask)) >> HSMCI_RSPR_RSP_Pos;
+	HSMCI_CRITICAL_SECTION_ENTER();
+	((Hsmci *)hw)->HSMCI_CR = data;
+	HSMCI_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_hsmci_rspr_reg_t hri_hsmci_read_RSPR_RSP_bf(const void *const hw, uint8_t index)
+static inline void hri_hsmci_write_CMDR_reg(const void *const hw, hri_hsmci_cmdr_reg_t data)
 {
-	return (((Hsmci *)hw)->HSMCI_RSPR[index] & HSMCI_RSPR_RSP_Msk) >> HSMCI_RSPR_RSP_Pos;
+	HSMCI_CRITICAL_SECTION_ENTER();
+	((Hsmci *)hw)->HSMCI_CMDR = data;
+	HSMCI_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_hsmci_rspr_reg_t hri_hsmci_get_RSPR_reg(const void *const hw, uint8_t index,
-                                                          hri_hsmci_rspr_reg_t mask)
+static inline void hri_hsmci_write_TDR_reg(const void *const hw, hri_hsmci_tdr_reg_t data)
 {
-	uint32_t tmp;
-	tmp = ((Hsmci *)hw)->HSMCI_RSPR[index];
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_hsmci_rspr_reg_t hri_hsmci_read_RSPR_reg(const void *const hw, uint8_t index)
-{
-	return ((Hsmci *)hw)->HSMCI_RSPR[index];
-}
-
-static inline hri_hsmci_rdr_reg_t hri_hsmci_get_RDR_DATA_bf(const void *const hw, hri_hsmci_rdr_reg_t mask)
-{
-	return (((Hsmci *)hw)->HSMCI_RDR & HSMCI_RDR_DATA(mask)) >> HSMCI_RDR_DATA_Pos;
-}
-
-static inline hri_hsmci_rdr_reg_t hri_hsmci_read_RDR_DATA_bf(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_RDR & HSMCI_RDR_DATA_Msk) >> HSMCI_RDR_DATA_Pos;
-}
-
-static inline hri_hsmci_rdr_reg_t hri_hsmci_get_RDR_reg(const void *const hw, hri_hsmci_rdr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Hsmci *)hw)->HSMCI_RDR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_hsmci_rdr_reg_t hri_hsmci_read_RDR_reg(const void *const hw)
-{
-	return ((Hsmci *)hw)->HSMCI_RDR;
-}
-
-static inline bool hri_hsmci_get_SR_CMDRDY_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CMDRDY) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RXRDY_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RXRDY) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_TXRDY_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_TXRDY) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_BLKE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_BLKE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_DTIP_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DTIP) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_NOTBUSY_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_NOTBUSY) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_SDIOIRQA_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_SDIOIRQA) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_SDIOWAIT_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_SDIOWAIT) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_CSRCV_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CSRCV) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RINDE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RINDE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RDIRE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RDIRE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RCRCE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RCRCE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RENDE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RENDE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_RTOE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_RTOE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_DCRCE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DCRCE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_DTOE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_DTOE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_CSTOE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_CSTOE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_BLKOVRE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_BLKOVRE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_FIFOEMPTY_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_FIFOEMPTY) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_XFRDONE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_XFRDONE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_ACKRCV_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_ACKRCV) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_ACKRCVE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_ACKRCVE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_OVRE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_OVRE) > 0;
-}
-
-static inline bool hri_hsmci_get_SR_UNRE_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_SR & HSMCI_SR_UNRE) > 0;
-}
-
-static inline hri_hsmci_sr_reg_t hri_hsmci_get_SR_reg(const void *const hw, hri_hsmci_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Hsmci *)hw)->HSMCI_SR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_hsmci_sr_reg_t hri_hsmci_read_SR_reg(const void *const hw)
-{
-	return ((Hsmci *)hw)->HSMCI_SR;
-}
-
-static inline bool hri_hsmci_get_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVS) > 0;
-}
-
-static inline hri_hsmci_wpsr_reg_t hri_hsmci_get_WPSR_WPVSRC_bf(const void *const hw, hri_hsmci_wpsr_reg_t mask)
-{
-	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVSRC(mask)) >> HSMCI_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_hsmci_wpsr_reg_t hri_hsmci_read_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Hsmci *)hw)->HSMCI_WPSR & HSMCI_WPSR_WPVSRC_Msk) >> HSMCI_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_hsmci_wpsr_reg_t hri_hsmci_get_WPSR_reg(const void *const hw, hri_hsmci_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Hsmci *)hw)->HSMCI_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_hsmci_wpsr_reg_t hri_hsmci_read_WPSR_reg(const void *const hw)
-{
-	return ((Hsmci *)hw)->HSMCI_WPSR;
+	HSMCI_CRITICAL_SECTION_ENTER();
+	((Hsmci *)hw)->HSMCI_TDR = data;
+	HSMCI_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

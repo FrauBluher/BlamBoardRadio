@@ -3,39 +3,29 @@
  *
  * \brief SAM ICM
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -68,6 +58,24 @@ typedef uint32_t hri_icm_isr_reg_t;
 typedef uint32_t hri_icm_sr_reg_t;
 typedef uint32_t hri_icm_uasr_reg_t;
 typedef uint32_t hri_icm_uihval_reg_t;
+
+static inline bool hri_icm_get_ISR_URAD_bit(const void *const hw)
+{
+	return (((Icm *)hw)->ICM_ISR & ICM_ISR_URAD) >> ICM_ISR_URAD_Pos;
+}
+
+static inline hri_icm_isr_reg_t hri_icm_get_ISR_reg(const void *const hw, hri_icm_isr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Icm *)hw)->ICM_ISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_icm_isr_reg_t hri_icm_read_ISR_reg(const void *const hw)
+{
+	return ((Icm *)hw)->ICM_ISR;
+}
 
 static inline void hri_icm_set_IMR_URAD_bit(const void *const hw)
 {
@@ -314,43 +322,65 @@ static inline void hri_icm_clear_IMR_reg(const void *const hw, hri_icm_imr_reg_t
 	((Icm *)hw)->ICM_IDR = mask;
 }
 
-static inline bool hri_icm_get_ISR_URAD_bit(const void *const hw)
+static inline bool hri_icm_get_SR_ENABLE_bit(const void *const hw)
 {
-	return (((Icm *)hw)->ICM_ISR & ICM_ISR_URAD) >> ICM_ISR_URAD_Pos;
+	return (((Icm *)hw)->ICM_SR & ICM_SR_ENABLE) > 0;
 }
 
-static inline hri_icm_isr_reg_t hri_icm_get_ISR_reg(const void *const hw, hri_icm_isr_reg_t mask)
+static inline hri_icm_sr_reg_t hri_icm_get_SR_RAWRMDIS_bf(const void *const hw, hri_icm_sr_reg_t mask)
+{
+	return (((Icm *)hw)->ICM_SR & ICM_SR_RAWRMDIS(mask)) >> ICM_SR_RAWRMDIS_Pos;
+}
+
+static inline hri_icm_sr_reg_t hri_icm_read_SR_RAWRMDIS_bf(const void *const hw)
+{
+	return (((Icm *)hw)->ICM_SR & ICM_SR_RAWRMDIS_Msk) >> ICM_SR_RAWRMDIS_Pos;
+}
+
+static inline hri_icm_sr_reg_t hri_icm_get_SR_RMDIS_bf(const void *const hw, hri_icm_sr_reg_t mask)
+{
+	return (((Icm *)hw)->ICM_SR & ICM_SR_RMDIS(mask)) >> ICM_SR_RMDIS_Pos;
+}
+
+static inline hri_icm_sr_reg_t hri_icm_read_SR_RMDIS_bf(const void *const hw)
+{
+	return (((Icm *)hw)->ICM_SR & ICM_SR_RMDIS_Msk) >> ICM_SR_RMDIS_Pos;
+}
+
+static inline hri_icm_sr_reg_t hri_icm_get_SR_reg(const void *const hw, hri_icm_sr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Icm *)hw)->ICM_ISR;
+	tmp = ((Icm *)hw)->ICM_SR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_icm_isr_reg_t hri_icm_read_ISR_reg(const void *const hw)
+static inline hri_icm_sr_reg_t hri_icm_read_SR_reg(const void *const hw)
 {
-	return ((Icm *)hw)->ICM_ISR;
+	return ((Icm *)hw)->ICM_SR;
 }
 
-static inline void hri_icm_write_CTRL_reg(const void *const hw, hri_icm_ctrl_reg_t data)
+static inline hri_icm_uasr_reg_t hri_icm_get_UASR_URAT_bf(const void *const hw, hri_icm_uasr_reg_t mask)
 {
-	ICM_CRITICAL_SECTION_ENTER();
-	((Icm *)hw)->ICM_CTRL = data;
-	ICM_CRITICAL_SECTION_LEAVE();
+	return (((Icm *)hw)->ICM_UASR & ICM_UASR_URAT(mask)) >> ICM_UASR_URAT_Pos;
 }
 
-static inline void hri_icm_write_SR_reg(const void *const hw, hri_icm_sr_reg_t data)
+static inline hri_icm_uasr_reg_t hri_icm_read_UASR_URAT_bf(const void *const hw)
 {
-	ICM_CRITICAL_SECTION_ENTER();
-	((Icm *)hw)->ICM_SR = data;
-	ICM_CRITICAL_SECTION_LEAVE();
+	return (((Icm *)hw)->ICM_UASR & ICM_UASR_URAT_Msk) >> ICM_UASR_URAT_Pos;
 }
 
-static inline void hri_icm_write_UIHVAL_reg(const void *const hw, uint8_t index, hri_icm_uihval_reg_t data)
+static inline hri_icm_uasr_reg_t hri_icm_get_UASR_reg(const void *const hw, hri_icm_uasr_reg_t mask)
 {
-	ICM_CRITICAL_SECTION_ENTER();
-	((Icm *)hw)->ICM_UIHVAL[index] = data;
-	ICM_CRITICAL_SECTION_LEAVE();
+	uint32_t tmp;
+	tmp = ((Icm *)hw)->ICM_UASR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_icm_uasr_reg_t hri_icm_read_UASR_reg(const void *const hw)
+{
+	return ((Icm *)hw)->ICM_UASR;
 }
 
 static inline void hri_icm_set_CFG_WBDIS_bit(const void *const hw)
@@ -908,27 +938,18 @@ static inline hri_icm_hash_reg_t hri_icm_read_HASH_reg(const void *const hw)
 	return ((Icm *)hw)->ICM_HASH;
 }
 
-static inline hri_icm_uasr_reg_t hri_icm_get_UASR_URAT_bf(const void *const hw, hri_icm_uasr_reg_t mask)
+static inline void hri_icm_write_CTRL_reg(const void *const hw, hri_icm_ctrl_reg_t data)
 {
-	return (((Icm *)hw)->ICM_UASR & ICM_UASR_URAT(mask)) >> ICM_UASR_URAT_Pos;
+	ICM_CRITICAL_SECTION_ENTER();
+	((Icm *)hw)->ICM_CTRL = data;
+	ICM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_icm_uasr_reg_t hri_icm_read_UASR_URAT_bf(const void *const hw)
+static inline void hri_icm_write_UIHVAL_reg(const void *const hw, uint8_t index, hri_icm_uihval_reg_t data)
 {
-	return (((Icm *)hw)->ICM_UASR & ICM_UASR_URAT_Msk) >> ICM_UASR_URAT_Pos;
-}
-
-static inline hri_icm_uasr_reg_t hri_icm_get_UASR_reg(const void *const hw, hri_icm_uasr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Icm *)hw)->ICM_UASR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_icm_uasr_reg_t hri_icm_read_UASR_reg(const void *const hw)
-{
-	return ((Icm *)hw)->ICM_UASR;
+	ICM_CRITICAL_SECTION_ENTER();
+	((Icm *)hw)->ICM_UIHVAL[index] = data;
+	ICM_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

@@ -3,39 +3,29 @@
  *
  * \brief SAM USBHS
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -99,6 +89,7 @@ typedef uint32_t hri_usbhs_hstpipifr_reg_t;
 typedef uint32_t hri_usbhs_hstpipimr_reg_t;
 typedef uint32_t hri_usbhs_hstpipinrq_reg_t;
 typedef uint32_t hri_usbhs_hstpipisr_reg_t;
+typedef uint32_t hri_usbhs_sfr_reg_t;
 typedef uint32_t hri_usbhs_sr_reg_t;
 typedef uint32_t hri_usbhsdevdma_devdmaaddress_reg_t;
 typedef uint32_t hri_usbhsdevdma_devdmacontrol_reg_t;
@@ -108,6 +99,424 @@ typedef uint32_t hri_usbhshstdma_hstdmaaddress_reg_t;
 typedef uint32_t hri_usbhshstdma_hstdmacontrol_reg_t;
 typedef uint32_t hri_usbhshstdma_hstdmanxtdsc_reg_t;
 typedef uint32_t hri_usbhshstdma_hstdmastatus_reg_t;
+
+static inline bool hri_usbhs_get_DEVEPTISR_TXINI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_TXINI) >> USBHS_DEVEPTISR_TXINI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_TXINI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_TXINI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_RXOUTI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RXOUTI) >> USBHS_DEVEPTISR_RXOUTI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_RXOUTI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_RXOUTI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_RXSTPI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RXSTPI) >> USBHS_DEVEPTISR_RXSTPI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_RXSTPI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_RXSTPI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_NAKOUTI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_NAKOUTI) >> USBHS_DEVEPTISR_NAKOUTI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_NAKOUTI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_NAKOUTI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_NAKINI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_NAKINI) >> USBHS_DEVEPTISR_NAKINI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_NAKINI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_NAKINI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_OVERFI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_OVERFI) >> USBHS_DEVEPTISR_OVERFI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_OVERFI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_OVERFI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_STALLEDI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_STALLEDI) >> USBHS_DEVEPTISR_STALLEDI_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_STALLEDI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_STALLEDI;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_SHORTPACKET_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_SHORTPACKET) >> USBHS_DEVEPTISR_SHORTPACKET_Pos;
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_SHORTPACKET_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_SHORTPACKET;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_RWALL_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RWALL) >> USBHS_DEVEPTISR_RWALL_Pos;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_CTRLDIR_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_CTRLDIR) >> USBHS_DEVEPTISR_CTRLDIR_Pos;
+}
+
+static inline bool hri_usbhs_get_DEVEPTISR_CFGOK_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_CFGOK) >> USBHS_DEVEPTISR_CFGOK_Pos;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_DTSEQ_bf(const void *const hw, uint8_t index,
+                                                                         hri_usbhs_deveptisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_DTSEQ(mask)) >> USBHS_DEVEPTISR_DTSEQ_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_DTSEQ_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_DTSEQ_Msk) >> USBHS_DEVEPTISR_DTSEQ_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_NBUSYBK_bf(const void *const hw, uint8_t index,
+                                                                           hri_usbhs_deveptisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_NBUSYBK(mask)) >> USBHS_DEVEPTISR_NBUSYBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_NBUSYBK_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_NBUSYBK_Msk) >> USBHS_DEVEPTISR_NBUSYBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_CURRBK_bf(const void *const hw, uint8_t index,
+                                                                          hri_usbhs_deveptisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_CURRBK(mask)) >> USBHS_DEVEPTISR_CURRBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_CURRBK_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_CURRBK_Msk) >> USBHS_DEVEPTISR_CURRBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_BYCT_bf(const void *const hw, uint8_t index,
+                                                                        hri_usbhs_deveptisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_BYCT(mask)) >> USBHS_DEVEPTISR_BYCT_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_BYCT_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = (tmp & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_reg(const void *const hw, uint8_t index,
+                                                                    hri_usbhs_deveptisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_reg(const void *const hw, uint8_t index)
+{
+	return ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+}
+
+static inline void hri_usbhs_clear_DEVEPTISR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptisr_reg_t mask)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = mask;
+}
+
+static inline void hri_usbhs_write_DEVEPTICR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptisr_reg_t data)
+{
+	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = data;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_RXINI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RXINI) >> USBHS_HSTPIPISR_RXINI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_RXINI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_RXINI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_TXOUTI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_TXOUTI) >> USBHS_HSTPIPISR_TXOUTI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_TXOUTI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_TXOUTI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_TXSTPI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_TXSTPI) >> USBHS_HSTPIPISR_TXSTPI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_TXSTPI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_TXSTPI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_PERRI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_PERRI) >> USBHS_HSTPIPISR_PERRI_Pos;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_NAKEDI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_NAKEDI) >> USBHS_HSTPIPISR_NAKEDI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_NAKEDI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_NAKEDI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_OVERFI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_OVERFI) >> USBHS_HSTPIPISR_OVERFI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_OVERFI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_OVERFI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_RXSTALLDI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RXSTALLDI) >> USBHS_HSTPIPISR_RXSTALLDI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_RXSTALLDI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_RXSTALLDI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_SHORTPACKETI_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_SHORTPACKETI) >> USBHS_HSTPIPISR_SHORTPACKETI_Pos;
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_SHORTPACKETI_bit(const void *const hw, uint8_t index)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_SHORTPACKETI;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_RWALL_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RWALL) >> USBHS_HSTPIPISR_RWALL_Pos;
+}
+
+static inline bool hri_usbhs_get_HSTPIPISR_CFGOK_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_CFGOK) >> USBHS_HSTPIPISR_CFGOK_Pos;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_DTSEQ_bf(const void *const hw, uint8_t index,
+                                                                         hri_usbhs_hstpipisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_DTSEQ(mask)) >> USBHS_HSTPIPISR_DTSEQ_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_DTSEQ_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_DTSEQ_Msk) >> USBHS_HSTPIPISR_DTSEQ_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_NBUSYBK_bf(const void *const hw, uint8_t index,
+                                                                           hri_usbhs_hstpipisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_NBUSYBK(mask)) >> USBHS_HSTPIPISR_NBUSYBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_NBUSYBK_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_NBUSYBK_Msk) >> USBHS_HSTPIPISR_NBUSYBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_CURRBK_bf(const void *const hw, uint8_t index,
+                                                                          hri_usbhs_hstpipisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_CURRBK(mask)) >> USBHS_HSTPIPISR_CURRBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_CURRBK_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_CURRBK_Msk) >> USBHS_HSTPIPISR_CURRBK_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_PBYCT_bf(const void *const hw, uint8_t index,
+                                                                         hri_usbhs_hstpipisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_PBYCT(mask)) >> USBHS_HSTPIPISR_PBYCT_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_PBYCT_bf(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = (tmp & USBHS_HSTPIPISR_PBYCT_Msk) >> USBHS_HSTPIPISR_PBYCT_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_reg(const void *const hw, uint8_t index,
+                                                                    hri_usbhs_hstpipisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_reg(const void *const hw, uint8_t index)
+{
+	return ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+}
+
+static inline void hri_usbhs_clear_HSTPIPISR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipisr_reg_t mask)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = mask;
+}
+
+static inline void hri_usbhs_write_HSTPIPICR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipisr_reg_t data)
+{
+	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = data;
+}
+
+static inline bool hri_usbhs_get_SR_RDERRI_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_SR & USBHS_SR_RDERRI) >> USBHS_SR_RDERRI_Pos;
+}
+
+static inline void hri_usbhs_clear_SR_RDERRI_bit(const void *const hw)
+{
+	((Usbhs *)hw)->USBHS_SCR = USBHS_SR_RDERRI;
+}
+
+static inline bool hri_usbhs_get_SR_CLKUSABLE_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_SR & USBHS_SR_CLKUSABLE) >> USBHS_SR_CLKUSABLE_Pos;
+}
+
+static inline hri_usbhs_sr_reg_t hri_usbhs_get_SR_SPEED_bf(const void *const hw, hri_usbhs_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_SR;
+	tmp = (tmp & USBHS_SR_SPEED(mask)) >> USBHS_SR_SPEED_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_sr_reg_t hri_usbhs_read_SR_SPEED_bf(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_SR;
+	tmp = (tmp & USBHS_SR_SPEED_Msk) >> USBHS_SR_SPEED_Pos;
+	return tmp;
+}
+
+static inline hri_usbhs_sr_reg_t hri_usbhs_get_SR_reg(const void *const hw, hri_usbhs_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usbhs_sr_reg_t hri_usbhs_read_SR_reg(const void *const hw)
+{
+	return ((Usbhs *)hw)->USBHS_SR;
+}
+
+static inline void hri_usbhs_clear_SR_reg(const void *const hw, hri_usbhs_sr_reg_t mask)
+{
+	((Usbhs *)hw)->USBHS_SCR = mask;
+}
+
+static inline void hri_usbhs_write_SCR_reg(const void *const hw, hri_usbhs_sr_reg_t data)
+{
+	((Usbhs *)hw)->USBHS_SCR = data;
+}
 
 static inline void hri_usbhs_set_DEVIMR_SUSPE_bit(const void *const hw)
 {
@@ -1415,546 +1824,496 @@ static inline void hri_usbhs_clear_HSTIMR_reg(const void *const hw, hri_usbhs_hs
 	((Usbhs *)hw)->USBHS_HSTIDR = mask;
 }
 
-static inline void hri_usbhs_set_SR_RDERRI_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_SUSP_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SFR = USBHS_SR_RDERRI;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_SUSP) > 0;
 }
 
-static inline bool hri_usbhs_get_SR_RDERRI_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_MSOF_bit(const void *const hw)
 {
-	return (((Usbhs *)hw)->USBHS_SR & USBHS_SR_RDERRI) >> USBHS_SR_RDERRI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_MSOF) > 0;
 }
 
-static inline void hri_usbhs_write_SR_RDERRI_bit(const void *const hw, bool value)
+static inline bool hri_usbhs_get_DEVISR_SOF_bit(const void *const hw)
 {
-	if (value == 0x0) {
-		((Usbhs *)hw)->USBHS_SCR = USBHS_SR_RDERRI;
-	} else {
-		((Usbhs *)hw)->USBHS_SFR = USBHS_SR_RDERRI;
-	}
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_SOF) > 0;
 }
 
-static inline void hri_usbhs_clear_SR_RDERRI_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_EORST_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SCR = USBHS_SR_RDERRI;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_EORST) > 0;
 }
 
-static inline void hri_usbhs_set_SR_VBUSRQ_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_WAKEUP_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SFR = USBHS_SR_VBUSRQ;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_WAKEUP) > 0;
 }
 
-static inline bool hri_usbhs_get_SR_VBUSRQ_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_EORSM_bit(const void *const hw)
 {
-	return (((Usbhs *)hw)->USBHS_SR & USBHS_SR_VBUSRQ) >> USBHS_SR_VBUSRQ_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_EORSM) > 0;
 }
 
-static inline void hri_usbhs_write_SR_VBUSRQ_bit(const void *const hw, bool value)
+static inline bool hri_usbhs_get_DEVISR_UPRSM_bit(const void *const hw)
 {
-	if (value == 0x0) {
-		((Usbhs *)hw)->USBHS_SCR = USBHS_SR_VBUSRQ;
-	} else {
-		((Usbhs *)hw)->USBHS_SFR = USBHS_SR_VBUSRQ;
-	}
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_UPRSM) > 0;
 }
 
-static inline void hri_usbhs_clear_SR_VBUSRQ_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_PEP_0_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SCR = USBHS_SR_VBUSRQ;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_0) > 0;
 }
 
-static inline bool hri_usbhs_get_SR_CLKUSABLE_bit(const void *const hw)
+static inline bool hri_usbhs_get_DEVISR_PEP_1_bit(const void *const hw)
 {
-	return (((Usbhs *)hw)->USBHS_SR & USBHS_SR_CLKUSABLE) >> USBHS_SR_CLKUSABLE_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_1) > 0;
 }
 
-static inline hri_usbhs_sr_reg_t hri_usbhs_get_SR_SPEED_bf(const void *const hw, hri_usbhs_sr_reg_t mask)
+static inline bool hri_usbhs_get_DEVISR_PEP_2_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_2) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_3_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_3) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_4_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_4) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_5_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_5) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_6_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_6) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_7_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_7) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_8_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_8) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_9_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_9) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_10_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_10) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_PEP_11_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_11) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_1_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_1) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_2_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_2) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_3_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_3) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_4_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_4) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_5_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_5) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_6_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_6) > 0;
+}
+
+static inline bool hri_usbhs_get_DEVISR_DMA_7_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_7) > 0;
+}
+
+static inline hri_usbhs_devisr_reg_t hri_usbhs_get_DEVISR_reg(const void *const hw, hri_usbhs_devisr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_SR;
-	tmp = (tmp & USBHS_SR_SPEED(mask)) >> USBHS_SR_SPEED_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_sr_reg_t hri_usbhs_read_SR_SPEED_bf(const void *const hw)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_SR;
-	tmp = (tmp & USBHS_SR_SPEED_Msk) >> USBHS_SR_SPEED_Pos;
-	return tmp;
-}
-
-static inline void hri_usbhs_set_SR_reg(const void *const hw, hri_usbhs_sr_reg_t mask)
-{
-	((Usbhs *)hw)->USBHS_SFR = mask;
-}
-
-static inline hri_usbhs_sr_reg_t hri_usbhs_get_SR_reg(const void *const hw, hri_usbhs_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_SR;
+	tmp = ((Usbhs *)hw)->USBHS_DEVISR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_usbhs_sr_reg_t hri_usbhs_read_SR_reg(const void *const hw)
+static inline hri_usbhs_devisr_reg_t hri_usbhs_read_DEVISR_reg(const void *const hw)
 {
-	return ((Usbhs *)hw)->USBHS_SR;
+	return ((Usbhs *)hw)->USBHS_DEVISR;
 }
 
-static inline void hri_usbhs_write_SR_reg(const void *const hw, hri_usbhs_sr_reg_t data)
+static inline bool hri_usbhs_get_DEVFNUM_FNCERR_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SFR = data;
-	((Usbhs *)hw)->USBHS_SCR = ~data;
+	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNCERR) > 0;
 }
 
-static inline void hri_usbhs_clear_SR_reg(const void *const hw, hri_usbhs_sr_reg_t mask)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_MFNUM_bf(const void *const hw, hri_usbhs_devfnum_reg_t mask)
 {
-	((Usbhs *)hw)->USBHS_SCR = mask;
+	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_MFNUM(mask)) >> USBHS_DEVFNUM_MFNUM_Pos;
 }
 
-static inline void hri_usbhs_write_SCR_reg(const void *const hw, hri_usbhs_sr_reg_t data)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_MFNUM_bf(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_SCR = data;
+	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_MFNUM_Msk) >> USBHS_DEVFNUM_MFNUM_Pos;
 }
 
-static inline void hri_usbhs_write_SFR_reg(const void *const hw, hri_usbhs_sr_reg_t data)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_FNUM_bf(const void *const hw, hri_usbhs_devfnum_reg_t mask)
 {
-	((Usbhs *)hw)->USBHS_SFR = data;
+	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNUM(mask)) >> USBHS_DEVFNUM_FNUM_Pos;
 }
 
-static inline bool hri_usbhs_get_DEVEPTISR_TXINI_bit(const void *const hw, uint8_t index)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_FNUM_bf(const void *const hw)
 {
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_TXINI) >> USBHS_DEVEPTISR_TXINI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNUM_Msk) >> USBHS_DEVFNUM_FNUM_Pos;
 }
 
-static inline void hri_usbhs_clear_DEVEPTISR_TXINI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_TXINI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_RXOUTI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RXOUTI) >> USBHS_DEVEPTISR_RXOUTI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_RXOUTI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_RXOUTI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_RXSTPI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RXSTPI) >> USBHS_DEVEPTISR_RXSTPI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_RXSTPI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_RXSTPI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_NAKOUTI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_NAKOUTI) >> USBHS_DEVEPTISR_NAKOUTI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_NAKOUTI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_NAKOUTI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_NAKINI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_NAKINI) >> USBHS_DEVEPTISR_NAKINI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_NAKINI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_NAKINI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_OVERFI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_OVERFI) >> USBHS_DEVEPTISR_OVERFI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_OVERFI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_OVERFI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_STALLEDI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_STALLEDI) >> USBHS_DEVEPTISR_STALLEDI_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_STALLEDI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_STALLEDI;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_SHORTPACKET_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_SHORTPACKET) >> USBHS_DEVEPTISR_SHORTPACKET_Pos;
-}
-
-static inline void hri_usbhs_clear_DEVEPTISR_SHORTPACKET_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = USBHS_DEVEPTISR_SHORTPACKET;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_RWALL_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_RWALL) >> USBHS_DEVEPTISR_RWALL_Pos;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_CTRLDIR_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_CTRLDIR) >> USBHS_DEVEPTISR_CTRLDIR_Pos;
-}
-
-static inline bool hri_usbhs_get_DEVEPTISR_CFGOK_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTISR[index] & USBHS_DEVEPTISR_CFGOK) >> USBHS_DEVEPTISR_CFGOK_Pos;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_DTSEQ_bf(const void *const hw, uint8_t index,
-                                                                         hri_usbhs_deveptisr_reg_t mask)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_reg(const void *const hw, hri_usbhs_devfnum_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_DTSEQ(mask)) >> USBHS_DEVEPTISR_DTSEQ_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_DTSEQ_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_DTSEQ_Msk) >> USBHS_DEVEPTISR_DTSEQ_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_NBUSYBK_bf(const void *const hw, uint8_t index,
-                                                                           hri_usbhs_deveptisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_NBUSYBK(mask)) >> USBHS_DEVEPTISR_NBUSYBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_NBUSYBK_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_NBUSYBK_Msk) >> USBHS_DEVEPTISR_NBUSYBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_CURRBK_bf(const void *const hw, uint8_t index,
-                                                                          hri_usbhs_deveptisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_CURRBK(mask)) >> USBHS_DEVEPTISR_CURRBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_CURRBK_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_CURRBK_Msk) >> USBHS_DEVEPTISR_CURRBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_BYCT_bf(const void *const hw, uint8_t index,
-                                                                        hri_usbhs_deveptisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_BYCT(mask)) >> USBHS_DEVEPTISR_BYCT_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_BYCT_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
-	tmp = (tmp & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_get_DEVEPTISR_reg(const void *const hw, uint8_t index,
-                                                                    hri_usbhs_deveptisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	tmp = ((Usbhs *)hw)->USBHS_DEVFNUM;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_usbhs_deveptisr_reg_t hri_usbhs_read_DEVEPTISR_reg(const void *const hw, uint8_t index)
+static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_reg(const void *const hw)
 {
-	return ((Usbhs *)hw)->USBHS_DEVEPTISR[index];
+	return ((Usbhs *)hw)->USBHS_DEVFNUM;
 }
 
-static inline void hri_usbhs_clear_DEVEPTISR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptisr_reg_t mask)
+static inline bool hri_usbhs_get_DEVEPTIMR_TXINE_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = mask;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_TXINE) > 0;
 }
 
-static inline void hri_usbhs_write_DEVEPTICR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptisr_reg_t data)
+static inline bool hri_usbhs_get_DEVEPTIMR_RXOUTE_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_DEVEPTICR[index] = data;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RXOUTE) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_RXINI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_RXSTPE_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RXINI) >> USBHS_HSTPIPISR_RXINI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RXSTPE) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_RXINI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_NAKOUTE_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_RXINI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NAKOUTE) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_TXOUTI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_NAKINE_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_TXOUTI) >> USBHS_HSTPIPISR_TXOUTI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NAKINE) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_TXOUTI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_OVERFE_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_TXOUTI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_OVERFE) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_TXSTPI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_STALLEDE_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_TXSTPI) >> USBHS_HSTPIPISR_TXSTPI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_STALLEDE) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_TXSTPI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_SHORTPACKETE_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_TXSTPI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_SHORTPACKETE) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_PERRI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_NBUSYBKE_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_PERRI) >> USBHS_HSTPIPISR_PERRI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NBUSYBKE) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_NAKEDI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_KILLBK_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_NAKEDI) >> USBHS_HSTPIPISR_NAKEDI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_KILLBK) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_NAKEDI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_FIFOCON_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_NAKEDI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_FIFOCON) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_OVERFI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_EPDISHDMA_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_OVERFI) >> USBHS_HSTPIPISR_OVERFI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_EPDISHDMA) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_OVERFI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_NYETDIS_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_OVERFI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NYETDIS) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_RXSTALLDI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_RSTDT_bit(const void *const hw, uint8_t index)
 {
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RXSTALLDI) >> USBHS_HSTPIPISR_RXSTALLDI_Pos;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RSTDT) > 0;
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_RXSTALLDI_bit(const void *const hw, uint8_t index)
+static inline bool hri_usbhs_get_DEVEPTIMR_STALLRQ_bit(const void *const hw, uint8_t index)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_RXSTALLDI;
+	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_STALLRQ) > 0;
 }
 
-static inline bool hri_usbhs_get_HSTPIPISR_SHORTPACKETI_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_SHORTPACKETI) >> USBHS_HSTPIPISR_SHORTPACKETI_Pos;
-}
-
-static inline void hri_usbhs_clear_HSTPIPISR_SHORTPACKETI_bit(const void *const hw, uint8_t index)
-{
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = USBHS_HSTPIPISR_SHORTPACKETI;
-}
-
-static inline bool hri_usbhs_get_HSTPIPISR_RWALL_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_RWALL) >> USBHS_HSTPIPISR_RWALL_Pos;
-}
-
-static inline bool hri_usbhs_get_HSTPIPISR_CFGOK_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPISR[index] & USBHS_HSTPIPISR_CFGOK) >> USBHS_HSTPIPISR_CFGOK_Pos;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_DTSEQ_bf(const void *const hw, uint8_t index,
-                                                                         hri_usbhs_hstpipisr_reg_t mask)
+static inline hri_usbhs_deveptimr_reg_t hri_usbhs_get_DEVEPTIMR_reg(const void *const hw, uint8_t index,
+                                                                    hri_usbhs_deveptimr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_DTSEQ(mask)) >> USBHS_HSTPIPISR_DTSEQ_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_DTSEQ_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_DTSEQ_Msk) >> USBHS_HSTPIPISR_DTSEQ_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_NBUSYBK_bf(const void *const hw, uint8_t index,
-                                                                           hri_usbhs_hstpipisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_NBUSYBK(mask)) >> USBHS_HSTPIPISR_NBUSYBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_NBUSYBK_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_NBUSYBK_Msk) >> USBHS_HSTPIPISR_NBUSYBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_CURRBK_bf(const void *const hw, uint8_t index,
-                                                                          hri_usbhs_hstpipisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_CURRBK(mask)) >> USBHS_HSTPIPISR_CURRBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_CURRBK_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_CURRBK_Msk) >> USBHS_HSTPIPISR_CURRBK_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_PBYCT_bf(const void *const hw, uint8_t index,
-                                                                         hri_usbhs_hstpipisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_PBYCT(mask)) >> USBHS_HSTPIPISR_PBYCT_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_PBYCT_bf(const void *const hw, uint8_t index)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
-	tmp = (tmp & USBHS_HSTPIPISR_PBYCT_Msk) >> USBHS_HSTPIPISR_PBYCT_Pos;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_get_HSTPIPISR_reg(const void *const hw, uint8_t index,
-                                                                    hri_usbhs_hstpipisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPTIMR[index];
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_usbhs_hstpipisr_reg_t hri_usbhs_read_HSTPIPISR_reg(const void *const hw, uint8_t index)
+static inline hri_usbhs_deveptimr_reg_t hri_usbhs_read_DEVEPTIMR_reg(const void *const hw, uint8_t index)
 {
-	return ((Usbhs *)hw)->USBHS_HSTPIPISR[index];
+	return ((Usbhs *)hw)->USBHS_DEVEPTIMR[index];
 }
 
-static inline void hri_usbhs_clear_HSTPIPISR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipisr_reg_t mask)
+static inline bool hri_usbhs_get_HSTISR_DCONNI_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = mask;
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DCONNI) > 0;
 }
 
-static inline void hri_usbhs_write_HSTPIPICR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipisr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_DDISCI_bit(const void *const hw)
 {
-	((Usbhs *)hw)->USBHS_HSTPIPICR[index] = data;
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DDISCI) > 0;
 }
 
-static inline void hri_usbhs_write_DEVICR_reg(const void *const hw, hri_usbhs_devicr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_RSTI_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_DEVICR = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RSTI) > 0;
 }
 
-static inline void hri_usbhs_write_DEVIFR_reg(const void *const hw, hri_usbhs_devifr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_RSMEDI_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_DEVIFR = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RSMEDI) > 0;
 }
 
-static inline void hri_usbhs_write_DEVEPTIFR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptifr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_RXRSMI_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_DEVEPTIFR[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RXRSMI) > 0;
 }
 
-static inline void hri_usbhs_write_DEVEPTIER_reg(const void *const hw, uint8_t index, hri_usbhs_deveptier_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_HSOFI_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_DEVEPTIER[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_HSOFI) > 0;
 }
 
-static inline void hri_usbhs_write_DEVEPTIDR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptidr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_HWUPI_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_DEVEPTIDR[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_HWUPI) > 0;
 }
 
-static inline void hri_usbhs_write_HSTICR_reg(const void *const hw, hri_usbhs_hsticr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_PEP_0_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_HSTICR = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_0) > 0;
 }
 
-static inline void hri_usbhs_write_HSTIFR_reg(const void *const hw, hri_usbhs_hstifr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_PEP_1_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_HSTIFR = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_1) > 0;
 }
 
-static inline void hri_usbhs_write_HSTPIPIFR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipifr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_PEP_2_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_HSTPIPIFR[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_2) > 0;
 }
 
-static inline void hri_usbhs_write_HSTPIPIER_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipier_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_PEP_3_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_HSTPIPIER[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_3) > 0;
 }
 
-static inline void hri_usbhs_write_HSTPIPIDR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipidr_reg_t data)
+static inline bool hri_usbhs_get_HSTISR_PEP_4_bit(const void *const hw)
 {
-	USBHS_CRITICAL_SECTION_ENTER();
-	((Usbhs *)hw)->USBHS_HSTPIPIDR[index] = data;
-	USBHS_CRITICAL_SECTION_LEAVE();
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_4) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_5_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_5) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_6_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_6) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_7_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_7) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_8_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_8) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_9_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_9) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_10_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_10) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_PEP_11_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_11) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_1_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_1) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_2_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_2) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_3_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_3) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_4_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_4) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_5_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_5) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_6_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_6) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTISR_DMA_7_bit(const void *const hw)
+{
+	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_7) > 0;
+}
+
+static inline hri_usbhs_hstisr_reg_t hri_usbhs_get_HSTISR_reg(const void *const hw, hri_usbhs_hstisr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usbhs_hstisr_reg_t hri_usbhs_read_HSTISR_reg(const void *const hw)
+{
+	return ((Usbhs *)hw)->USBHS_HSTISR;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_RXINE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RXINE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_TXOUTE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_TXOUTE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_TXSTPE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_TXSTPE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_PERRE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PERRE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_NAKEDE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_NAKEDE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_OVERFIE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_OVERFIE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_RXSTALLDE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RXSTALLDE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_SHORTPACKETIE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_SHORTPACKETIE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_NBUSYBKE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_NBUSYBKE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_FIFOCON_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_FIFOCON) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_PDISHDMA_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PDISHDMA) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_PFREEZE_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PFREEZE) > 0;
+}
+
+static inline bool hri_usbhs_get_HSTPIPIMR_RSTDT_bit(const void *const hw, uint8_t index)
+{
+	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RSTDT) > 0;
+}
+
+static inline hri_usbhs_hstpipimr_reg_t hri_usbhs_get_HSTPIPIMR_reg(const void *const hw, uint8_t index,
+                                                                    hri_usbhs_hstpipimr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_HSTPIPIMR[index];
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usbhs_hstpipimr_reg_t hri_usbhs_read_HSTPIPIMR_reg(const void *const hw, uint8_t index)
+{
+	return ((Usbhs *)hw)->USBHS_HSTPIPIMR[index];
 }
 
 static inline void hri_usbhs_set_DEVCTRL_ADDEN_bit(const void *const hw)
@@ -2775,6 +3134,46 @@ static inline void hri_usbhs_toggle_DEVEPT_EPEN8_bit(const void *const hw)
 	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
+static inline void hri_usbhs_set_DEVEPT_EPEN9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT |= USBHS_DEVEPT_EPEN9;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_usbhs_get_DEVEPT_EPEN9_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPT;
+	tmp = (tmp & USBHS_DEVEPT_EPEN9) >> USBHS_DEVEPT_EPEN9_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_usbhs_write_DEVEPT_EPEN9_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	USBHS_CRITICAL_SECTION_ENTER();
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPT;
+	tmp &= ~USBHS_DEVEPT_EPEN9;
+	tmp |= value << USBHS_DEVEPT_EPEN9_Pos;
+	((Usbhs *)hw)->USBHS_DEVEPT = tmp;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_usbhs_clear_DEVEPT_EPEN9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT &= ~USBHS_DEVEPT_EPEN9;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_usbhs_toggle_DEVEPT_EPEN9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT ^= USBHS_DEVEPT_EPEN9;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
 static inline void hri_usbhs_set_DEVEPT_EPRST0_bit(const void *const hw)
 {
 	USBHS_CRITICAL_SECTION_ENTER();
@@ -3132,6 +3531,46 @@ static inline void hri_usbhs_toggle_DEVEPT_EPRST8_bit(const void *const hw)
 {
 	USBHS_CRITICAL_SECTION_ENTER();
 	((Usbhs *)hw)->USBHS_DEVEPT ^= USBHS_DEVEPT_EPRST8;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_usbhs_set_DEVEPT_EPRST9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT |= USBHS_DEVEPT_EPRST9;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_usbhs_get_DEVEPT_EPRST9_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPT;
+	tmp = (tmp & USBHS_DEVEPT_EPRST9) >> USBHS_DEVEPT_EPRST9_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_usbhs_write_DEVEPT_EPRST9_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	USBHS_CRITICAL_SECTION_ENTER();
+	tmp = ((Usbhs *)hw)->USBHS_DEVEPT;
+	tmp &= ~USBHS_DEVEPT_EPRST9;
+	tmp |= value << USBHS_DEVEPT_EPRST9_Pos;
+	((Usbhs *)hw)->USBHS_DEVEPT = tmp;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_usbhs_clear_DEVEPT_EPRST9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT &= ~USBHS_DEVEPT_EPRST9;
+	USBHS_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_usbhs_toggle_DEVEPT_EPRST9_bit(const void *const hw)
+{
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPT ^= USBHS_DEVEPT_EPRST9;
 	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
@@ -6425,496 +6864,81 @@ static inline hri_usbhs_ctrl_reg_t hri_usbhs_read_CTRL_reg(const void *const hw)
 	return ((Usbhs *)hw)->USBHS_CTRL;
 }
 
-static inline bool hri_usbhs_get_DEVISR_SUSP_bit(const void *const hw)
+static inline void hri_usbhs_write_DEVICR_reg(const void *const hw, hri_usbhs_devicr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_SUSP) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVICR = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_MSOF_bit(const void *const hw)
+static inline void hri_usbhs_write_DEVIFR_reg(const void *const hw, hri_usbhs_devifr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_MSOF) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVIFR = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_SOF_bit(const void *const hw)
+static inline void hri_usbhs_write_DEVEPTIFR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptifr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_SOF) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPTIFR[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_EORST_bit(const void *const hw)
+static inline void hri_usbhs_write_DEVEPTIER_reg(const void *const hw, uint8_t index, hri_usbhs_deveptier_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_EORST) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPTIER[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_WAKEUP_bit(const void *const hw)
+static inline void hri_usbhs_write_DEVEPTIDR_reg(const void *const hw, uint8_t index, hri_usbhs_deveptidr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_WAKEUP) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_DEVEPTIDR[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_EORSM_bit(const void *const hw)
+static inline void hri_usbhs_write_HSTICR_reg(const void *const hw, hri_usbhs_hsticr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_EORSM) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_HSTICR = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_UPRSM_bit(const void *const hw)
+static inline void hri_usbhs_write_HSTIFR_reg(const void *const hw, hri_usbhs_hstifr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_UPRSM) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_HSTIFR = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_PEP_0_bit(const void *const hw)
+static inline void hri_usbhs_write_HSTPIPIFR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipifr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_0) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_HSTPIPIFR[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_PEP_1_bit(const void *const hw)
+static inline void hri_usbhs_write_HSTPIPIER_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipier_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_1) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_HSTPIPIER[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_PEP_2_bit(const void *const hw)
+static inline void hri_usbhs_write_HSTPIPIDR_reg(const void *const hw, uint8_t index, hri_usbhs_hstpipidr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_2) > 0;
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_HSTPIPIDR[index] = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usbhs_get_DEVISR_PEP_3_bit(const void *const hw)
+static inline void hri_usbhs_write_SFR_reg(const void *const hw, hri_usbhs_sfr_reg_t data)
 {
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_3) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_4_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_4) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_5_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_5) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_6_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_6) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_7_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_7) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_8_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_8) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_9_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_9) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_10_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_10) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_PEP_11_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_PEP_11) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_1_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_1) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_2_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_2) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_3_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_3) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_4_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_4) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_5_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_5) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_6_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_6) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVISR_DMA_7_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVISR & USBHS_DEVISR_DMA_7) > 0;
-}
-
-static inline hri_usbhs_devisr_reg_t hri_usbhs_get_DEVISR_reg(const void *const hw, hri_usbhs_devisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVISR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usbhs_devisr_reg_t hri_usbhs_read_DEVISR_reg(const void *const hw)
-{
-	return ((Usbhs *)hw)->USBHS_DEVISR;
-}
-
-static inline bool hri_usbhs_get_DEVFNUM_FNCERR_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNCERR) > 0;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_MFNUM_bf(const void *const hw, hri_usbhs_devfnum_reg_t mask)
-{
-	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_MFNUM(mask)) >> USBHS_DEVFNUM_MFNUM_Pos;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_MFNUM_bf(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_MFNUM_Msk) >> USBHS_DEVFNUM_MFNUM_Pos;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_FNUM_bf(const void *const hw, hri_usbhs_devfnum_reg_t mask)
-{
-	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNUM(mask)) >> USBHS_DEVFNUM_FNUM_Pos;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_FNUM_bf(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_DEVFNUM & USBHS_DEVFNUM_FNUM_Msk) >> USBHS_DEVFNUM_FNUM_Pos;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_get_DEVFNUM_reg(const void *const hw, hri_usbhs_devfnum_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVFNUM;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usbhs_devfnum_reg_t hri_usbhs_read_DEVFNUM_reg(const void *const hw)
-{
-	return ((Usbhs *)hw)->USBHS_DEVFNUM;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_TXINE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_TXINE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_RXOUTE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RXOUTE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_RXSTPE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RXSTPE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_NAKOUTE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NAKOUTE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_NAKINE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NAKINE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_OVERFE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_OVERFE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_STALLEDE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_STALLEDE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_SHORTPACKETE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_SHORTPACKETE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_NBUSYBKE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NBUSYBKE) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_KILLBK_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_KILLBK) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_FIFOCON_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_FIFOCON) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_EPDISHDMA_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_EPDISHDMA) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_NYETDIS_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_NYETDIS) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_RSTDT_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_RSTDT) > 0;
-}
-
-static inline bool hri_usbhs_get_DEVEPTIMR_STALLRQ_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_DEVEPTIMR[index] & USBHS_DEVEPTIMR_STALLRQ) > 0;
-}
-
-static inline hri_usbhs_deveptimr_reg_t hri_usbhs_get_DEVEPTIMR_reg(const void *const hw, uint8_t index,
-                                                                    hri_usbhs_deveptimr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_DEVEPTIMR[index];
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usbhs_deveptimr_reg_t hri_usbhs_read_DEVEPTIMR_reg(const void *const hw, uint8_t index)
-{
-	return ((Usbhs *)hw)->USBHS_DEVEPTIMR[index];
-}
-
-static inline bool hri_usbhs_get_HSTISR_DCONNI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DCONNI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DDISCI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DDISCI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_RSTI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RSTI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_RSMEDI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RSMEDI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_RXRSMI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_RXRSMI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_HSOFI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_HSOFI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_HWUPI_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_HWUPI) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_0_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_0) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_1_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_1) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_2_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_2) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_3_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_3) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_4_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_4) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_5_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_5) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_6_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_6) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_7_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_7) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_8_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_8) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_9_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_9) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_10_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_10) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_PEP_11_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_PEP_11) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_1_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_1) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_2_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_2) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_3_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_3) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_4_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_4) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_5_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_5) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_6_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_6) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTISR_DMA_7_bit(const void *const hw)
-{
-	return (((Usbhs *)hw)->USBHS_HSTISR & USBHS_HSTISR_DMA_7) > 0;
-}
-
-static inline hri_usbhs_hstisr_reg_t hri_usbhs_get_HSTISR_reg(const void *const hw, hri_usbhs_hstisr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTISR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usbhs_hstisr_reg_t hri_usbhs_read_HSTISR_reg(const void *const hw)
-{
-	return ((Usbhs *)hw)->USBHS_HSTISR;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_RXINE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RXINE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_TXOUTE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_TXOUTE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_TXSTPE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_TXSTPE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_PERRE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PERRE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_NAKEDE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_NAKEDE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_OVERFIE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_OVERFIE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_RXSTALLDE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RXSTALLDE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_SHORTPACKETIE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_SHORTPACKETIE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_NBUSYBKE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_NBUSYBKE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_FIFOCON_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_FIFOCON) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_PDISHDMA_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PDISHDMA) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_PFREEZE_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_PFREEZE) > 0;
-}
-
-static inline bool hri_usbhs_get_HSTPIPIMR_RSTDT_bit(const void *const hw, uint8_t index)
-{
-	return (((Usbhs *)hw)->USBHS_HSTPIPIMR[index] & USBHS_HSTPIPIMR_RSTDT) > 0;
-}
-
-static inline hri_usbhs_hstpipimr_reg_t hri_usbhs_get_HSTPIPIMR_reg(const void *const hw, uint8_t index,
-                                                                    hri_usbhs_hstpipimr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usbhs *)hw)->USBHS_HSTPIPIMR[index];
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usbhs_hstpipimr_reg_t hri_usbhs_read_HSTPIPIMR_reg(const void *const hw, uint8_t index)
-{
-	return ((Usbhs *)hw)->USBHS_HSTPIPIMR[index];
+	USBHS_CRITICAL_SECTION_ENTER();
+	((Usbhs *)hw)->USBHS_SFR = data;
+	USBHS_CRITICAL_SECTION_LEAVE();
 }
 
 static inline void hri_usbhsdevdma_set_DEVDMANXTDSC_NXT_DSC_ADD_bf(const void *const            hw,

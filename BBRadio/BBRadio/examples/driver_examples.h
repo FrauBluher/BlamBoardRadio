@@ -20,6 +20,10 @@ void DAC_0_example(void);
 
 void EXTERNAL_IRQ_0_example(void);
 
+void EXTERNAL_IRQ_1_example(void);
+
+void SPI_1_example(void);
+
 void SPI_0_example(void);
 
 void I2C_0_example(void);

@@ -3,39 +3,29 @@
  *
  * \brief SAM PMC
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -84,6 +74,11 @@ typedef uint32_t hri_pmc_sr_reg_t;
 typedef uint32_t hri_pmc_usb_reg_t;
 typedef uint32_t hri_pmc_wpmr_reg_t;
 typedef uint32_t hri_pmc_wpsr_reg_t;
+
+static inline bool hri_pmc_get_SCSR_HCLKS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SCSR & PMC_SCSR_HCLKS) >> PMC_SCSR_HCLKS_Pos;
+}
 
 static inline void hri_pmc_set_SCSR_USBCLK_bit(const void *const hw)
 {
@@ -229,35 +224,6 @@ static inline void hri_pmc_clear_SCSR_PCK4_bit(const void *const hw)
 	((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK4;
 }
 
-static inline void hri_pmc_set_SCSR_PCK6_bit(const void *const hw)
-{
-	((Pmc *)hw)->PMC_SCER = PMC_SCSR_PCK6;
-}
-
-static inline bool hri_pmc_get_SCSR_PCK6_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SCSR & PMC_SCSR_PCK6) >> PMC_SCSR_PCK6_Pos;
-}
-
-static inline void hri_pmc_write_SCSR_PCK6_bit(const void *const hw, bool value)
-{
-	if (value == 0x0) {
-		((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK6;
-	} else {
-		((Pmc *)hw)->PMC_SCER = PMC_SCSR_PCK6;
-	}
-}
-
-static inline void hri_pmc_clear_SCSR_PCK6_bit(const void *const hw)
-{
-	((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK6;
-}
-
-static inline bool hri_pmc_get_SCSR_HCLKS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SCSR & PMC_SCSR_HCLKS) >> PMC_SCSR_HCLKS_Pos;
-}
-
 static inline void hri_pmc_set_SCSR_PCK5_bit(const void *const hw)
 {
 	((Pmc *)hw)->PMC_SCER = PMC_SCSR_PCK5;
@@ -280,6 +246,30 @@ static inline void hri_pmc_write_SCSR_PCK5_bit(const void *const hw, bool value)
 static inline void hri_pmc_clear_SCSR_PCK5_bit(const void *const hw)
 {
 	((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK5;
+}
+
+static inline void hri_pmc_set_SCSR_PCK6_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_SCER = PMC_SCSR_PCK6;
+}
+
+static inline bool hri_pmc_get_SCSR_PCK6_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SCSR & PMC_SCSR_PCK6) >> PMC_SCSR_PCK6_Pos;
+}
+
+static inline void hri_pmc_write_SCSR_PCK6_bit(const void *const hw, bool value)
+{
+	if (value == 0x0) {
+		((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK6;
+	} else {
+		((Pmc *)hw)->PMC_SCER = PMC_SCSR_PCK6;
+	}
+}
+
+static inline void hri_pmc_clear_SCSR_PCK6_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_SCDR = PMC_SCSR_PCK6;
 }
 
 static inline void hri_pmc_set_SCSR_reg(const void *const hw, hri_pmc_scsr_reg_t mask)
@@ -948,6 +938,102 @@ static inline void hri_pmc_write_IMR_PCKRDY2_bit(const void *const hw, bool valu
 static inline void hri_pmc_clear_IMR_PCKRDY2_bit(const void *const hw)
 {
 	((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY2;
+}
+
+static inline void hri_pmc_set_IMR_PCKRDY3_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY3;
+}
+
+static inline bool hri_pmc_get_IMR_PCKRDY3_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_IMR & PMC_IMR_PCKRDY3) >> PMC_IMR_PCKRDY3_Pos;
+}
+
+static inline void hri_pmc_write_IMR_PCKRDY3_bit(const void *const hw, bool value)
+{
+	if (value == 0x0) {
+		((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY3;
+	} else {
+		((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY3;
+	}
+}
+
+static inline void hri_pmc_clear_IMR_PCKRDY3_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY3;
+}
+
+static inline void hri_pmc_set_IMR_PCKRDY4_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY4;
+}
+
+static inline bool hri_pmc_get_IMR_PCKRDY4_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_IMR & PMC_IMR_PCKRDY4) >> PMC_IMR_PCKRDY4_Pos;
+}
+
+static inline void hri_pmc_write_IMR_PCKRDY4_bit(const void *const hw, bool value)
+{
+	if (value == 0x0) {
+		((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY4;
+	} else {
+		((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY4;
+	}
+}
+
+static inline void hri_pmc_clear_IMR_PCKRDY4_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY4;
+}
+
+static inline void hri_pmc_set_IMR_PCKRDY5_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY5;
+}
+
+static inline bool hri_pmc_get_IMR_PCKRDY5_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_IMR & PMC_IMR_PCKRDY5) >> PMC_IMR_PCKRDY5_Pos;
+}
+
+static inline void hri_pmc_write_IMR_PCKRDY5_bit(const void *const hw, bool value)
+{
+	if (value == 0x0) {
+		((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY5;
+	} else {
+		((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY5;
+	}
+}
+
+static inline void hri_pmc_clear_IMR_PCKRDY5_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY5;
+}
+
+static inline void hri_pmc_set_IMR_PCKRDY6_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY6;
+}
+
+static inline bool hri_pmc_get_IMR_PCKRDY6_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_IMR & PMC_IMR_PCKRDY6) >> PMC_IMR_PCKRDY6_Pos;
+}
+
+static inline void hri_pmc_write_IMR_PCKRDY6_bit(const void *const hw, bool value)
+{
+	if (value == 0x0) {
+		((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY6;
+	} else {
+		((Pmc *)hw)->PMC_IER = PMC_IMR_PCKRDY6;
+	}
+}
+
+static inline void hri_pmc_clear_IMR_PCKRDY6_bit(const void *const hw)
+{
+	((Pmc *)hw)->PMC_IDR = PMC_IMR_PCKRDY6;
 }
 
 static inline void hri_pmc_set_IMR_MOSCSELS_bit(const void *const hw)
@@ -2962,11 +3048,429 @@ static inline void hri_pmc_clear_SLPWK_SR1_reg(const void *const hw, hri_pmc_slp
 	((Pmc *)hw)->PMC_SLPWK_DR1 = mask;
 }
 
-static inline void hri_pmc_write_FOCR_reg(const void *const hw, hri_pmc_focr_reg_t data)
+static inline bool hri_pmc_get_SR_MOSCXTS_bit(const void *const hw)
 {
-	PMC_CRITICAL_SECTION_ENTER();
-	((Pmc *)hw)->PMC_FOCR = data;
-	PMC_CRITICAL_SECTION_LEAVE();
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCXTS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_LOCKA_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_LOCKA) > 0;
+}
+
+static inline bool hri_pmc_get_SR_MCKRDY_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_MCKRDY) > 0;
+}
+
+static inline bool hri_pmc_get_SR_LOCKU_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_LOCKU) > 0;
+}
+
+static inline bool hri_pmc_get_SR_OSCSELS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_OSCSELS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY0_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY0) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY1_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY1) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY2_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY2) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY3_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY3) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY4_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY4) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY5_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY5) > 0;
+}
+
+static inline bool hri_pmc_get_SR_PCKRDY6_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY6) > 0;
+}
+
+static inline bool hri_pmc_get_SR_MOSCSELS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCSELS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_MOSCRCS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCRCS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_CFDEV_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_CFDEV) > 0;
+}
+
+static inline bool hri_pmc_get_SR_CFDS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_CFDS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_FOS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_FOS) > 0;
+}
+
+static inline bool hri_pmc_get_SR_XT32KERR_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SR & PMC_SR_XT32KERR) > 0;
+}
+
+static inline hri_pmc_sr_reg_t hri_pmc_get_SR_reg(const void *const hw, hri_pmc_sr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pmc *)hw)->PMC_SR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pmc_sr_reg_t hri_pmc_read_SR_reg(const void *const hw)
+{
+	return ((Pmc *)hw)->PMC_SR;
+}
+
+static inline bool hri_pmc_get_WPSR_WPVS_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVS) > 0;
+}
+
+static inline hri_pmc_wpsr_reg_t hri_pmc_get_WPSR_WPVSRC_bf(const void *const hw, hri_pmc_wpsr_reg_t mask)
+{
+	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVSRC(mask)) >> PMC_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_pmc_wpsr_reg_t hri_pmc_read_WPSR_WPVSRC_bf(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVSRC_Msk) >> PMC_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_pmc_wpsr_reg_t hri_pmc_get_WPSR_reg(const void *const hw, hri_pmc_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pmc *)hw)->PMC_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pmc_wpsr_reg_t hri_pmc_read_WPSR_reg(const void *const hw)
+{
+	return ((Pmc *)hw)->PMC_WPSR;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID7_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID7) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID8_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID8) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID9_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID9) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID10_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID10) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID11_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID11) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID12_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID12) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID13_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID13) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID14_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID14) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID15_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID15) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID16_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID16) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID17_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID17) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID18_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID18) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID19_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID19) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID20_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID20) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID21_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID21) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID22_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID22) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID23_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID23) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID24_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID24) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID25_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID25) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID26_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID26) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID27_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID27) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID28_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID28) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID29_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID29) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID30_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID30) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR0_PID31_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID31) > 0;
+}
+
+static inline hri_pmc_slpwk_asr0_reg_t hri_pmc_get_SLPWK_ASR0_reg(const void *const hw, hri_pmc_slpwk_asr0_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pmc *)hw)->PMC_SLPWK_ASR0;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pmc_slpwk_asr0_reg_t hri_pmc_read_SLPWK_ASR0_reg(const void *const hw)
+{
+	return ((Pmc *)hw)->PMC_SLPWK_ASR0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID32_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID32) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID33_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID33) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID34_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID34) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID35_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID35) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID37_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID37) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID39_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID39) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID40_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID40) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID41_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID41) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID42_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID42) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID43_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID43) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID44_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID44) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID45_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID45) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID46_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID46) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID47_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID47) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID48_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID48) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID49_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID49) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID50_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID50) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID51_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID51) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID52_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID52) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID53_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID53) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID56_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID56) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID57_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID57) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID58_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID58) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID59_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID59) > 0;
+}
+
+static inline bool hri_pmc_get_SLPWK_ASR1_PID60_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID60) > 0;
+}
+
+static inline hri_pmc_slpwk_asr1_reg_t hri_pmc_get_SLPWK_ASR1_reg(const void *const hw, hri_pmc_slpwk_asr1_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pmc *)hw)->PMC_SLPWK_ASR1;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pmc_slpwk_asr1_reg_t hri_pmc_read_SLPWK_ASR1_reg(const void *const hw)
+{
+	return ((Pmc *)hw)->PMC_SLPWK_ASR1;
+}
+
+static inline bool hri_pmc_get_SLPWK_AIPR_AIP_bit(const void *const hw)
+{
+	return (((Pmc *)hw)->PMC_SLPWK_AIPR & PMC_SLPWK_AIPR_AIP) > 0;
+}
+
+static inline hri_pmc_slpwk_aipr_reg_t hri_pmc_get_SLPWK_AIPR_reg(const void *const hw, hri_pmc_slpwk_aipr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pmc *)hw)->PMC_SLPWK_AIPR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pmc_slpwk_aipr_reg_t hri_pmc_read_SLPWK_AIPR_reg(const void *const hw)
+{
+	return ((Pmc *)hw)->PMC_SLPWK_AIPR;
 }
 
 static inline void hri_pmc_set_CKGR_UCKR_UPLLEN_bit(const void *const hw)
@@ -6930,409 +7434,11 @@ static inline hri_pmc_pmmr_reg_t hri_pmc_read_PMMR_reg(const void *const hw)
 	return ((Pmc *)hw)->PMC_PMMR;
 }
 
-static inline bool hri_pmc_get_SR_MOSCXTS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCXTS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_LOCKA_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_LOCKA) > 0;
-}
-
-static inline bool hri_pmc_get_SR_MCKRDY_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_MCKRDY) > 0;
-}
-
-static inline bool hri_pmc_get_SR_LOCKU_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_LOCKU) > 0;
-}
-
-static inline bool hri_pmc_get_SR_OSCSELS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_OSCSELS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_PCKRDY0_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY0) > 0;
-}
-
-static inline bool hri_pmc_get_SR_PCKRDY1_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY1) > 0;
-}
-
-static inline bool hri_pmc_get_SR_PCKRDY2_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_PCKRDY2) > 0;
-}
-
-static inline bool hri_pmc_get_SR_MOSCSELS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCSELS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_MOSCRCS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_MOSCRCS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_CFDEV_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_CFDEV) > 0;
-}
-
-static inline bool hri_pmc_get_SR_CFDS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_CFDS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_FOS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_FOS) > 0;
-}
-
-static inline bool hri_pmc_get_SR_XT32KERR_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SR & PMC_SR_XT32KERR) > 0;
-}
-
-static inline hri_pmc_sr_reg_t hri_pmc_get_SR_reg(const void *const hw, hri_pmc_sr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pmc *)hw)->PMC_SR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pmc_sr_reg_t hri_pmc_read_SR_reg(const void *const hw)
-{
-	return ((Pmc *)hw)->PMC_SR;
-}
-
-static inline bool hri_pmc_get_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVS) > 0;
-}
-
-static inline hri_pmc_wpsr_reg_t hri_pmc_get_WPSR_WPVSRC_bf(const void *const hw, hri_pmc_wpsr_reg_t mask)
-{
-	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVSRC(mask)) >> PMC_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pmc_wpsr_reg_t hri_pmc_read_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_WPSR & PMC_WPSR_WPVSRC_Msk) >> PMC_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pmc_wpsr_reg_t hri_pmc_get_WPSR_reg(const void *const hw, hri_pmc_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pmc *)hw)->PMC_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pmc_wpsr_reg_t hri_pmc_read_WPSR_reg(const void *const hw)
-{
-	return ((Pmc *)hw)->PMC_WPSR;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID7_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID7) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID8_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID8) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID9_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID9) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID10_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID10) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID11_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID11) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID12_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID12) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID13_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID13) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID14_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID14) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID15_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID15) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID16_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID16) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID17_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID17) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID18_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID18) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID19_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID19) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID20_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID20) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID21_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID21) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID22_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID22) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID23_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID23) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID24_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID24) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID25_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID25) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID26_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID26) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID27_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID27) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID28_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID28) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID29_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID29) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID30_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID30) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR0_PID31_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR0 & PMC_SLPWK_ASR0_PID31) > 0;
-}
-
-static inline hri_pmc_slpwk_asr0_reg_t hri_pmc_get_SLPWK_ASR0_reg(const void *const hw, hri_pmc_slpwk_asr0_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pmc *)hw)->PMC_SLPWK_ASR0;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pmc_slpwk_asr0_reg_t hri_pmc_read_SLPWK_ASR0_reg(const void *const hw)
-{
-	return ((Pmc *)hw)->PMC_SLPWK_ASR0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID32_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID32) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID33_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID33) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID34_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID34) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID35_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID35) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID37_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID37) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID39_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID39) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID40_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID40) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID41_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID41) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID42_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID42) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID43_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID43) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID44_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID44) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID45_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID45) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID46_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID46) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID47_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID47) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID48_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID48) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID49_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID49) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID50_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID50) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID51_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID51) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID52_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID52) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID53_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID53) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID56_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID56) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID57_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID57) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID58_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID58) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID59_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID59) > 0;
-}
-
-static inline bool hri_pmc_get_SLPWK_ASR1_PID60_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_ASR1 & PMC_SLPWK_ASR1_PID60) > 0;
-}
-
-static inline hri_pmc_slpwk_asr1_reg_t hri_pmc_get_SLPWK_ASR1_reg(const void *const hw, hri_pmc_slpwk_asr1_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pmc *)hw)->PMC_SLPWK_ASR1;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pmc_slpwk_asr1_reg_t hri_pmc_read_SLPWK_ASR1_reg(const void *const hw)
-{
-	return ((Pmc *)hw)->PMC_SLPWK_ASR1;
-}
-
-static inline bool hri_pmc_get_SLPWK_AIPR_AIP_bit(const void *const hw)
-{
-	return (((Pmc *)hw)->PMC_SLPWK_AIPR & PMC_SLPWK_AIPR_AIP) > 0;
-}
-
-static inline hri_pmc_slpwk_aipr_reg_t hri_pmc_get_SLPWK_AIPR_reg(const void *const hw, hri_pmc_slpwk_aipr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pmc *)hw)->PMC_SLPWK_AIPR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pmc_slpwk_aipr_reg_t hri_pmc_read_SLPWK_AIPR_reg(const void *const hw)
-{
-	return ((Pmc *)hw)->PMC_SLPWK_AIPR;
+static inline void hri_pmc_write_FOCR_reg(const void *const hw, hri_pmc_focr_reg_t data)
+{
+	PMC_CRITICAL_SECTION_ENTER();
+	((Pmc *)hw)->PMC_FOCR = data;
+	PMC_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

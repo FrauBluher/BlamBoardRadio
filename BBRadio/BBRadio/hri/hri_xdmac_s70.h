@@ -3,39 +3,29 @@
  *
  * \brief SAM XDMAC
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -292,6 +282,54 @@ static inline void hri_xdmacchid_write_CIM_reg(const void *const hw, hri_xdmac_c
 static inline void hri_xdmacchid_clear_CIM_reg(const void *const hw, hri_xdmac_cim_reg_t mask)
 {
 	((XdmacChid *)hw)->XDMAC_CID = mask;
+}
+
+static inline bool hri_xdmacchid_get_CIS_BIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_BIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_LIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_LIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_DIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_DIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_FIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_FIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_RBEIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_RBEIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_WBEIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_WBEIS) > 0;
+}
+
+static inline bool hri_xdmacchid_get_CIS_ROIS_bit(const void *const hw)
+{
+	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_ROIS) > 0;
+}
+
+static inline hri_xdmac_cis_reg_t hri_xdmacchid_get_CIS_reg(const void *const hw, hri_xdmac_cis_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((XdmacChid *)hw)->XDMAC_CIS;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_xdmac_cis_reg_t hri_xdmacchid_read_CIS_reg(const void *const hw)
+{
+	return ((XdmacChid *)hw)->XDMAC_CIS;
 }
 
 static inline void hri_xdmacchid_set_CSA_SA_bf(const void *const hw, hri_xdmac_csa_reg_t mask)
@@ -1994,54 +2032,6 @@ static inline hri_xdmac_cdus_reg_t hri_xdmacchid_read_CDUS_reg(const void *const
 	return ((XdmacChid *)hw)->XDMAC_CDUS;
 }
 
-static inline bool hri_xdmacchid_get_CIS_BIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_BIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_LIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_LIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_DIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_DIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_FIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_FIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_RBEIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_RBEIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_WBEIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_WBEIS) > 0;
-}
-
-static inline bool hri_xdmacchid_get_CIS_ROIS_bit(const void *const hw)
-{
-	return (((XdmacChid *)hw)->XDMAC_CIS & XDMAC_CIS_ROIS) > 0;
-}
-
-static inline hri_xdmac_cis_reg_t hri_xdmacchid_get_CIS_reg(const void *const hw, hri_xdmac_cis_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((XdmacChid *)hw)->XDMAC_CIS;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_xdmac_cis_reg_t hri_xdmacchid_read_CIS_reg(const void *const hw)
-{
-	return ((XdmacChid *)hw)->XDMAC_CIS;
-}
-
 static inline void hri_xdmac_set_CIM_BIM_bit(const void *const hw, uint8_t submodule_index)
 {
 	((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIE = XDMAC_CIM_BIM;
@@ -2238,6 +2228,55 @@ static inline void hri_xdmac_write_CIM_reg(const void *const hw, uint8_t submodu
 static inline void hri_xdmac_clear_CIM_reg(const void *const hw, uint8_t submodule_index, hri_xdmac_cim_reg_t mask)
 {
 	((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CID = mask;
+}
+
+static inline bool hri_xdmac_get_CIS_BIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_BIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_LIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_LIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_DIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_DIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_FIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_FIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_RBEIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_RBEIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_WBEIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_WBEIS) > 0;
+}
+
+static inline bool hri_xdmac_get_CIS_ROIS_bit(const void *const hw, uint8_t submodule_index)
+{
+	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_ROIS) > 0;
+}
+
+static inline hri_xdmac_cis_reg_t hri_xdmac_get_CIS_reg(const void *const hw, uint8_t submodule_index,
+                                                        hri_xdmac_cis_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_xdmac_cis_reg_t hri_xdmac_read_CIS_reg(const void *const hw, uint8_t submodule_index)
+{
+	return ((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS;
 }
 
 static inline void hri_xdmac_set_CSA_SA_bf(const void *const hw, uint8_t submodule_index, hri_xdmac_csa_reg_t mask)
@@ -3990,55 +4029,6 @@ static inline hri_xdmac_cdus_reg_t hri_xdmac_read_CDUS_reg(const void *const hw,
 	return ((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CDUS;
 }
 
-static inline bool hri_xdmac_get_CIS_BIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_BIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_LIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_LIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_DIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_DIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_FIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_FIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_RBEIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_RBEIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_WBEIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_WBEIS) > 0;
-}
-
-static inline bool hri_xdmac_get_CIS_ROIS_bit(const void *const hw, uint8_t submodule_index)
-{
-	return (((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS & XDMAC_CIS_ROIS) > 0;
-}
-
-static inline hri_xdmac_cis_reg_t hri_xdmac_get_CIS_reg(const void *const hw, uint8_t submodule_index,
-                                                        hri_xdmac_cis_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_xdmac_cis_reg_t hri_xdmac_read_CIS_reg(const void *const hw, uint8_t submodule_index)
-{
-	return ((Xdmac *)hw)->XDMAC_CHID[submodule_index].XDMAC_CIS;
-}
-
 static inline void hri_xdmac_set_GIM_IM0_bit(const void *const hw)
 {
 	((Xdmac *)hw)->XDMAC_GIE = XDMAC_GIM_IM0;
@@ -5249,183 +5239,34 @@ static inline void hri_xdmac_clear_GS_reg(const void *const hw, hri_xdmac_gs_reg
 	((Xdmac *)hw)->XDMAC_GD = mask;
 }
 
-static inline void hri_xdmac_write_GRWS_reg(const void *const hw, hri_xdmac_grws_reg_t data)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GRWS = data;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_write_GRWR_reg(const void *const hw, hri_xdmac_grwr_reg_t data)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GRWR = data;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_write_GSWR_reg(const void *const hw, hri_xdmac_gswr_reg_t data)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GSWR = data;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_write_GSWF_reg(const void *const hw, hri_xdmac_gswf_reg_t data)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GSWF = data;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_set_GTYPE_NB_CH_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE |= XDMAC_GTYPE_NB_CH(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
 static inline hri_xdmac_gtype_reg_t hri_xdmac_get_GTYPE_NB_CH_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_NB_CH(mask)) >> XDMAC_GTYPE_NB_CH_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_write_GTYPE_NB_CH_bf(const void *const hw, hri_xdmac_gtype_reg_t data)
-{
-	uint32_t tmp;
-	XDMAC_CRITICAL_SECTION_ENTER();
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp &= ~XDMAC_GTYPE_NB_CH_Msk;
-	tmp |= XDMAC_GTYPE_NB_CH(data);
-	((Xdmac *)hw)->XDMAC_GTYPE = tmp;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_clear_GTYPE_NB_CH_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE &= ~XDMAC_GTYPE_NB_CH(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_toggle_GTYPE_NB_CH_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE ^= XDMAC_GTYPE_NB_CH(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_NB_CH(mask)) >> XDMAC_GTYPE_NB_CH_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_read_GTYPE_NB_CH_bf(const void *const hw)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_NB_CH_Msk) >> XDMAC_GTYPE_NB_CH_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_set_GTYPE_FIFO_SZ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE |= XDMAC_GTYPE_FIFO_SZ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_NB_CH_Msk) >> XDMAC_GTYPE_NB_CH_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_get_GTYPE_FIFO_SZ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_FIFO_SZ(mask)) >> XDMAC_GTYPE_FIFO_SZ_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_write_GTYPE_FIFO_SZ_bf(const void *const hw, hri_xdmac_gtype_reg_t data)
-{
-	uint32_t tmp;
-	XDMAC_CRITICAL_SECTION_ENTER();
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp &= ~XDMAC_GTYPE_FIFO_SZ_Msk;
-	tmp |= XDMAC_GTYPE_FIFO_SZ(data);
-	((Xdmac *)hw)->XDMAC_GTYPE = tmp;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_clear_GTYPE_FIFO_SZ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE &= ~XDMAC_GTYPE_FIFO_SZ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_toggle_GTYPE_FIFO_SZ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE ^= XDMAC_GTYPE_FIFO_SZ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_FIFO_SZ(mask)) >> XDMAC_GTYPE_FIFO_SZ_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_read_GTYPE_FIFO_SZ_bf(const void *const hw)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_FIFO_SZ_Msk) >> XDMAC_GTYPE_FIFO_SZ_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_set_GTYPE_NB_REQ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE |= XDMAC_GTYPE_NB_REQ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_FIFO_SZ_Msk) >> XDMAC_GTYPE_FIFO_SZ_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_get_GTYPE_NB_REQ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_NB_REQ(mask)) >> XDMAC_GTYPE_NB_REQ_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_write_GTYPE_NB_REQ_bf(const void *const hw, hri_xdmac_gtype_reg_t data)
-{
-	uint32_t tmp;
-	XDMAC_CRITICAL_SECTION_ENTER();
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp &= ~XDMAC_GTYPE_NB_REQ_Msk;
-	tmp |= XDMAC_GTYPE_NB_REQ(data);
-	((Xdmac *)hw)->XDMAC_GTYPE = tmp;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_clear_GTYPE_NB_REQ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE &= ~XDMAC_GTYPE_NB_REQ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_toggle_GTYPE_NB_REQ_bf(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE ^= XDMAC_GTYPE_NB_REQ(mask);
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_NB_REQ(mask)) >> XDMAC_GTYPE_NB_REQ_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_read_GTYPE_NB_REQ_bf(const void *const hw)
 {
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GTYPE;
-	tmp = (tmp & XDMAC_GTYPE_NB_REQ_Msk) >> XDMAC_GTYPE_NB_REQ_Pos;
-	return tmp;
-}
-
-static inline void hri_xdmac_set_GTYPE_reg(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE |= mask;
-	XDMAC_CRITICAL_SECTION_LEAVE();
+	return (((Xdmac *)hw)->XDMAC_GTYPE & XDMAC_GTYPE_NB_REQ_Msk) >> XDMAC_GTYPE_NB_REQ_Pos;
 }
 
 static inline hri_xdmac_gtype_reg_t hri_xdmac_get_GTYPE_reg(const void *const hw, hri_xdmac_gtype_reg_t mask)
@@ -5436,30 +5277,516 @@ static inline hri_xdmac_gtype_reg_t hri_xdmac_get_GTYPE_reg(const void *const hw
 	return tmp;
 }
 
-static inline void hri_xdmac_write_GTYPE_reg(const void *const hw, hri_xdmac_gtype_reg_t data)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE = data;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_clear_GTYPE_reg(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE &= ~mask;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_xdmac_toggle_GTYPE_reg(const void *const hw, hri_xdmac_gtype_reg_t mask)
-{
-	XDMAC_CRITICAL_SECTION_ENTER();
-	((Xdmac *)hw)->XDMAC_GTYPE ^= mask;
-	XDMAC_CRITICAL_SECTION_LEAVE();
-}
-
 static inline hri_xdmac_gtype_reg_t hri_xdmac_read_GTYPE_reg(const void *const hw)
 {
 	return ((Xdmac *)hw)->XDMAC_GTYPE;
+}
+
+static inline bool hri_xdmac_get_GIS_IS0_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS0) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS1_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS1) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS2_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS2) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS3_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS3) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS4_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS4) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS5_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS5) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS6_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS6) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS7_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS7) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS8_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS8) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS9_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS9) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS10_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS10) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS11_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS11) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS12_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS12) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS13_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS13) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS14_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS14) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS15_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS15) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS16_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS16) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS17_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS17) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS18_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS18) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS19_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS19) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS20_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS20) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS21_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS21) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS22_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS22) > 0;
+}
+
+static inline bool hri_xdmac_get_GIS_IS23_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS23) > 0;
+}
+
+static inline hri_xdmac_gis_reg_t hri_xdmac_get_GIS_reg(const void *const hw, hri_xdmac_gis_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GIS;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_xdmac_gis_reg_t hri_xdmac_read_GIS_reg(const void *const hw)
+{
+	return ((Xdmac *)hw)->XDMAC_GIS;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS0_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS0) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS1_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS1) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS2_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS2) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS3_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS3) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS4_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS4) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS5_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS5) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS6_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS6) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS7_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS7) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS8_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS8) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS9_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS9) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS10_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS10) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS11_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS11) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS12_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS12) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS13_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS13) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS14_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS14) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS15_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS15) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS16_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS16) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS17_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS17) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS18_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS18) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS19_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS19) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS20_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS20) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS21_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS21) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS22_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS22) > 0;
+}
+
+static inline bool hri_xdmac_get_GSWS_SWRS23_bit(const void *const hw)
+{
+	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS23) > 0;
+}
+
+static inline hri_xdmac_gsws_reg_t hri_xdmac_get_GSWS_reg(const void *const hw, hri_xdmac_gsws_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GSWS;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_xdmac_gsws_reg_t hri_xdmac_read_GSWS_reg(const void *const hw)
+{
+	return ((Xdmac *)hw)->XDMAC_GSWS;
+}
+
+static inline void hri_xdmac_set_GCFG_CGDISREG_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= XDMAC_GCFG_CGDISREG;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_xdmac_get_GCFG_CGDISREG_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp = (tmp & XDMAC_GCFG_CGDISREG) >> XDMAC_GCFG_CGDISREG_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_CGDISREG_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= ~XDMAC_GCFG_CGDISREG;
+	tmp |= value << XDMAC_GCFG_CGDISREG_Pos;
+	((Xdmac *)hw)->XDMAC_GCFG = tmp;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_CGDISREG_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~XDMAC_GCFG_CGDISREG;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_CGDISREG_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= XDMAC_GCFG_CGDISREG;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_set_GCFG_CGDISPIPE_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= XDMAC_GCFG_CGDISPIPE;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_xdmac_get_GCFG_CGDISPIPE_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp = (tmp & XDMAC_GCFG_CGDISPIPE) >> XDMAC_GCFG_CGDISPIPE_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_CGDISPIPE_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= ~XDMAC_GCFG_CGDISPIPE;
+	tmp |= value << XDMAC_GCFG_CGDISPIPE_Pos;
+	((Xdmac *)hw)->XDMAC_GCFG = tmp;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_CGDISPIPE_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~XDMAC_GCFG_CGDISPIPE;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_CGDISPIPE_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= XDMAC_GCFG_CGDISPIPE;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_set_GCFG_CGDISFIFO_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= XDMAC_GCFG_CGDISFIFO;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_xdmac_get_GCFG_CGDISFIFO_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp = (tmp & XDMAC_GCFG_CGDISFIFO) >> XDMAC_GCFG_CGDISFIFO_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_CGDISFIFO_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= ~XDMAC_GCFG_CGDISFIFO;
+	tmp |= value << XDMAC_GCFG_CGDISFIFO_Pos;
+	((Xdmac *)hw)->XDMAC_GCFG = tmp;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_CGDISFIFO_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~XDMAC_GCFG_CGDISFIFO;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_CGDISFIFO_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= XDMAC_GCFG_CGDISFIFO;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_set_GCFG_CGDISIF_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= XDMAC_GCFG_CGDISIF;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_xdmac_get_GCFG_CGDISIF_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp = (tmp & XDMAC_GCFG_CGDISIF) >> XDMAC_GCFG_CGDISIF_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_CGDISIF_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= ~XDMAC_GCFG_CGDISIF;
+	tmp |= value << XDMAC_GCFG_CGDISIF_Pos;
+	((Xdmac *)hw)->XDMAC_GCFG = tmp;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_CGDISIF_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~XDMAC_GCFG_CGDISIF;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_CGDISIF_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= XDMAC_GCFG_CGDISIF;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_set_GCFG_BXKBEN_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= XDMAC_GCFG_BXKBEN;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_xdmac_get_GCFG_BXKBEN_bit(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp = (tmp & XDMAC_GCFG_BXKBEN) >> XDMAC_GCFG_BXKBEN_Pos;
+	return (bool)tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_BXKBEN_bit(const void *const hw, bool value)
+{
+	uint32_t tmp;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= ~XDMAC_GCFG_BXKBEN;
+	tmp |= value << XDMAC_GCFG_BXKBEN_Pos;
+	((Xdmac *)hw)->XDMAC_GCFG = tmp;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_BXKBEN_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~XDMAC_GCFG_BXKBEN;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_BXKBEN_bit(const void *const hw)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= XDMAC_GCFG_BXKBEN;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_set_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t mask)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG |= mask;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_xdmac_gcfg_reg_t hri_xdmac_get_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline void hri_xdmac_write_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t data)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG = data;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_clear_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t mask)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG &= ~mask;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_xdmac_toggle_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t mask)
+{
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GCFG ^= mask;
+	XDMAC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_xdmac_gcfg_reg_t hri_xdmac_read_GCFG_reg(const void *const hw)
+{
+	return ((Xdmac *)hw)->XDMAC_GCFG;
 }
 
 static inline void hri_xdmac_set_GWAC_PW0_bf(const void *const hw, hri_xdmac_gwac_reg_t mask)
@@ -7697,308 +8024,32 @@ static inline hri_xdmac_gws_reg_t hri_xdmac_read_GWS_reg(const void *const hw)
 	return ((Xdmac *)hw)->XDMAC_GWS;
 }
 
-static inline bool hri_xdmac_get_GCFG_CGDISREG_bit(const void *const hw)
+static inline void hri_xdmac_write_GRWS_reg(const void *const hw, hri_xdmac_grws_reg_t data)
 {
-	return (((Xdmac *)hw)->XDMAC_GCFG & XDMAC_GCFG_CGDISREG) > 0;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GRWS = data;
+	XDMAC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_xdmac_get_GCFG_CGDISPIPE_bit(const void *const hw)
+static inline void hri_xdmac_write_GRWR_reg(const void *const hw, hri_xdmac_grwr_reg_t data)
 {
-	return (((Xdmac *)hw)->XDMAC_GCFG & XDMAC_GCFG_CGDISPIPE) > 0;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GRWR = data;
+	XDMAC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_xdmac_get_GCFG_CGDISFIFO_bit(const void *const hw)
+static inline void hri_xdmac_write_GSWR_reg(const void *const hw, hri_xdmac_gswr_reg_t data)
 {
-	return (((Xdmac *)hw)->XDMAC_GCFG & XDMAC_GCFG_CGDISFIFO) > 0;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GSWR = data;
+	XDMAC_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_xdmac_get_GCFG_CGDISIF_bit(const void *const hw)
+static inline void hri_xdmac_write_GSWF_reg(const void *const hw, hri_xdmac_gswf_reg_t data)
 {
-	return (((Xdmac *)hw)->XDMAC_GCFG & XDMAC_GCFG_CGDISIF) > 0;
-}
-
-static inline bool hri_xdmac_get_GCFG_BXKBEN_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GCFG & XDMAC_GCFG_BXKBEN) > 0;
-}
-
-static inline hri_xdmac_gcfg_reg_t hri_xdmac_get_GCFG_reg(const void *const hw, hri_xdmac_gcfg_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GCFG;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_xdmac_gcfg_reg_t hri_xdmac_read_GCFG_reg(const void *const hw)
-{
-	return ((Xdmac *)hw)->XDMAC_GCFG;
-}
-
-static inline bool hri_xdmac_get_GIS_IS0_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS0) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS1_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS1) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS2_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS2) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS3_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS3) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS4_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS4) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS5_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS5) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS6_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS6) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS7_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS7) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS8_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS8) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS9_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS9) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS10_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS10) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS11_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS11) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS12_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS12) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS13_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS13) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS14_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS14) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS15_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS15) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS16_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS16) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS17_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS17) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS18_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS18) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS19_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS19) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS20_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS20) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS21_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS21) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS22_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS22) > 0;
-}
-
-static inline bool hri_xdmac_get_GIS_IS23_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GIS & XDMAC_GIS_IS23) > 0;
-}
-
-static inline hri_xdmac_gis_reg_t hri_xdmac_get_GIS_reg(const void *const hw, hri_xdmac_gis_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GIS;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_xdmac_gis_reg_t hri_xdmac_read_GIS_reg(const void *const hw)
-{
-	return ((Xdmac *)hw)->XDMAC_GIS;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS0_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS0) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS1_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS1) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS2_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS2) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS3_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS3) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS4_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS4) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS5_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS5) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS6_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS6) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS7_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS7) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS8_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS8) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS9_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS9) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS10_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS10) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS11_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS11) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS12_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS12) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS13_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS13) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS14_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS14) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS15_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS15) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS16_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS16) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS17_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS17) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS18_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS18) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS19_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS19) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS20_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS20) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS21_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS21) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS22_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS22) > 0;
-}
-
-static inline bool hri_xdmac_get_GSWS_SWRS23_bit(const void *const hw)
-{
-	return (((Xdmac *)hw)->XDMAC_GSWS & XDMAC_GSWS_SWRS23) > 0;
-}
-
-static inline hri_xdmac_gsws_reg_t hri_xdmac_get_GSWS_reg(const void *const hw, hri_xdmac_gsws_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Xdmac *)hw)->XDMAC_GSWS;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_xdmac_gsws_reg_t hri_xdmac_read_GSWS_reg(const void *const hw)
-{
-	return ((Xdmac *)hw)->XDMAC_GSWS;
+	XDMAC_CRITICAL_SECTION_ENTER();
+	((Xdmac *)hw)->XDMAC_GSWF = data;
+	XDMAC_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

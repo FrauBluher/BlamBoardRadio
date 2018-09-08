@@ -3,39 +3,29 @@
  *
  * \brief SAM USART
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -478,18 +468,253 @@ static inline void hri_usart_clear_US_IMR_reg(const void *const hw, hri_usart_us
 	((Usart *)hw)->US_IDR = mask;
 }
 
-static inline void hri_usart_write_US_CR_reg(const void *const hw, hri_usart_us_cr_reg_t data)
+static inline bool hri_usart_get_US_CSR_RXRDY_bit(const void *const hw)
 {
-	USART_CRITICAL_SECTION_ENTER();
-	((Usart *)hw)->US_CR = data;
-	USART_CRITICAL_SECTION_LEAVE();
+	return (((Usart *)hw)->US_CSR & US_CSR_RXRDY) > 0;
 }
 
-static inline void hri_usart_write_US_THR_reg(const void *const hw, hri_usart_us_thr_reg_t data)
+static inline bool hri_usart_get_US_CSR_TXRDY_bit(const void *const hw)
 {
-	USART_CRITICAL_SECTION_ENTER();
-	((Usart *)hw)->US_THR = data;
-	USART_CRITICAL_SECTION_LEAVE();
+	return (((Usart *)hw)->US_CSR & US_CSR_TXRDY) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_RXBRK_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_RXBRK) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_OVRE_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_OVRE) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_FRAME_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_FRAME) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_PARE_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_PARE) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_TIMEOUT_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_TIMEOUT) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_TXEMPTY_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_TXEMPTY) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_ITER_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_ITER) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_NACK_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_NACK) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_RIIC_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_RIIC) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_DSRIC_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_DSRIC) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_DCDIC_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_DCDIC) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_CTSIC_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_CTSIC) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_RI_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_RI) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_DSR_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_DSR) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_DCD_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_DCD) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_CTS_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_CTS) > 0;
+}
+
+static inline bool hri_usart_get_US_CSR_MANERR_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_CSR & US_CSR_MANERR) > 0;
+}
+
+static inline hri_usart_us_csr_reg_t hri_usart_get_US_CSR_reg(const void *const hw, hri_usart_us_csr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_CSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_csr_reg_t hri_usart_read_US_CSR_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_CSR;
+}
+
+static inline bool hri_usart_get_US_RHR_RXSYNH_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_RHR & US_RHR_RXSYNH) > 0;
+}
+
+static inline hri_usart_us_rhr_reg_t hri_usart_get_US_RHR_RXCHR_bf(const void *const hw, hri_usart_us_rhr_reg_t mask)
+{
+	return (((Usart *)hw)->US_RHR & US_RHR_RXCHR(mask)) >> US_RHR_RXCHR_Pos;
+}
+
+static inline hri_usart_us_rhr_reg_t hri_usart_read_US_RHR_RXCHR_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_RHR & US_RHR_RXCHR_Msk) >> US_RHR_RXCHR_Pos;
+}
+
+static inline hri_usart_us_rhr_reg_t hri_usart_get_US_RHR_reg(const void *const hw, hri_usart_us_rhr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_RHR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_rhr_reg_t hri_usart_read_US_RHR_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_RHR;
+}
+
+static inline hri_usart_us_ner_reg_t hri_usart_get_US_NER_NB_ERRORS_bf(const void *const      hw,
+                                                                       hri_usart_us_ner_reg_t mask)
+{
+	return (((Usart *)hw)->US_NER & US_NER_NB_ERRORS(mask)) >> US_NER_NB_ERRORS_Pos;
+}
+
+static inline hri_usart_us_ner_reg_t hri_usart_read_US_NER_NB_ERRORS_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_NER & US_NER_NB_ERRORS_Msk) >> US_NER_NB_ERRORS_Pos;
+}
+
+static inline hri_usart_us_ner_reg_t hri_usart_get_US_NER_reg(const void *const hw, hri_usart_us_ner_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_NER;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_ner_reg_t hri_usart_read_US_NER_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_NER;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_LINCD_bf(const void *const         hw,
+                                                                         hri_usart_us_linbrr_reg_t mask)
+{
+	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINCD(mask)) >> US_LINBRR_LINCD_Pos;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_LINCD_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINCD_Msk) >> US_LINBRR_LINCD_Pos;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_LINFP_bf(const void *const         hw,
+                                                                         hri_usart_us_linbrr_reg_t mask)
+{
+	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINFP(mask)) >> US_LINBRR_LINFP_Pos;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_LINFP_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINFP_Msk) >> US_LINBRR_LINFP_Pos;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_reg(const void *const         hw,
+                                                                    hri_usart_us_linbrr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_LINBRR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_LINBRR;
+}
+
+static inline hri_usart_us_lonbl_reg_t hri_usart_get_US_LONBL_LONBL_bf(const void *const        hw,
+                                                                       hri_usart_us_lonbl_reg_t mask)
+{
+	return (((Usart *)hw)->US_LONBL & US_LONBL_LONBL(mask)) >> US_LONBL_LONBL_Pos;
+}
+
+static inline hri_usart_us_lonbl_reg_t hri_usart_read_US_LONBL_LONBL_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_LONBL & US_LONBL_LONBL_Msk) >> US_LONBL_LONBL_Pos;
+}
+
+static inline hri_usart_us_lonbl_reg_t hri_usart_get_US_LONBL_reg(const void *const hw, hri_usart_us_lonbl_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_LONBL;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_lonbl_reg_t hri_usart_read_US_LONBL_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_LONBL;
+}
+
+static inline bool hri_usart_get_US_WPSR_WPVS_bit(const void *const hw)
+{
+	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVS) > 0;
+}
+
+static inline hri_usart_us_wpsr_reg_t hri_usart_get_US_WPSR_WPVSRC_bf(const void *const       hw,
+                                                                      hri_usart_us_wpsr_reg_t mask)
+{
+	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVSRC(mask)) >> US_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_usart_us_wpsr_reg_t hri_usart_read_US_WPSR_WPVSRC_bf(const void *const hw)
+{
+	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVSRC_Msk) >> US_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_usart_us_wpsr_reg_t hri_usart_get_US_WPSR_reg(const void *const hw, hri_usart_us_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Usart *)hw)->US_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_usart_us_wpsr_reg_t hri_usart_read_US_WPSR_reg(const void *const hw)
+{
+	return ((Usart *)hw)->US_WPSR;
 }
 
 static inline void hri_usart_set_US_MR_SYNC_bit(const void *const hw)
@@ -4269,253 +4494,18 @@ static inline hri_usart_us_wpmr_reg_t hri_usart_read_US_WPMR_reg(const void *con
 	return ((Usart *)hw)->US_WPMR;
 }
 
-static inline bool hri_usart_get_US_CSR_RXRDY_bit(const void *const hw)
+static inline void hri_usart_write_US_CR_reg(const void *const hw, hri_usart_us_cr_reg_t data)
 {
-	return (((Usart *)hw)->US_CSR & US_CSR_RXRDY) > 0;
+	USART_CRITICAL_SECTION_ENTER();
+	((Usart *)hw)->US_CR = data;
+	USART_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_usart_get_US_CSR_TXRDY_bit(const void *const hw)
+static inline void hri_usart_write_US_THR_reg(const void *const hw, hri_usart_us_thr_reg_t data)
 {
-	return (((Usart *)hw)->US_CSR & US_CSR_TXRDY) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_RXBRK_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_RXBRK) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_OVRE_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_OVRE) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_FRAME_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_FRAME) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_PARE_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_PARE) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_TIMEOUT_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_TIMEOUT) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_TXEMPTY_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_TXEMPTY) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_ITER_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_ITER) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_NACK_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_NACK) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_RIIC_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_RIIC) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_DSRIC_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_DSRIC) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_DCDIC_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_DCDIC) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_CTSIC_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_CTSIC) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_RI_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_RI) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_DSR_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_DSR) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_DCD_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_DCD) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_CTS_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_CTS) > 0;
-}
-
-static inline bool hri_usart_get_US_CSR_MANERR_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_CSR & US_CSR_MANERR) > 0;
-}
-
-static inline hri_usart_us_csr_reg_t hri_usart_get_US_CSR_reg(const void *const hw, hri_usart_us_csr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_CSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_csr_reg_t hri_usart_read_US_CSR_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_CSR;
-}
-
-static inline bool hri_usart_get_US_RHR_RXSYNH_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_RHR & US_RHR_RXSYNH) > 0;
-}
-
-static inline hri_usart_us_rhr_reg_t hri_usart_get_US_RHR_RXCHR_bf(const void *const hw, hri_usart_us_rhr_reg_t mask)
-{
-	return (((Usart *)hw)->US_RHR & US_RHR_RXCHR(mask)) >> US_RHR_RXCHR_Pos;
-}
-
-static inline hri_usart_us_rhr_reg_t hri_usart_read_US_RHR_RXCHR_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_RHR & US_RHR_RXCHR_Msk) >> US_RHR_RXCHR_Pos;
-}
-
-static inline hri_usart_us_rhr_reg_t hri_usart_get_US_RHR_reg(const void *const hw, hri_usart_us_rhr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_RHR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_rhr_reg_t hri_usart_read_US_RHR_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_RHR;
-}
-
-static inline hri_usart_us_ner_reg_t hri_usart_get_US_NER_NB_ERRORS_bf(const void *const      hw,
-                                                                       hri_usart_us_ner_reg_t mask)
-{
-	return (((Usart *)hw)->US_NER & US_NER_NB_ERRORS(mask)) >> US_NER_NB_ERRORS_Pos;
-}
-
-static inline hri_usart_us_ner_reg_t hri_usart_read_US_NER_NB_ERRORS_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_NER & US_NER_NB_ERRORS_Msk) >> US_NER_NB_ERRORS_Pos;
-}
-
-static inline hri_usart_us_ner_reg_t hri_usart_get_US_NER_reg(const void *const hw, hri_usart_us_ner_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_NER;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_ner_reg_t hri_usart_read_US_NER_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_NER;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_LINCD_bf(const void *const         hw,
-                                                                         hri_usart_us_linbrr_reg_t mask)
-{
-	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINCD(mask)) >> US_LINBRR_LINCD_Pos;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_LINCD_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINCD_Msk) >> US_LINBRR_LINCD_Pos;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_LINFP_bf(const void *const         hw,
-                                                                         hri_usart_us_linbrr_reg_t mask)
-{
-	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINFP(mask)) >> US_LINBRR_LINFP_Pos;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_LINFP_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_LINBRR & US_LINBRR_LINFP_Msk) >> US_LINBRR_LINFP_Pos;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_get_US_LINBRR_reg(const void *const         hw,
-                                                                    hri_usart_us_linbrr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_LINBRR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_linbrr_reg_t hri_usart_read_US_LINBRR_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_LINBRR;
-}
-
-static inline hri_usart_us_lonbl_reg_t hri_usart_get_US_LONBL_LONBL_bf(const void *const        hw,
-                                                                       hri_usart_us_lonbl_reg_t mask)
-{
-	return (((Usart *)hw)->US_LONBL & US_LONBL_LONBL(mask)) >> US_LONBL_LONBL_Pos;
-}
-
-static inline hri_usart_us_lonbl_reg_t hri_usart_read_US_LONBL_LONBL_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_LONBL & US_LONBL_LONBL_Msk) >> US_LONBL_LONBL_Pos;
-}
-
-static inline hri_usart_us_lonbl_reg_t hri_usart_get_US_LONBL_reg(const void *const hw, hri_usart_us_lonbl_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_LONBL;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_lonbl_reg_t hri_usart_read_US_LONBL_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_LONBL;
-}
-
-static inline bool hri_usart_get_US_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVS) > 0;
-}
-
-static inline hri_usart_us_wpsr_reg_t hri_usart_get_US_WPSR_WPVSRC_bf(const void *const       hw,
-                                                                      hri_usart_us_wpsr_reg_t mask)
-{
-	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVSRC(mask)) >> US_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_usart_us_wpsr_reg_t hri_usart_read_US_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Usart *)hw)->US_WPSR & US_WPSR_WPVSRC_Msk) >> US_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_usart_us_wpsr_reg_t hri_usart_get_US_WPSR_reg(const void *const hw, hri_usart_us_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Usart *)hw)->US_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_usart_us_wpsr_reg_t hri_usart_read_US_WPSR_reg(const void *const hw)
-{
-	return ((Usart *)hw)->US_WPSR;
+	USART_CRITICAL_SECTION_ENTER();
+	((Usart *)hw)->US_THR = data;
+	USART_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

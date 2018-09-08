@@ -3,7 +3,7 @@
  *
  * \brief GCC linker script (sram) for ATSAMS70Q21
  *
- * Copyright (c) 2017 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
+ * Copyright (c) 2018 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
  *
  * \license_start
  *
@@ -97,12 +97,8 @@ SECTIONS
         _efixed = .;            /* End of text section */
     } > ram
 
-    . = ALIGN(8);
+    . = ALIGN(4);
     _etext = .;
-
-    .relocate : AT (_etext)
-    {
-        . = ALIGN(8);    _etext = .;
 
     .relocate : AT (_etext)
     {

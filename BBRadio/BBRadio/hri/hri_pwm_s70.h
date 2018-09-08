@@ -3,39 +3,29 @@
  *
  * \brief SAM PWM
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -123,25 +113,27 @@ typedef uint32_t hri_pwmcmp_cmpmupd_reg_t;
 typedef uint32_t hri_pwmcmp_cmpv_reg_t;
 typedef uint32_t hri_pwmcmp_cmpvupd_reg_t;
 
-static inline void hri_pwmchnum_write_CDTYUPD_reg(const void *const hw, hri_pwm_cdtyupd_reg_t data)
+static inline hri_pwm_ccnt_reg_t hri_pwmchnum_get_CCNT_CNT_bf(const void *const hw, hri_pwm_ccnt_reg_t mask)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((PwmChNum *)hw)->PWM_CDTYUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((PwmChNum *)hw)->PWM_CCNT & PWM_CCNT_CNT(mask)) >> PWM_CCNT_CNT_Pos;
 }
 
-static inline void hri_pwmchnum_write_CPRDUPD_reg(const void *const hw, hri_pwm_cprdupd_reg_t data)
+static inline hri_pwm_ccnt_reg_t hri_pwmchnum_read_CCNT_CNT_bf(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((PwmChNum *)hw)->PWM_CPRDUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((PwmChNum *)hw)->PWM_CCNT & PWM_CCNT_CNT_Msk) >> PWM_CCNT_CNT_Pos;
 }
 
-static inline void hri_pwmchnum_write_DTUPD_reg(const void *const hw, hri_pwm_dtupd_reg_t data)
+static inline hri_pwm_ccnt_reg_t hri_pwmchnum_get_CCNT_reg(const void *const hw, hri_pwm_ccnt_reg_t mask)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((PwmChNum *)hw)->PWM_DTUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	uint32_t tmp;
+	tmp = ((PwmChNum *)hw)->PWM_CCNT;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pwm_ccnt_reg_t hri_pwmchnum_read_CCNT_reg(const void *const hw)
+{
+	return ((PwmChNum *)hw)->PWM_CCNT;
 }
 
 static inline void hri_pwmchnum_set_CMR_CALG_bit(const void *const hw)
@@ -948,48 +940,50 @@ static inline hri_pwm_dt_reg_t hri_pwmchnum_read_DT_reg(const void *const hw)
 	return ((PwmChNum *)hw)->PWM_DT;
 }
 
-static inline hri_pwm_ccnt_reg_t hri_pwmchnum_get_CCNT_CNT_bf(const void *const hw, hri_pwm_ccnt_reg_t mask)
+static inline void hri_pwmchnum_write_CDTYUPD_reg(const void *const hw, hri_pwm_cdtyupd_reg_t data)
 {
-	return (((PwmChNum *)hw)->PWM_CCNT & PWM_CCNT_CNT(mask)) >> PWM_CCNT_CNT_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((PwmChNum *)hw)->PWM_CDTYUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_ccnt_reg_t hri_pwmchnum_read_CCNT_CNT_bf(const void *const hw)
+static inline void hri_pwmchnum_write_CPRDUPD_reg(const void *const hw, hri_pwm_cprdupd_reg_t data)
 {
-	return (((PwmChNum *)hw)->PWM_CCNT & PWM_CCNT_CNT_Msk) >> PWM_CCNT_CNT_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((PwmChNum *)hw)->PWM_CPRDUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_ccnt_reg_t hri_pwmchnum_get_CCNT_reg(const void *const hw, hri_pwm_ccnt_reg_t mask)
+static inline void hri_pwmchnum_write_DTUPD_reg(const void *const hw, hri_pwm_dtupd_reg_t data)
+{
+	PWM_CRITICAL_SECTION_ENTER();
+	((PwmChNum *)hw)->PWM_DTUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_pwm_ccnt_reg_t hri_pwm_get_CCNT_CNT_bf(const void *const hw, uint8_t submodule_index,
+                                                         hri_pwm_ccnt_reg_t mask)
+{
+	return (((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT & PWM_CCNT_CNT(mask)) >> PWM_CCNT_CNT_Pos;
+}
+
+static inline hri_pwm_ccnt_reg_t hri_pwm_read_CCNT_CNT_bf(const void *const hw, uint8_t submodule_index)
+{
+	return (((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT & PWM_CCNT_CNT_Msk) >> PWM_CCNT_CNT_Pos;
+}
+
+static inline hri_pwm_ccnt_reg_t hri_pwm_get_CCNT_reg(const void *const hw, uint8_t submodule_index,
+                                                      hri_pwm_ccnt_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((PwmChNum *)hw)->PWM_CCNT;
+	tmp = ((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_pwm_ccnt_reg_t hri_pwmchnum_read_CCNT_reg(const void *const hw)
+static inline hri_pwm_ccnt_reg_t hri_pwm_read_CCNT_reg(const void *const hw, uint8_t submodule_index)
 {
-	return ((PwmChNum *)hw)->PWM_CCNT;
-}
-
-static inline void hri_pwm_write_CDTYUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cdtyupd_reg_t data)
-{
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CDTYUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_pwm_write_CPRDUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cprdupd_reg_t data)
-{
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CPRDUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
-}
-
-static inline void hri_pwm_write_DTUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_dtupd_reg_t data)
-{
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_DTUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return ((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT;
 }
 
 static inline void hri_pwm_set_CMR_CALG_bit(const void *const hw, uint8_t submodule_index)
@@ -1804,42 +1798,24 @@ static inline hri_pwm_dt_reg_t hri_pwm_read_DT_reg(const void *const hw, uint8_t
 	return ((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_DT;
 }
 
-static inline hri_pwm_ccnt_reg_t hri_pwm_get_CCNT_CNT_bf(const void *const hw, uint8_t submodule_index,
-                                                         hri_pwm_ccnt_reg_t mask)
-{
-	return (((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT & PWM_CCNT_CNT(mask)) >> PWM_CCNT_CNT_Pos;
-}
-
-static inline hri_pwm_ccnt_reg_t hri_pwm_read_CCNT_CNT_bf(const void *const hw, uint8_t submodule_index)
-{
-	return (((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT & PWM_CCNT_CNT_Msk) >> PWM_CCNT_CNT_Pos;
-}
-
-static inline hri_pwm_ccnt_reg_t hri_pwm_get_CCNT_reg(const void *const hw, uint8_t submodule_index,
-                                                      hri_pwm_ccnt_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pwm_ccnt_reg_t hri_pwm_read_CCNT_reg(const void *const hw, uint8_t submodule_index)
-{
-	return ((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CCNT;
-}
-
-static inline void hri_pwmcmp_write_CMPVUPD_reg(const void *const hw, hri_pwm_cmpvupd_reg_t data)
+static inline void hri_pwm_write_CDTYUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cdtyupd_reg_t data)
 {
 	PWM_CRITICAL_SECTION_ENTER();
-	((PwmCmp *)hw)->PWM_CMPVUPD = data;
+	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CDTYUPD = data;
 	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline void hri_pwmcmp_write_CMPMUPD_reg(const void *const hw, hri_pwm_cmpmupd_reg_t data)
+static inline void hri_pwm_write_CPRDUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cprdupd_reg_t data)
 {
 	PWM_CRITICAL_SECTION_ENTER();
-	((PwmCmp *)hw)->PWM_CMPMUPD = data;
+	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_CPRDUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_pwm_write_DTUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_dtupd_reg_t data)
+{
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CH_NUM[submodule_index].PWM_DTUPD = data;
 	PWM_CRITICAL_SECTION_LEAVE();
 }
 
@@ -2293,17 +2269,17 @@ static inline hri_pwm_cmpm_reg_t hri_pwmcmp_read_CMPM_reg(const void *const hw)
 	return ((PwmCmp *)hw)->PWM_CMPM;
 }
 
-static inline void hri_pwm_write_CMPVUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cmpvupd_reg_t data)
+static inline void hri_pwmcmp_write_CMPVUPD_reg(const void *const hw, hri_pwm_cmpvupd_reg_t data)
 {
 	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMP[submodule_index].PWM_CMPVUPD = data;
+	((PwmCmp *)hw)->PWM_CMPVUPD = data;
 	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline void hri_pwm_write_CMPMUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cmpmupd_reg_t data)
+static inline void hri_pwmcmp_write_CMPMUPD_reg(const void *const hw, hri_pwm_cmpmupd_reg_t data)
 {
 	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMP[submodule_index].PWM_CMPMUPD = data;
+	((PwmCmp *)hw)->PWM_CMPMUPD = data;
 	PWM_CRITICAL_SECTION_LEAVE();
 }
 
@@ -2764,6 +2740,176 @@ static inline void hri_pwm_toggle_CMPM_reg(const void *const hw, uint8_t submodu
 static inline hri_pwm_cmpm_reg_t hri_pwm_read_CMPM_reg(const void *const hw, uint8_t submodule_index)
 {
 	return ((Pwm *)hw)->PWM_CMP[submodule_index].PWM_CMPM;
+}
+
+static inline void hri_pwm_write_CMPVUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cmpvupd_reg_t data)
+{
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMP[submodule_index].PWM_CMPVUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
+}
+
+static inline void hri_pwm_write_CMPMUPD_reg(const void *const hw, uint8_t submodule_index, hri_pwm_cmpmupd_reg_t data)
+{
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMP[submodule_index].PWM_CMPMUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
+}
+
+static inline bool hri_pwm_get_ISR1_CHID0_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID0) >> PWM_ISR1_CHID0_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_CHID1_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID1) >> PWM_ISR1_CHID1_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_CHID2_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID2) >> PWM_ISR1_CHID2_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_CHID3_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID3) >> PWM_ISR1_CHID3_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_FCHID0_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID0) >> PWM_ISR1_FCHID0_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_FCHID1_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID1) >> PWM_ISR1_FCHID1_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_FCHID2_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID2) >> PWM_ISR1_FCHID2_Pos;
+}
+
+static inline bool hri_pwm_get_ISR1_FCHID3_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID3) >> PWM_ISR1_FCHID3_Pos;
+}
+
+static inline hri_pwm_isr1_reg_t hri_pwm_get_ISR1_reg(const void *const hw, hri_pwm_isr1_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pwm *)hw)->PWM_ISR1;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pwm_isr1_reg_t hri_pwm_read_ISR1_reg(const void *const hw)
+{
+	return ((Pwm *)hw)->PWM_ISR1;
+}
+
+static inline bool hri_pwm_get_ISR2_WRDY_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_WRDY) >> PWM_ISR2_WRDY_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_UNRE_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_UNRE) >> PWM_ISR2_UNRE_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM0_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM0) >> PWM_ISR2_CMPM0_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM1_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM1) >> PWM_ISR2_CMPM1_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM2_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM2) >> PWM_ISR2_CMPM2_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM3_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM3) >> PWM_ISR2_CMPM3_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM4_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM4) >> PWM_ISR2_CMPM4_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM5_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM5) >> PWM_ISR2_CMPM5_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM6_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM6) >> PWM_ISR2_CMPM6_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPM7_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM7) >> PWM_ISR2_CMPM7_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU0_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU0) >> PWM_ISR2_CMPU0_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU1_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU1) >> PWM_ISR2_CMPU1_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU2_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU2) >> PWM_ISR2_CMPU2_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU3_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU3) >> PWM_ISR2_CMPU3_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU4_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU4) >> PWM_ISR2_CMPU4_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU5_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU5) >> PWM_ISR2_CMPU5_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU6_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU6) >> PWM_ISR2_CMPU6_Pos;
+}
+
+static inline bool hri_pwm_get_ISR2_CMPU7_bit(const void *const hw)
+{
+	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU7) >> PWM_ISR2_CMPU7_Pos;
+}
+
+static inline hri_pwm_isr2_reg_t hri_pwm_get_ISR2_reg(const void *const hw, hri_pwm_isr2_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pwm *)hw)->PWM_ISR2;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pwm_isr2_reg_t hri_pwm_read_ISR2_reg(const void *const hw)
+{
+	return ((Pwm *)hw)->PWM_ISR2;
 }
 
 static inline void hri_pwm_set_IMR1_CHID0_bit(const void *const hw)
@@ -3448,265 +3594,158 @@ static inline void hri_pwm_clear_IMR2_reg(const void *const hw, hri_pwm_imr2_reg
 	((Pwm *)hw)->PWM_IDR2 = mask;
 }
 
-static inline bool hri_pwm_get_ISR1_CHID0_bit(const void *const hw)
+static inline bool hri_pwm_get_SR_CHID0_bit(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID0) >> PWM_ISR1_CHID0_Pos;
+	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID0) > 0;
 }
 
-static inline bool hri_pwm_get_ISR1_CHID1_bit(const void *const hw)
+static inline bool hri_pwm_get_SR_CHID1_bit(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID1) >> PWM_ISR1_CHID1_Pos;
+	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID1) > 0;
 }
 
-static inline bool hri_pwm_get_ISR1_CHID2_bit(const void *const hw)
+static inline bool hri_pwm_get_SR_CHID2_bit(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID2) >> PWM_ISR1_CHID2_Pos;
+	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID2) > 0;
 }
 
-static inline bool hri_pwm_get_ISR1_CHID3_bit(const void *const hw)
+static inline bool hri_pwm_get_SR_CHID3_bit(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_CHID3) >> PWM_ISR1_CHID3_Pos;
+	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID3) > 0;
 }
 
-static inline bool hri_pwm_get_ISR1_FCHID0_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID0) >> PWM_ISR1_FCHID0_Pos;
-}
-
-static inline bool hri_pwm_get_ISR1_FCHID1_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID1) >> PWM_ISR1_FCHID1_Pos;
-}
-
-static inline bool hri_pwm_get_ISR1_FCHID2_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID2) >> PWM_ISR1_FCHID2_Pos;
-}
-
-static inline bool hri_pwm_get_ISR1_FCHID3_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR1 & PWM_ISR1_FCHID3) >> PWM_ISR1_FCHID3_Pos;
-}
-
-static inline hri_pwm_isr1_reg_t hri_pwm_get_ISR1_reg(const void *const hw, hri_pwm_isr1_reg_t mask)
+static inline hri_pwm_sr_reg_t hri_pwm_get_SR_reg(const void *const hw, hri_pwm_sr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_ISR1;
+	tmp = ((Pwm *)hw)->PWM_SR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_pwm_isr1_reg_t hri_pwm_read_ISR1_reg(const void *const hw)
+static inline hri_pwm_sr_reg_t hri_pwm_read_SR_reg(const void *const hw)
 {
-	return ((Pwm *)hw)->PWM_ISR1;
+	return ((Pwm *)hw)->PWM_SR;
 }
 
-static inline bool hri_pwm_get_ISR2_WRDY_bit(const void *const hw)
+static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_FIV_bf(const void *const hw, hri_pwm_fsr_reg_t mask)
 {
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_WRDY) >> PWM_ISR2_WRDY_Pos;
+	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FIV(mask)) >> PWM_FSR_FIV_Pos;
 }
 
-static inline bool hri_pwm_get_ISR2_UNRE_bit(const void *const hw)
+static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_FIV_bf(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_UNRE) >> PWM_ISR2_UNRE_Pos;
+	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FIV_Msk) >> PWM_FSR_FIV_Pos;
 }
 
-static inline bool hri_pwm_get_ISR2_CMPM0_bit(const void *const hw)
+static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_FS_bf(const void *const hw, hri_pwm_fsr_reg_t mask)
 {
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM0) >> PWM_ISR2_CMPM0_Pos;
+	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FS(mask)) >> PWM_FSR_FS_Pos;
 }
 
-static inline bool hri_pwm_get_ISR2_CMPM1_bit(const void *const hw)
+static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_FS_bf(const void *const hw)
 {
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM1) >> PWM_ISR2_CMPM1_Pos;
+	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FS_Msk) >> PWM_FSR_FS_Pos;
 }
 
-static inline bool hri_pwm_get_ISR2_CMPM2_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM2) >> PWM_ISR2_CMPM2_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPM3_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM3) >> PWM_ISR2_CMPM3_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPM4_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM4) >> PWM_ISR2_CMPM4_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPM5_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM5) >> PWM_ISR2_CMPM5_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPM6_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM6) >> PWM_ISR2_CMPM6_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPM7_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPM7) >> PWM_ISR2_CMPM7_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU0_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU0) >> PWM_ISR2_CMPU0_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU1_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU1) >> PWM_ISR2_CMPU1_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU2_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU2) >> PWM_ISR2_CMPU2_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU3_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU3) >> PWM_ISR2_CMPU3_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU4_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU4) >> PWM_ISR2_CMPU4_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU5_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU5) >> PWM_ISR2_CMPU5_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU6_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU6) >> PWM_ISR2_CMPU6_Pos;
-}
-
-static inline bool hri_pwm_get_ISR2_CMPU7_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_ISR2 & PWM_ISR2_CMPU7) >> PWM_ISR2_CMPU7_Pos;
-}
-
-static inline hri_pwm_isr2_reg_t hri_pwm_get_ISR2_reg(const void *const hw, hri_pwm_isr2_reg_t mask)
+static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_reg(const void *const hw, hri_pwm_fsr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_ISR2;
+	tmp = ((Pwm *)hw)->PWM_FSR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_pwm_isr2_reg_t hri_pwm_read_ISR2_reg(const void *const hw)
+static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_reg(const void *const hw)
 {
-	return ((Pwm *)hw)->PWM_ISR2;
+	return ((Pwm *)hw)->PWM_FSR;
 }
 
-static inline void hri_pwm_write_ENA_reg(const void *const hw, hri_pwm_ena_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS0_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_ENA = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS0) > 0;
 }
 
-static inline void hri_pwm_write_DIS_reg(const void *const hw, hri_pwm_dis_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS1_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_DIS = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS1) > 0;
 }
 
-static inline void hri_pwm_write_DMAR_reg(const void *const hw, hri_pwm_dmar_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS2_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_DMAR = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS2) > 0;
 }
 
-static inline void hri_pwm_write_SCUPUPD_reg(const void *const hw, hri_pwm_scupupd_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS3_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_SCUPUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS3) > 0;
 }
 
-static inline void hri_pwm_write_OSS_reg(const void *const hw, hri_pwm_oss_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS4_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_OSS = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS4) > 0;
 }
 
-static inline void hri_pwm_write_OSC_reg(const void *const hw, hri_pwm_osc_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPSWS5_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_OSC = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS5) > 0;
 }
 
-static inline void hri_pwm_write_OSSUPD_reg(const void *const hw, hri_pwm_ossupd_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPVS_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_OSSUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVS) > 0;
 }
 
-static inline void hri_pwm_write_OSCUPD_reg(const void *const hw, hri_pwm_oscupd_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS0_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_OSCUPD = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS0) > 0;
 }
 
-static inline void hri_pwm_write_FCR_reg(const void *const hw, hri_pwm_fcr_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS1_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_FCR = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS1) > 0;
 }
 
-static inline void hri_pwm_write_SSPUP_reg(const void *const hw, hri_pwm_sspup_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS2_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_SSPUP = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS2) > 0;
 }
 
-static inline void hri_pwm_write_WPCR_reg(const void *const hw, hri_pwm_wpcr_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS3_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_WPCR = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS3) > 0;
 }
 
-static inline void hri_pwm_write_CMUPD0_reg(const void *const hw, hri_pwm_cmupd0_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS4_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMUPD0 = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS4) > 0;
 }
 
-static inline void hri_pwm_write_CMUPD1_reg(const void *const hw, hri_pwm_cmupd1_reg_t data)
+static inline bool hri_pwm_get_WPSR_WPHWS5_bit(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMUPD1 = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS5) > 0;
 }
 
-static inline void hri_pwm_write_CMUPD2_reg(const void *const hw, hri_pwm_cmupd2_reg_t data)
+static inline hri_pwm_wpsr_reg_t hri_pwm_get_WPSR_WPVSRC_bf(const void *const hw, hri_pwm_wpsr_reg_t mask)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMUPD2 = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVSRC(mask)) >> PWM_WPSR_WPVSRC_Pos;
 }
 
-static inline void hri_pwm_write_CMUPD3_reg(const void *const hw, hri_pwm_cmupd3_reg_t data)
+static inline hri_pwm_wpsr_reg_t hri_pwm_read_WPSR_WPVSRC_bf(const void *const hw)
 {
-	PWM_CRITICAL_SECTION_ENTER();
-	((Pwm *)hw)->PWM_CMUPD3 = data;
-	PWM_CRITICAL_SECTION_LEAVE();
+	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVSRC_Msk) >> PWM_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_pwm_wpsr_reg_t hri_pwm_get_WPSR_reg(const void *const hw, hri_pwm_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Pwm *)hw)->PWM_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_pwm_wpsr_reg_t hri_pwm_read_WPSR_reg(const void *const hw)
+{
+	return ((Pwm *)hw)->PWM_WPSR;
 }
 
 static inline void hri_pwm_set_CLK_DIVA_bf(const void *const hw, hri_pwm_clk_reg_t mask)
@@ -8142,158 +8181,109 @@ static inline hri_pwm_lebr2_reg_t hri_pwm_read_LEBR2_reg(const void *const hw)
 	return ((Pwm *)hw)->PWM_LEBR2;
 }
 
-static inline bool hri_pwm_get_SR_CHID0_bit(const void *const hw)
+static inline void hri_pwm_write_ENA_reg(const void *const hw, hri_pwm_ena_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID0) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_ENA = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_SR_CHID1_bit(const void *const hw)
+static inline void hri_pwm_write_DIS_reg(const void *const hw, hri_pwm_dis_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID1) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_DIS = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_SR_CHID2_bit(const void *const hw)
+static inline void hri_pwm_write_DMAR_reg(const void *const hw, hri_pwm_dmar_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID2) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_DMAR = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_SR_CHID3_bit(const void *const hw)
+static inline void hri_pwm_write_SCUPUPD_reg(const void *const hw, hri_pwm_scupupd_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_SR & PWM_SR_CHID3) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_SCUPUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_sr_reg_t hri_pwm_get_SR_reg(const void *const hw, hri_pwm_sr_reg_t mask)
+static inline void hri_pwm_write_OSS_reg(const void *const hw, hri_pwm_oss_reg_t data)
 {
-	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_SR;
-	tmp &= mask;
-	return tmp;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_OSS = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_sr_reg_t hri_pwm_read_SR_reg(const void *const hw)
+static inline void hri_pwm_write_OSC_reg(const void *const hw, hri_pwm_osc_reg_t data)
 {
-	return ((Pwm *)hw)->PWM_SR;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_OSC = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_FIV_bf(const void *const hw, hri_pwm_fsr_reg_t mask)
+static inline void hri_pwm_write_OSSUPD_reg(const void *const hw, hri_pwm_ossupd_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FIV(mask)) >> PWM_FSR_FIV_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_OSSUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_FIV_bf(const void *const hw)
+static inline void hri_pwm_write_OSCUPD_reg(const void *const hw, hri_pwm_oscupd_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FIV_Msk) >> PWM_FSR_FIV_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_OSCUPD = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_FS_bf(const void *const hw, hri_pwm_fsr_reg_t mask)
+static inline void hri_pwm_write_FCR_reg(const void *const hw, hri_pwm_fcr_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FS(mask)) >> PWM_FSR_FS_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_FCR = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_FS_bf(const void *const hw)
+static inline void hri_pwm_write_SSPUP_reg(const void *const hw, hri_pwm_sspup_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_FSR & PWM_FSR_FS_Msk) >> PWM_FSR_FS_Pos;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_SSPUP = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_get_FSR_reg(const void *const hw, hri_pwm_fsr_reg_t mask)
+static inline void hri_pwm_write_WPCR_reg(const void *const hw, hri_pwm_wpcr_reg_t data)
 {
-	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_FSR;
-	tmp &= mask;
-	return tmp;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_WPCR = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_pwm_fsr_reg_t hri_pwm_read_FSR_reg(const void *const hw)
+static inline void hri_pwm_write_CMUPD0_reg(const void *const hw, hri_pwm_cmupd0_reg_t data)
 {
-	return ((Pwm *)hw)->PWM_FSR;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMUPD0 = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_WPSR_WPSWS0_bit(const void *const hw)
+static inline void hri_pwm_write_CMUPD1_reg(const void *const hw, hri_pwm_cmupd1_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS0) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMUPD1 = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_WPSR_WPSWS1_bit(const void *const hw)
+static inline void hri_pwm_write_CMUPD2_reg(const void *const hw, hri_pwm_cmupd2_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS1) > 0;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMUPD2 = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
-static inline bool hri_pwm_get_WPSR_WPSWS2_bit(const void *const hw)
+static inline void hri_pwm_write_CMUPD3_reg(const void *const hw, hri_pwm_cmupd3_reg_t data)
 {
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS2) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPSWS3_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS3) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPSWS4_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS4) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPSWS5_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPSWS5) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVS) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS0_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS0) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS1_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS1) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS2_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS2) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS3_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS3) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS4_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS4) > 0;
-}
-
-static inline bool hri_pwm_get_WPSR_WPHWS5_bit(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPHWS5) > 0;
-}
-
-static inline hri_pwm_wpsr_reg_t hri_pwm_get_WPSR_WPVSRC_bf(const void *const hw, hri_pwm_wpsr_reg_t mask)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVSRC(mask)) >> PWM_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pwm_wpsr_reg_t hri_pwm_read_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Pwm *)hw)->PWM_WPSR & PWM_WPSR_WPVSRC_Msk) >> PWM_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_pwm_wpsr_reg_t hri_pwm_get_WPSR_reg(const void *const hw, hri_pwm_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Pwm *)hw)->PWM_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_pwm_wpsr_reg_t hri_pwm_read_WPSR_reg(const void *const hw)
-{
-	return ((Pwm *)hw)->PWM_WPSR;
+	PWM_CRITICAL_SECTION_ENTER();
+	((Pwm *)hw)->PWM_CMUPD3 = data;
+	PWM_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

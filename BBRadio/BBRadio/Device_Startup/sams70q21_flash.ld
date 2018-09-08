@@ -3,7 +3,7 @@
  *
  * \brief GCC linker script (flash) for ATSAMS70Q21
  *
- * Copyright (c) 2017 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
+ * Copyright (c) 2018 Atmel Corporation, a wholly owned subsidiary of Microchip Technology Inc.
  *
  * \license_start
  *

@@ -4,39 +4,29 @@
  *
  * \brief SAM PIO External Interrupt
  *
- * Copyright (C) 2016 - 2017 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  *
@@ -63,7 +53,7 @@
 #define CONF_EXTIRQ_4_ENABLE 0
 #endif
 
-#define EXT_IRQ_AMOUNT (0 + 1)
+#define EXT_IRQ_AMOUNT (0 + 1 + 1)
 
 struct ext_irq_configuration {
 	uint8_t  number;
@@ -78,6 +68,31 @@ struct ext_irq_configuration {
 	uint32_t rehlsr;
 	/* Write 1 to set Falling Edge/Low-Level Select */
 	uint32_t fellsr;
+};
+
+/** IRQ number lookup for PIO instances
+ */
+static const int8_t _pio_irq_n[] = {
+
+#if defined(PIOA)
+    PIOA_IRQn,
+#endif
+
+#if defined(PIOB)
+    PIOB_IRQn,
+#endif
+
+#if defined(PIOC)
+    PIOC_IRQn,
+#endif
+
+#if defined(PIOD)
+    PIOD_IRQn,
+#endif
+
+#if defined(PIOE)
+    PIOE_IRQn,
+#endif
 };
 
 #if EXT_IRQ_AMOUNT < 1
@@ -309,6 +324,11 @@ void PIOB_Handler(void)
 	_ext_irq_handler();
 }
 
+void PIOD_Handler(void)
+{
+	_ext_irq_handler();
+}
+
 /**
  * \internal Initialize PIO instance
  *
@@ -335,10 +355,10 @@ static int32_t _pio_init(void *const hw)
 	hri_pio_clear_FRLHSR_reg(hw, _ext_irq[i].fellsr);
 	hri_pio_set_FRLHSR_reg(hw, _ext_irq[i].rehlsr);
 
-	i = _pio_get_hardware_index(hw) + PIOA_IRQn;
-	NVIC_DisableIRQ(i);
-	NVIC_ClearPendingIRQ(i);
-	NVIC_EnableIRQ(i);
+	i = _pio_irq_n[_pio_get_hardware_index(hw)];
+	NVIC_DisableIRQ((IRQn_Type)i);
+	NVIC_ClearPendingIRQ((IRQn_Type)i);
+	NVIC_EnableIRQ((IRQn_Type)i);
 
 	return ERR_NONE;
 }

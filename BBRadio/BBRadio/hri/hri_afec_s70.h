@@ -3,39 +3,29 @@
  *
  * \brief SAM AFEC
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -84,6 +74,99 @@ typedef uint32_t hri_afec_tempcwr_reg_t;
 typedef uint32_t hri_afec_tempmr_reg_t;
 typedef uint32_t hri_afec_wpmr_reg_t;
 typedef uint32_t hri_afec_wpsr_reg_t;
+
+static inline bool hri_afec_get_ISR_EOC0_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC0) >> AFEC_ISR_EOC0_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC1_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC1) >> AFEC_ISR_EOC1_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC2_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC2) >> AFEC_ISR_EOC2_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC3_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC3) >> AFEC_ISR_EOC3_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC4_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC4) >> AFEC_ISR_EOC4_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC5_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC5) >> AFEC_ISR_EOC5_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC6_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC6) >> AFEC_ISR_EOC6_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC7_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC7) >> AFEC_ISR_EOC7_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC8_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC8) >> AFEC_ISR_EOC8_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC9_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC9) >> AFEC_ISR_EOC9_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC10_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC10) >> AFEC_ISR_EOC10_Pos;
+}
+
+static inline bool hri_afec_get_ISR_EOC11_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC11) >> AFEC_ISR_EOC11_Pos;
+}
+
+static inline bool hri_afec_get_ISR_DRDY_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_DRDY) >> AFEC_ISR_DRDY_Pos;
+}
+
+static inline bool hri_afec_get_ISR_GOVRE_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_GOVRE) >> AFEC_ISR_GOVRE_Pos;
+}
+
+static inline bool hri_afec_get_ISR_COMPE_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_COMPE) >> AFEC_ISR_COMPE_Pos;
+}
+
+static inline bool hri_afec_get_ISR_TEMPCHG_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_TEMPCHG) >> AFEC_ISR_TEMPCHG_Pos;
+}
+
+static inline hri_afec_isr_reg_t hri_afec_get_ISR_reg(const void *const hw, hri_afec_isr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Afec *)hw)->AFEC_ISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_afec_isr_reg_t hri_afec_read_ISR_reg(const void *const hw)
+{
+	return ((Afec *)hw)->AFEC_ISR;
+}
 
 static inline void hri_afec_set_CHSR_CH0_bit(const void *const hw)
 {
@@ -815,104 +898,161 @@ static inline void hri_afec_clear_IMR_reg(const void *const hw, hri_afec_imr_reg
 	((Afec *)hw)->AFEC_IDR = mask;
 }
 
-static inline bool hri_afec_get_ISR_EOC0_bit(const void *const hw)
+static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_LDATA_bf(const void *const hw, hri_afec_lcdr_reg_t mask)
 {
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC0) >> AFEC_ISR_EOC0_Pos;
+	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_LDATA(mask)) >> AFEC_LCDR_LDATA_Pos;
 }
 
-static inline bool hri_afec_get_ISR_EOC1_bit(const void *const hw)
+static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_LDATA_bf(const void *const hw)
 {
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC1) >> AFEC_ISR_EOC1_Pos;
+	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_LDATA_Msk) >> AFEC_LCDR_LDATA_Pos;
 }
 
-static inline bool hri_afec_get_ISR_EOC2_bit(const void *const hw)
+static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_CHNB_bf(const void *const hw, hri_afec_lcdr_reg_t mask)
 {
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC2) >> AFEC_ISR_EOC2_Pos;
+	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_CHNB(mask)) >> AFEC_LCDR_CHNB_Pos;
 }
 
-static inline bool hri_afec_get_ISR_EOC3_bit(const void *const hw)
+static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_CHNB_bf(const void *const hw)
 {
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC3) >> AFEC_ISR_EOC3_Pos;
+	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_CHNB_Msk) >> AFEC_LCDR_CHNB_Pos;
 }
 
-static inline bool hri_afec_get_ISR_EOC4_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC4) >> AFEC_ISR_EOC4_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC5_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC5) >> AFEC_ISR_EOC5_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC6_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC6) >> AFEC_ISR_EOC6_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC7_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC7) >> AFEC_ISR_EOC7_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC8_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC8) >> AFEC_ISR_EOC8_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC9_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC9) >> AFEC_ISR_EOC9_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC10_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC10) >> AFEC_ISR_EOC10_Pos;
-}
-
-static inline bool hri_afec_get_ISR_EOC11_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_EOC11) >> AFEC_ISR_EOC11_Pos;
-}
-
-static inline bool hri_afec_get_ISR_DRDY_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_DRDY) >> AFEC_ISR_DRDY_Pos;
-}
-
-static inline bool hri_afec_get_ISR_GOVRE_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_GOVRE) >> AFEC_ISR_GOVRE_Pos;
-}
-
-static inline bool hri_afec_get_ISR_COMPE_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_COMPE) >> AFEC_ISR_COMPE_Pos;
-}
-
-static inline bool hri_afec_get_ISR_TEMPCHG_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_ISR & AFEC_ISR_TEMPCHG) >> AFEC_ISR_TEMPCHG_Pos;
-}
-
-static inline hri_afec_isr_reg_t hri_afec_get_ISR_reg(const void *const hw, hri_afec_isr_reg_t mask)
+static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_reg(const void *const hw, hri_afec_lcdr_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Afec *)hw)->AFEC_ISR;
+	tmp = ((Afec *)hw)->AFEC_LCDR;
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_afec_isr_reg_t hri_afec_read_ISR_reg(const void *const hw)
+static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_reg(const void *const hw)
 {
-	return ((Afec *)hw)->AFEC_ISR;
+	return ((Afec *)hw)->AFEC_LCDR;
 }
 
-static inline void hri_afec_write_CR_reg(const void *const hw, hri_afec_cr_reg_t data)
+static inline bool hri_afec_get_OVER_OVRE0_bit(const void *const hw)
 {
-	AFEC_CRITICAL_SECTION_ENTER();
-	((Afec *)hw)->AFEC_CR = data;
-	AFEC_CRITICAL_SECTION_LEAVE();
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE0) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE1_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE1) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE2_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE2) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE3_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE3) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE4_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE4) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE5_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE5) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE6_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE6) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE7_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE7) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE8_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE8) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE9_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE9) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE10_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE10) > 0;
+}
+
+static inline bool hri_afec_get_OVER_OVRE11_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE11) > 0;
+}
+
+static inline hri_afec_over_reg_t hri_afec_get_OVER_reg(const void *const hw, hri_afec_over_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Afec *)hw)->AFEC_OVER;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_afec_over_reg_t hri_afec_read_OVER_reg(const void *const hw)
+{
+	return ((Afec *)hw)->AFEC_OVER;
+}
+
+static inline hri_afec_cdr_reg_t hri_afec_get_CDR_DATA_bf(const void *const hw, hri_afec_cdr_reg_t mask)
+{
+	return (((Afec *)hw)->AFEC_CDR & AFEC_CDR_DATA(mask)) >> AFEC_CDR_DATA_Pos;
+}
+
+static inline hri_afec_cdr_reg_t hri_afec_read_CDR_DATA_bf(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_CDR & AFEC_CDR_DATA_Msk) >> AFEC_CDR_DATA_Pos;
+}
+
+static inline hri_afec_cdr_reg_t hri_afec_get_CDR_reg(const void *const hw, hri_afec_cdr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Afec *)hw)->AFEC_CDR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_afec_cdr_reg_t hri_afec_read_CDR_reg(const void *const hw)
+{
+	return ((Afec *)hw)->AFEC_CDR;
+}
+
+static inline bool hri_afec_get_WPSR_WPVS_bit(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVS) > 0;
+}
+
+static inline hri_afec_wpsr_reg_t hri_afec_get_WPSR_WPVSRC_bf(const void *const hw, hri_afec_wpsr_reg_t mask)
+{
+	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVSRC(mask)) >> AFEC_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_afec_wpsr_reg_t hri_afec_read_WPSR_WPVSRC_bf(const void *const hw)
+{
+	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVSRC_Msk) >> AFEC_WPSR_WPVSRC_Pos;
+}
+
+static inline hri_afec_wpsr_reg_t hri_afec_get_WPSR_reg(const void *const hw, hri_afec_wpsr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Afec *)hw)->AFEC_WPSR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_afec_wpsr_reg_t hri_afec_read_WPSR_reg(const void *const hw)
+{
+	return ((Afec *)hw)->AFEC_WPSR;
 }
 
 static inline void hri_afec_set_MR_TRGEN_bit(const void *const hw)
@@ -5774,161 +5914,11 @@ static inline hri_afec_wpmr_reg_t hri_afec_read_WPMR_reg(const void *const hw)
 	return ((Afec *)hw)->AFEC_WPMR;
 }
 
-static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_LDATA_bf(const void *const hw, hri_afec_lcdr_reg_t mask)
+static inline void hri_afec_write_CR_reg(const void *const hw, hri_afec_cr_reg_t data)
 {
-	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_LDATA(mask)) >> AFEC_LCDR_LDATA_Pos;
-}
-
-static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_LDATA_bf(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_LDATA_Msk) >> AFEC_LCDR_LDATA_Pos;
-}
-
-static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_CHNB_bf(const void *const hw, hri_afec_lcdr_reg_t mask)
-{
-	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_CHNB(mask)) >> AFEC_LCDR_CHNB_Pos;
-}
-
-static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_CHNB_bf(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_LCDR & AFEC_LCDR_CHNB_Msk) >> AFEC_LCDR_CHNB_Pos;
-}
-
-static inline hri_afec_lcdr_reg_t hri_afec_get_LCDR_reg(const void *const hw, hri_afec_lcdr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Afec *)hw)->AFEC_LCDR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_afec_lcdr_reg_t hri_afec_read_LCDR_reg(const void *const hw)
-{
-	return ((Afec *)hw)->AFEC_LCDR;
-}
-
-static inline bool hri_afec_get_OVER_OVRE0_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE0) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE1_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE1) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE2_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE2) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE3_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE3) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE4_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE4) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE5_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE5) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE6_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE6) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE7_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE7) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE8_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE8) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE9_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE9) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE10_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE10) > 0;
-}
-
-static inline bool hri_afec_get_OVER_OVRE11_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_OVER & AFEC_OVER_OVRE11) > 0;
-}
-
-static inline hri_afec_over_reg_t hri_afec_get_OVER_reg(const void *const hw, hri_afec_over_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Afec *)hw)->AFEC_OVER;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_afec_over_reg_t hri_afec_read_OVER_reg(const void *const hw)
-{
-	return ((Afec *)hw)->AFEC_OVER;
-}
-
-static inline hri_afec_cdr_reg_t hri_afec_get_CDR_DATA_bf(const void *const hw, hri_afec_cdr_reg_t mask)
-{
-	return (((Afec *)hw)->AFEC_CDR & AFEC_CDR_DATA(mask)) >> AFEC_CDR_DATA_Pos;
-}
-
-static inline hri_afec_cdr_reg_t hri_afec_read_CDR_DATA_bf(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_CDR & AFEC_CDR_DATA_Msk) >> AFEC_CDR_DATA_Pos;
-}
-
-static inline hri_afec_cdr_reg_t hri_afec_get_CDR_reg(const void *const hw, hri_afec_cdr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Afec *)hw)->AFEC_CDR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_afec_cdr_reg_t hri_afec_read_CDR_reg(const void *const hw)
-{
-	return ((Afec *)hw)->AFEC_CDR;
-}
-
-static inline bool hri_afec_get_WPSR_WPVS_bit(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVS) > 0;
-}
-
-static inline hri_afec_wpsr_reg_t hri_afec_get_WPSR_WPVSRC_bf(const void *const hw, hri_afec_wpsr_reg_t mask)
-{
-	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVSRC(mask)) >> AFEC_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_afec_wpsr_reg_t hri_afec_read_WPSR_WPVSRC_bf(const void *const hw)
-{
-	return (((Afec *)hw)->AFEC_WPSR & AFEC_WPSR_WPVSRC_Msk) >> AFEC_WPSR_WPVSRC_Pos;
-}
-
-static inline hri_afec_wpsr_reg_t hri_afec_get_WPSR_reg(const void *const hw, hri_afec_wpsr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Afec *)hw)->AFEC_WPSR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_afec_wpsr_reg_t hri_afec_read_WPSR_reg(const void *const hw)
-{
-	return ((Afec *)hw)->AFEC_WPSR;
+	AFEC_CRITICAL_SECTION_ENTER();
+	((Afec *)hw)->AFEC_CR = data;
+	AFEC_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

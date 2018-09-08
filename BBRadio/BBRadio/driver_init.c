@@ -21,6 +21,8 @@ static uint8_t USART_1_buffer[USART_1_BUFFER_SIZE];
 
 struct dac_sync_descriptor DAC_0;
 
+struct spi_m_dma_descriptor SPI_1;
+
 struct spi_m_dma_descriptor SPI_0;
 
 struct i2c_m_sync_desc I2C_0;
@@ -65,6 +67,45 @@ void EXTERNAL_IRQ_0_init(void)
 	                       GPIO_PULL_OFF);
 
 	gpio_set_pin_function(PB0, GPIO_PIN_FUNCTION_OFF);
+}
+
+void EXTERNAL_IRQ_1_init(void)
+{
+
+	// Set pin direction to input
+	gpio_set_pin_direction(PD23, GPIO_DIRECTION_IN);
+
+	gpio_set_pin_pull_mode(PD23,
+	                       // <y> Pull configuration
+	                       // <id> pad_pull_config
+	                       // <GPIO_PULL_OFF"> Off
+	                       // <GPIO_PULL_UP"> Pull-up
+	                       // <GPIO_PULL_DOWN"> Pull-down
+	                       GPIO_PULL_OFF);
+
+	gpio_set_pin_function(PD23, GPIO_PIN_FUNCTION_OFF);
+}
+
+void SPI_1_PORT_init(void)
+{
+
+	gpio_set_pin_function(PD20, MUX_PD20B_SPI0_MISO);
+
+	gpio_set_pin_function(PD21, MUX_PD21B_SPI0_MOSI);
+
+	gpio_set_pin_function(PD22, MUX_PD22B_SPI0_SPCK);
+}
+
+void SPI_1_CLOCK_init(void)
+{
+	_pmc_enable_periph_clock(ID_SPI0);
+}
+
+void SPI_1_init(void)
+{
+	SPI_1_CLOCK_init();
+	spi_m_dma_init(&SPI_1, SPI0);
+	SPI_1_PORT_init();
 }
 
 void SPI_0_PORT_init(void)
@@ -211,10 +252,26 @@ void system_init(void)
 
 	_pmc_enable_periph_clock(ID_PIOC);
 
+	_pmc_enable_periph_clock(ID_PIOD);
+
 	/* Disable Watchdog */
 	hri_wdt_set_MR_WDDIS_bit(WDT);
 
-	/* GPIO on PC20 */
+	/* GPIO on PB1 */
+
+	// Set pin direction to output
+	gpio_set_pin_direction(AT86_1_RST, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_level(AT86_1_RST,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	gpio_set_pin_function(AT86_1_RST, GPIO_PIN_FUNCTION_OFF);
+
+	/* GPIO on PC7 */
 
 	// Set pin direction to output
 	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
@@ -224,34 +281,80 @@ void system_init(void)
 	                   // <id> pad_initial_level
 	                   // <false"> Low
 	                   // <true"> High
-	                   true);
+	                   false);
 
 	gpio_set_pin_function(LED0, GPIO_PIN_FUNCTION_OFF);
 
-	gpio_set_pin_direction(CS, GPIO_DIRECTION_OUT);
+	/* GPIO on PC25 */
+
+	gpio_set_pin_direction(CS,
+	                       // <y> Pin direction
+	                       // <id> pad_direction
+	                       // <GPIO_DIRECTION_OFF"> Off
+	                       // <GPIO_DIRECTION_IN"> In
+	                       // <GPIO_DIRECTION_OUT"> Out
+	                       GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(CS,
-	// <y> Initial level
-	// <id> pad_initial_level
-	// <false"> Low
-	// <true"> High
-	true);
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
 
-	gpio_set_pin_function(CS, GPIO_PIN_FUNCTION_OFF);
-	
-	gpio_set_pin_direction(PB1, GPIO_DIRECTION_OUT);
+	gpio_set_pin_pull_mode(CS,
+	                       // <y> Pull configuration
+	                       // <id> pad_pull_config
+	                       // <GPIO_PULL_OFF"> Off
+	                       // <GPIO_PULL_UP"> Pull-up
+	                       // <GPIO_PULL_DOWN"> Pull-down
+	                       GPIO_PULL_OFF);
 
-	gpio_set_pin_level(PB1,
-	// <y> Initial level
-	// <id> pad_initial_level
-	// <false"> Low
-	// <true"> High
-	true);
+	gpio_set_pin_function(CS,
+	                      // <y> Pin function
+	                      // <id> pad_function
+	                      // <i> Auto : use driver pinmux if signal is imported by driver, else turn off function
+	                      // <GPIO_PIN_FUNCTION_OFF"> Auto
+	                      // <GPIO_PIN_FUNCTION_OFF"> Off
+	                      // <GPIO_PIN_FUNCTION_A"> A
+	                      // <GPIO_PIN_FUNCTION_B"> B
+	                      // <GPIO_PIN_FUNCTION_C"> C
+	                      // <GPIO_PIN_FUNCTION_D"> D
+	                      GPIO_PIN_FUNCTION_C);
 
-	gpio_set_pin_function(PB1, GPIO_PIN_FUNCTION_OFF);
+	/* GPIO on PD17 */
+
+	// Set pin direction to output
+	gpio_set_pin_direction(CS_2, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_level(CS_2,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	gpio_set_pin_function(CS_2, GPIO_PIN_FUNCTION_OFF);
+
+	/* GPIO on PD24 */
+
+	// Set pin direction to output
+	gpio_set_pin_direction(AT86_2_RST, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_level(AT86_2_RST,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	gpio_set_pin_function(AT86_2_RST, GPIO_PIN_FUNCTION_OFF);
 
 	DAC_0_init();
 	EXTERNAL_IRQ_0_init();
+	EXTERNAL_IRQ_1_init();
+
+	SPI_1_init();
 
 	SPI_0_init();
 

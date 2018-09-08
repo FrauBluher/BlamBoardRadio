@@ -1,5 +1,13 @@
 format_version: '2'
 name: BBRadio
+versions:
+  api: '1.0'
+  backend: 1.3.73
+  commit: 75f2258d48912553b0bd533c92b20f36f54fe176
+  content: 1.0.1105
+  content_pack_name: acme-packs-all
+  format: '2'
+  frontend: 1.3.1765
 board:
   identifier: CustomBoard
   device: ATSAMS70Q21A-CN
@@ -126,6 +134,87 @@ drivers:
     variant: null
     clocks:
       domain_group: null
+  EXTERNAL_IRQ_1:
+    user_label: EXTERNAL_IRQ_1
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::PIOD::driver_config_definition::External.IRQ::HAL:Driver:Ext.IRQ
+    functionality: External_IRQ
+    api: HAL:Driver:Ext_IRQ
+    configuration:
+      gpio_ext_irq_sense0: Any change detection
+      gpio_ext_irq_sense1: Any change detection
+      gpio_ext_irq_sense10: Any change detection
+      gpio_ext_irq_sense11: Any change detection
+      gpio_ext_irq_sense12: Any change detection
+      gpio_ext_irq_sense13: Any change detection
+      gpio_ext_irq_sense14: Any change detection
+      gpio_ext_irq_sense15: Any change detection
+      gpio_ext_irq_sense16: Any change detection
+      gpio_ext_irq_sense17: Any change detection
+      gpio_ext_irq_sense18: Any change detection
+      gpio_ext_irq_sense19: Any change detection
+      gpio_ext_irq_sense2: Any change detection
+      gpio_ext_irq_sense20: Any change detection
+      gpio_ext_irq_sense21: Any change detection
+      gpio_ext_irq_sense22: Any change detection
+      gpio_ext_irq_sense23: Rising-edge detection
+      gpio_ext_irq_sense24: Any change detection
+      gpio_ext_irq_sense25: Any change detection
+      gpio_ext_irq_sense26: Any change detection
+      gpio_ext_irq_sense27: Any change detection
+      gpio_ext_irq_sense28: Any change detection
+      gpio_ext_irq_sense29: Any change detection
+      gpio_ext_irq_sense3: Any change detection
+      gpio_ext_irq_sense30: Any change detection
+      gpio_ext_irq_sense31: Any change detection
+      gpio_ext_irq_sense4: Any change detection
+      gpio_ext_irq_sense5: Any change detection
+      gpio_ext_irq_sense6: Any change detection
+      gpio_ext_irq_sense7: Any change detection
+      gpio_ext_irq_sense8: Any change detection
+      gpio_ext_irq_sense9: Any change detection
+      pio_ext_irq_enable_setting0: false
+      pio_ext_irq_enable_setting1: false
+      pio_ext_irq_enable_setting10: false
+      pio_ext_irq_enable_setting11: false
+      pio_ext_irq_enable_setting12: false
+      pio_ext_irq_enable_setting13: false
+      pio_ext_irq_enable_setting14: false
+      pio_ext_irq_enable_setting15: false
+      pio_ext_irq_enable_setting16: false
+      pio_ext_irq_enable_setting17: false
+      pio_ext_irq_enable_setting18: false
+      pio_ext_irq_enable_setting19: false
+      pio_ext_irq_enable_setting2: false
+      pio_ext_irq_enable_setting20: false
+      pio_ext_irq_enable_setting21: false
+      pio_ext_irq_enable_setting22: false
+      pio_ext_irq_enable_setting23: true
+      pio_ext_irq_enable_setting24: false
+      pio_ext_irq_enable_setting25: false
+      pio_ext_irq_enable_setting26: false
+      pio_ext_irq_enable_setting27: false
+      pio_ext_irq_enable_setting28: false
+      pio_ext_irq_enable_setting29: false
+      pio_ext_irq_enable_setting3: false
+      pio_ext_irq_enable_setting30: false
+      pio_ext_irq_enable_setting31: false
+      pio_ext_irq_enable_setting4: false
+      pio_ext_irq_enable_setting5: false
+      pio_ext_irq_enable_setting6: false
+      pio_ext_irq_enable_setting7: false
+      pio_ext_irq_enable_setting8: false
+      pio_ext_irq_enable_setting9: false
+    optional_signals:
+    - identifier: EXTERNAL_IRQ_1:P/119
+      pad: PD23
+      mode: Ext IRQ Enabled
+      configuration: null
+      definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::optional_signal_definition::PIOD.P.119
+      name: PIOD/P/119
+      label: P/119
+    variant: null
+    clocks:
+      domain_group: null
   PMC:
     user_label: PMC
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::PMC::driver_config_definition::PMC::HAL:HPL:PMC
@@ -241,6 +330,44 @@ drivers:
         - name: CPU
           input: CPU
         configuration: {}
+  SPI_1:
+    user_label: SPI_1
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::SPI0::driver_config_definition::SPI.Master::HAL:Driver:SPI.Master.DMA
+    functionality: SPI
+    api: HAL:Driver:SPI_Master_DMA
+    configuration:
+      spi_master_advanced: true
+      spi_master_arch_cpha: Data is captured on the leading edge of SPCK and changed
+        on the following edge of SPCK.
+      spi_master_arch_cpol: The inactive state value of SPCK is logic level zero.
+      spi_master_baud_rate: 12000000
+      spi_master_character_size: 8 bits
+      spi_master_dlybct: 1000
+      spi_master_dlybs: 1000
+      spi_master_dma_rx_channel: 3
+      spi_master_dma_tx_channel: 2
+      spi_master_dummybyte: 65535
+      spi_master_rx_channel: true
+    optional_signals: []
+    variant:
+      specification: default
+      required_signals:
+      - name: SPI0/MISO
+        pad: PD20
+        label: MISO
+      - name: SPI0/MOSI
+        pad: PD21
+        label: MOSI
+      - name: SPI0/SPCK
+        pad: PD22
+        label: SPCK
+    clocks:
+      domain_group:
+        nodes:
+        - name: SPI
+          input: Master Clock (MCK)
+        configuration:
+          spi_clock_source: Master Clock (MCK)
   SPI_0:
     user_label: SPI_0
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::SPI1::driver_config_definition::SPI.Master::HAL:Driver:SPI.Master.DMA
@@ -443,8 +570,8 @@ drivers:
     functionality: System
     api: HAL:HPL:DMAC
     configuration:
-      dma_des_interface_0: AHB_IF0
-      dma_des_interface_1: AHB_IF1
+      dma_des_interface_0: AHB_IF1
+      dma_des_interface_1: AHB_IF0
       dma_des_interface_10: AHB_IF0
       dma_des_interface_11: AHB_IF0
       dma_des_interface_12: AHB_IF0
@@ -455,7 +582,7 @@ drivers:
       dma_des_interface_17: AHB_IF0
       dma_des_interface_18: AHB_IF0
       dma_des_interface_19: AHB_IF0
-      dma_des_interface_2: AHB_IF0
+      dma_des_interface_2: AHB_IF1
       dma_des_interface_20: AHB_IF0
       dma_des_interface_21: AHB_IF0
       dma_des_interface_22: AHB_IF0
@@ -468,7 +595,7 @@ drivers:
       dma_des_interface_8: AHB_IF0
       dma_des_interface_9: AHB_IF0
       dma_src_interface_0: AHB_IF0
-      dma_src_interface_1: AHB_IF0
+      dma_src_interface_1: AHB_IF1
       dma_src_interface_10: AHB_IF0
       dma_src_interface_11: AHB_IF0
       dma_src_interface_12: AHB_IF0
@@ -484,15 +611,15 @@ drivers:
       dma_src_interface_21: AHB_IF0
       dma_src_interface_22: AHB_IF0
       dma_src_interface_23: AHB_IF0
-      dma_src_interface_3: AHB_IF0
+      dma_src_interface_3: AHB_IF1
       dma_src_interface_4: AHB_IF0
       dma_src_interface_5: AHB_IF0
       dma_src_interface_6: AHB_IF0
       dma_src_interface_7: AHB_IF0
       dma_src_interface_8: AHB_IF0
       dma_src_interface_9: AHB_IF0
-      dma_trans_type_0: Memory to Memory Transfer
-      dma_trans_type_1: Memory to Peripheral Transfer
+      dma_trans_type_0: Memory to Peripheral Transfer
+      dma_trans_type_1: Peripheral to Memory Transfer
       dma_trans_type_10: Memory to Memory Transfer
       dma_trans_type_11: Memory to Memory Transfer
       dma_trans_type_12: Memory to Memory Transfer
@@ -503,12 +630,12 @@ drivers:
       dma_trans_type_17: Memory to Memory Transfer
       dma_trans_type_18: Memory to Memory Transfer
       dma_trans_type_19: Memory to Memory Transfer
-      dma_trans_type_2: Memory to Memory Transfer
+      dma_trans_type_2: Memory to Peripheral Transfer
       dma_trans_type_20: Memory to Memory Transfer
       dma_trans_type_21: Memory to Memory Transfer
       dma_trans_type_22: Memory to Memory Transfer
       dma_trans_type_23: Memory to Memory Transfer
-      dma_trans_type_3: Memory to Memory Transfer
+      dma_trans_type_3: Peripheral to Memory Transfer
       dma_trans_type_4: Memory to Memory Transfer
       dma_trans_type_5: Memory to Memory Transfer
       dma_trans_type_6: Memory to Memory Transfer
@@ -563,7 +690,7 @@ drivers:
       dmac_burstsize_7: 1 burst size
       dmac_burstsize_8: 1 burst size
       dmac_burstsize_9: 1 burst size
-      dmac_channel_0_settings: false
+      dmac_channel_0_settings: true
       dmac_channel_10_settings: false
       dmac_channel_11_settings: false
       dmac_channel_12_settings: false
@@ -579,8 +706,8 @@ drivers:
       dmac_channel_21_settings: false
       dmac_channel_22_settings: false
       dmac_channel_23_settings: false
-      dmac_channel_2_settings: false
-      dmac_channel_3_settings: false
+      dmac_channel_2_settings: true
+      dmac_channel_3_settings: true
       dmac_channel_4_settings: false
       dmac_channel_5_settings: false
       dmac_channel_6_settings: false
@@ -612,7 +739,7 @@ drivers:
       dmac_chunksize_8: 1 data transferred
       dmac_chunksize_9: 1 data transferred
       dmac_dstinc_0: false
-      dmac_dstinc_1: false
+      dmac_dstinc_1: true
       dmac_dstinc_10: false
       dmac_dstinc_11: false
       dmac_dstinc_12: false
@@ -628,14 +755,14 @@ drivers:
       dmac_dstinc_21: false
       dmac_dstinc_22: false
       dmac_dstinc_23: false
-      dmac_dstinc_3: false
+      dmac_dstinc_3: true
       dmac_dstinc_4: false
       dmac_dstinc_5: false
       dmac_dstinc_6: false
       dmac_dstinc_7: false
       dmac_dstinc_8: false
       dmac_dstinc_9: false
-      dmac_srcinc_0: false
+      dmac_srcinc_0: true
       dmac_srcinc_1: false
       dmac_srcinc_10: false
       dmac_srcinc_11: false
@@ -647,7 +774,7 @@ drivers:
       dmac_srcinc_17: false
       dmac_srcinc_18: false
       dmac_srcinc_19: false
-      dmac_srcinc_2: false
+      dmac_srcinc_2: true
       dmac_srcinc_20: false
       dmac_srcinc_21: false
       dmac_srcinc_22: false
@@ -659,8 +786,8 @@ drivers:
       dmac_srcinc_7: false
       dmac_srcinc_8: false
       dmac_srcinc_9: false
-      dmac_trifsrc_0: Software Trigger
-      dmac_trifsrc_1: SPI0 RX Trigger
+      dmac_trifsrc_0: SPI1 TX Trigger
+      dmac_trifsrc_1: SPI1 TX Trigger
       dmac_trifsrc_10: Software Trigger
       dmac_trifsrc_11: Software Trigger
       dmac_trifsrc_12: Software Trigger
@@ -671,12 +798,12 @@ drivers:
       dmac_trifsrc_17: Software Trigger
       dmac_trifsrc_18: Software Trigger
       dmac_trifsrc_19: Software Trigger
-      dmac_trifsrc_2: Software Trigger
+      dmac_trifsrc_2: SPI0 TX Trigger
       dmac_trifsrc_20: Software Trigger
       dmac_trifsrc_21: Software Trigger
       dmac_trifsrc_22: Software Trigger
       dmac_trifsrc_23: Software Trigger
-      dmac_trifsrc_3: Software Trigger
+      dmac_trifsrc_3: SPI0 RX Trigger
       dmac_trifsrc_4: Software Trigger
       dmac_trifsrc_5: Software Trigger
       dmac_trifsrc_6: Software Trigger
@@ -689,13 +816,6 @@ drivers:
     clocks:
       domain_group: null
 pads:
-  LED0:
-    name: PC20
-    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PC20
-    mode: Digital output
-    user_label: LED0
-    configuration:
-      pad_initial_level: High
   PB13:
     name: PB13
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PB13
@@ -742,11 +862,29 @@ pads:
     mode: Peripheral IO
     user_label: PA3
     configuration: null
+  AT86_1_RST:
+    name: PB1
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PB1
+    mode: Digital output
+    user_label: AT86_1_RST
+    configuration: null
   PB0:
     name: PB0
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PB0
     mode: Digital input
     user_label: PB0
+    configuration: null
+  PD21:
+    name: PD21
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD21
+    mode: Peripheral IO
+    user_label: PD21
+    configuration: null
+  PD20:
+    name: PD20
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD20
+    mode: Peripheral IO
+    user_label: PD20
     configuration: null
   PA4:
     name: PA4
@@ -759,6 +897,36 @@ pads:
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PA10
     mode: Peripheral IO
     user_label: PA10
+    configuration: null
+  CS_2:
+    name: PD17
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD17
+    mode: Digital output
+    user_label: CS_2
+    configuration: null
+  LED0:
+    name: PC7
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PC7
+    mode: Digital output
+    user_label: LED0
+    configuration: null
+  AT86_2_RST:
+    name: PD24
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD24
+    mode: Digital output
+    user_label: AT86_2_RST
+    configuration: null
+  PD23:
+    name: PD23
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD23
+    mode: Digital input
+    user_label: PD23
+    configuration: null
+  PD22:
+    name: PD22
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD22
+    mode: Peripheral IO
+    user_label: PD22
     configuration: null
   PD19:
     name: PD19

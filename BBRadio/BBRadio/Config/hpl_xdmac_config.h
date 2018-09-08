@@ -14,7 +14,7 @@
 // <e> Channel 0 settings
 // <id> dmac_channel_0_settings
 #ifndef CONF_DMAC_CHANNEL_0_SETTINGS
-#define CONF_DMAC_CHANNEL_0_SETTINGS 0
+#define CONF_DMAC_CHANNEL_0_SETTINGS 1
 #endif
 
 // <o> Burst Size
@@ -148,7 +148,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_0
 #ifndef CONF_DMAC_TRIGSRC_0
-#define CONF_DMAC_TRIGSRC_0 0x03
+#define CONF_DMAC_TRIGSRC_0 0x3
 #endif
 
 // </e>
@@ -330,7 +330,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_1
 #ifndef CONF_DMAC_TRIGSRC_1
-#define CONF_DMAC_TRIGSRC_1 0x4
+#define CONF_DMAC_TRIGSRC_1 0x3
 #endif
 
 // </e>
@@ -378,7 +378,7 @@
 // <e> Channel 2 settings
 // <id> dmac_channel_2_settings
 #ifndef CONF_DMAC_CHANNEL_2_SETTINGS
-#define CONF_DMAC_CHANNEL_2_SETTINGS 0
+#define CONF_DMAC_CHANNEL_2_SETTINGS 1
 #endif
 
 // <o> Burst Size
@@ -429,14 +429,14 @@
 // <i> Define the data is written through the system bus interface 0 or 1
 // <id> dma_des_interface_2
 #ifndef CONF_DMAC_DES_INTERFACE_2
-#define CONF_DMAC_DES_INTERFACE_2 0x0
+#define CONF_DMAC_DES_INTERFACE_2 0x1
 #endif
 
 // <q> Source Address Increment
 // <i> Indicates whether the source address incremented as beat size or not
 // <id> dmac_srcinc_2
 #ifndef CONF_DMAC_SRCINC_2
-#define CONF_DMAC_SRCINC_2 0
+#define CONF_DMAC_SRCINC_2 1
 #endif
 
 // <q> Destination Address Increment
@@ -453,7 +453,7 @@
 // <i> Define the data transfer type
 // <id> dma_trans_type_2
 #ifndef CONF_DMAC_TRANS_TYPE_2
-#define CONF_DMAC_TRANS_TYPE_2 0x0
+#define CONF_DMAC_TRANS_TYPE_2 0x2
 #endif
 
 // <o> Trigger source
@@ -512,7 +512,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_2
 #ifndef CONF_DMAC_TRIGSRC_2
-#define CONF_DMAC_TRIGSRC_2 0xff
+#define CONF_DMAC_TRIGSRC_2 0x1
 #endif
 
 // </e>
@@ -560,7 +560,7 @@
 // <e> Channel 3 settings
 // <id> dmac_channel_3_settings
 #ifndef CONF_DMAC_CHANNEL_3_SETTINGS
-#define CONF_DMAC_CHANNEL_3_SETTINGS 0
+#define CONF_DMAC_CHANNEL_3_SETTINGS 1
 #endif
 
 // <o> Burst Size
@@ -602,7 +602,7 @@
 // <i> Define the data is read through the system bus interface 0 or 1
 // <id> dma_src_interface_3
 #ifndef CONF_DMAC_SRC_INTERFACE_3
-#define CONF_DMAC_SRC_INTERFACE_3 0x0
+#define CONF_DMAC_SRC_INTERFACE_3 0x1
 #endif
 
 // <o> Destination Interface Identifier
@@ -625,7 +625,7 @@
 // <i> Indicates whether the destination address incremented as beat size or not
 // <id> dmac_dstinc_3
 #ifndef CONF_DMAC_DSTINC_3
-#define CONF_DMAC_DSTINC_3 0
+#define CONF_DMAC_DSTINC_3 1
 #endif
 
 // <o> Transfer Type
@@ -635,7 +635,7 @@
 // <i> Define the data transfer type
 // <id> dma_trans_type_3
 #ifndef CONF_DMAC_TRANS_TYPE_3
-#define CONF_DMAC_TRANS_TYPE_3 0x0
+#define CONF_DMAC_TRANS_TYPE_3 0x1
 #endif
 
 // <o> Trigger source
@@ -694,7 +694,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_3
 #ifndef CONF_DMAC_TRIGSRC_3
-#define CONF_DMAC_TRIGSRC_3 0xff
+#define CONF_DMAC_TRIGSRC_3 0x2
 #endif
 
 // </e>

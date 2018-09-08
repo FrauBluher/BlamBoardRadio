@@ -3,39 +3,29 @@
  *
  * \brief SAM AES
  *
- * Copyright (C) 2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
  * \page License
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. The name of Atmel may not be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * 4. This software may only be redistributed and used in connection with an
- *    Atmel microcontroller product.
- *
- * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
- * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
  */
@@ -73,6 +63,34 @@ typedef uint32_t hri_aes_keywr_reg_t;
 typedef uint32_t hri_aes_mr_reg_t;
 typedef uint32_t hri_aes_odatar_reg_t;
 typedef uint32_t hri_aes_tagr_reg_t;
+
+static inline bool hri_aes_get_ISR_DATRDY_bit(const void *const hw)
+{
+	return (((Aes *)hw)->AES_ISR & AES_ISR_DATRDY) >> AES_ISR_DATRDY_Pos;
+}
+
+static inline bool hri_aes_get_ISR_URAD_bit(const void *const hw)
+{
+	return (((Aes *)hw)->AES_ISR & AES_ISR_URAD) >> AES_ISR_URAD_Pos;
+}
+
+static inline bool hri_aes_get_ISR_TAGRDY_bit(const void *const hw)
+{
+	return (((Aes *)hw)->AES_ISR & AES_ISR_TAGRDY) >> AES_ISR_TAGRDY_Pos;
+}
+
+static inline hri_aes_isr_reg_t hri_aes_get_ISR_reg(const void *const hw, hri_aes_isr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Aes *)hw)->AES_ISR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_aes_isr_reg_t hri_aes_read_ISR_reg(const void *const hw)
+{
+	return ((Aes *)hw)->AES_ISR;
+}
 
 static inline void hri_aes_set_IMR_DATRDY_bit(const void *const hw)
 {
@@ -175,60 +193,75 @@ static inline void hri_aes_clear_IMR_reg(const void *const hw, hri_aes_imr_reg_t
 	((Aes *)hw)->AES_IDR = mask;
 }
 
-static inline bool hri_aes_get_ISR_DATRDY_bit(const void *const hw)
+static inline hri_aes_odatar_reg_t hri_aes_get_ODATAR_ODATA_bf(const void *const hw, uint8_t index,
+                                                               hri_aes_odatar_reg_t mask)
 {
-	return (((Aes *)hw)->AES_ISR & AES_ISR_DATRDY) >> AES_ISR_DATRDY_Pos;
+	return (((Aes *)hw)->AES_ODATAR[index] & AES_ODATAR_ODATA(mask)) >> AES_ODATAR_ODATA_Pos;
 }
 
-static inline bool hri_aes_get_ISR_URAD_bit(const void *const hw)
+static inline hri_aes_odatar_reg_t hri_aes_read_ODATAR_ODATA_bf(const void *const hw, uint8_t index)
 {
-	return (((Aes *)hw)->AES_ISR & AES_ISR_URAD) >> AES_ISR_URAD_Pos;
+	return (((Aes *)hw)->AES_ODATAR[index] & AES_ODATAR_ODATA_Msk) >> AES_ODATAR_ODATA_Pos;
 }
 
-static inline bool hri_aes_get_ISR_TAGRDY_bit(const void *const hw)
-{
-	return (((Aes *)hw)->AES_ISR & AES_ISR_TAGRDY) >> AES_ISR_TAGRDY_Pos;
-}
-
-static inline hri_aes_isr_reg_t hri_aes_get_ISR_reg(const void *const hw, hri_aes_isr_reg_t mask)
+static inline hri_aes_odatar_reg_t hri_aes_get_ODATAR_reg(const void *const hw, uint8_t index,
+                                                          hri_aes_odatar_reg_t mask)
 {
 	uint32_t tmp;
-	tmp = ((Aes *)hw)->AES_ISR;
+	tmp = ((Aes *)hw)->AES_ODATAR[index];
 	tmp &= mask;
 	return tmp;
 }
 
-static inline hri_aes_isr_reg_t hri_aes_read_ISR_reg(const void *const hw)
+static inline hri_aes_odatar_reg_t hri_aes_read_ODATAR_reg(const void *const hw, uint8_t index)
 {
-	return ((Aes *)hw)->AES_ISR;
+	return ((Aes *)hw)->AES_ODATAR[index];
 }
 
-static inline void hri_aes_write_CR_reg(const void *const hw, hri_aes_cr_reg_t data)
+static inline hri_aes_tagr_reg_t hri_aes_get_TAGR_TAG_bf(const void *const hw, uint8_t index, hri_aes_tagr_reg_t mask)
 {
-	AES_CRITICAL_SECTION_ENTER();
-	((Aes *)hw)->AES_CR = data;
-	AES_CRITICAL_SECTION_LEAVE();
+	return (((Aes *)hw)->AES_TAGR[index] & AES_TAGR_TAG(mask)) >> AES_TAGR_TAG_Pos;
 }
 
-static inline void hri_aes_write_KEYWR_reg(const void *const hw, uint8_t index, hri_aes_keywr_reg_t data)
+static inline hri_aes_tagr_reg_t hri_aes_read_TAGR_TAG_bf(const void *const hw, uint8_t index)
 {
-	AES_CRITICAL_SECTION_ENTER();
-	((Aes *)hw)->AES_KEYWR[index] = data;
-	AES_CRITICAL_SECTION_LEAVE();
+	return (((Aes *)hw)->AES_TAGR[index] & AES_TAGR_TAG_Msk) >> AES_TAGR_TAG_Pos;
 }
 
-static inline void hri_aes_write_IDATAR_reg(const void *const hw, uint8_t index, hri_aes_idatar_reg_t data)
+static inline hri_aes_tagr_reg_t hri_aes_get_TAGR_reg(const void *const hw, uint8_t index, hri_aes_tagr_reg_t mask)
 {
-	AES_CRITICAL_SECTION_ENTER();
-	((Aes *)hw)->AES_IDATAR[index] = data;
-	AES_CRITICAL_SECTION_LEAVE();
+	uint32_t tmp;
+	tmp = ((Aes *)hw)->AES_TAGR[index];
+	tmp &= mask;
+	return tmp;
 }
 
-static inline void hri_aes_write_IVR_reg(const void *const hw, uint8_t index, hri_aes_ivr_reg_t data)
+static inline hri_aes_tagr_reg_t hri_aes_read_TAGR_reg(const void *const hw, uint8_t index)
 {
-	AES_CRITICAL_SECTION_ENTER();
-	((Aes *)hw)->AES_IVR[index] = data;
-	AES_CRITICAL_SECTION_LEAVE();
+	return ((Aes *)hw)->AES_TAGR[index];
+}
+
+static inline hri_aes_ctrr_reg_t hri_aes_get_CTRR_CTR_bf(const void *const hw, hri_aes_ctrr_reg_t mask)
+{
+	return (((Aes *)hw)->AES_CTRR & AES_CTRR_CTR(mask)) >> AES_CTRR_CTR_Pos;
+}
+
+static inline hri_aes_ctrr_reg_t hri_aes_read_CTRR_CTR_bf(const void *const hw)
+{
+	return (((Aes *)hw)->AES_CTRR & AES_CTRR_CTR_Msk) >> AES_CTRR_CTR_Pos;
+}
+
+static inline hri_aes_ctrr_reg_t hri_aes_get_CTRR_reg(const void *const hw, hri_aes_ctrr_reg_t mask)
+{
+	uint32_t tmp;
+	tmp = ((Aes *)hw)->AES_CTRR;
+	tmp &= mask;
+	return tmp;
+}
+
+static inline hri_aes_ctrr_reg_t hri_aes_read_CTRR_reg(const void *const hw)
+{
+	return ((Aes *)hw)->AES_CTRR;
 }
 
 static inline void hri_aes_set_MR_CIPHER_bit(const void *const hw)
@@ -1078,75 +1111,32 @@ static inline hri_aes_gcmhr_reg_t hri_aes_read_GCMHR_reg(const void *const hw, u
 	return ((Aes *)hw)->AES_GCMHR[index];
 }
 
-static inline hri_aes_odatar_reg_t hri_aes_get_ODATAR_ODATA_bf(const void *const hw, uint8_t index,
-                                                               hri_aes_odatar_reg_t mask)
+static inline void hri_aes_write_CR_reg(const void *const hw, hri_aes_cr_reg_t data)
 {
-	return (((Aes *)hw)->AES_ODATAR[index] & AES_ODATAR_ODATA(mask)) >> AES_ODATAR_ODATA_Pos;
+	AES_CRITICAL_SECTION_ENTER();
+	((Aes *)hw)->AES_CR = data;
+	AES_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_aes_odatar_reg_t hri_aes_read_ODATAR_ODATA_bf(const void *const hw, uint8_t index)
+static inline void hri_aes_write_KEYWR_reg(const void *const hw, uint8_t index, hri_aes_keywr_reg_t data)
 {
-	return (((Aes *)hw)->AES_ODATAR[index] & AES_ODATAR_ODATA_Msk) >> AES_ODATAR_ODATA_Pos;
+	AES_CRITICAL_SECTION_ENTER();
+	((Aes *)hw)->AES_KEYWR[index] = data;
+	AES_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_aes_odatar_reg_t hri_aes_get_ODATAR_reg(const void *const hw, uint8_t index,
-                                                          hri_aes_odatar_reg_t mask)
+static inline void hri_aes_write_IDATAR_reg(const void *const hw, uint8_t index, hri_aes_idatar_reg_t data)
 {
-	uint32_t tmp;
-	tmp = ((Aes *)hw)->AES_ODATAR[index];
-	tmp &= mask;
-	return tmp;
+	AES_CRITICAL_SECTION_ENTER();
+	((Aes *)hw)->AES_IDATAR[index] = data;
+	AES_CRITICAL_SECTION_LEAVE();
 }
 
-static inline hri_aes_odatar_reg_t hri_aes_read_ODATAR_reg(const void *const hw, uint8_t index)
+static inline void hri_aes_write_IVR_reg(const void *const hw, uint8_t index, hri_aes_ivr_reg_t data)
 {
-	return ((Aes *)hw)->AES_ODATAR[index];
-}
-
-static inline hri_aes_tagr_reg_t hri_aes_get_TAGR_TAG_bf(const void *const hw, uint8_t index, hri_aes_tagr_reg_t mask)
-{
-	return (((Aes *)hw)->AES_TAGR[index] & AES_TAGR_TAG(mask)) >> AES_TAGR_TAG_Pos;
-}
-
-static inline hri_aes_tagr_reg_t hri_aes_read_TAGR_TAG_bf(const void *const hw, uint8_t index)
-{
-	return (((Aes *)hw)->AES_TAGR[index] & AES_TAGR_TAG_Msk) >> AES_TAGR_TAG_Pos;
-}
-
-static inline hri_aes_tagr_reg_t hri_aes_get_TAGR_reg(const void *const hw, uint8_t index, hri_aes_tagr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Aes *)hw)->AES_TAGR[index];
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_aes_tagr_reg_t hri_aes_read_TAGR_reg(const void *const hw, uint8_t index)
-{
-	return ((Aes *)hw)->AES_TAGR[index];
-}
-
-static inline hri_aes_ctrr_reg_t hri_aes_get_CTRR_CTR_bf(const void *const hw, hri_aes_ctrr_reg_t mask)
-{
-	return (((Aes *)hw)->AES_CTRR & AES_CTRR_CTR(mask)) >> AES_CTRR_CTR_Pos;
-}
-
-static inline hri_aes_ctrr_reg_t hri_aes_read_CTRR_CTR_bf(const void *const hw)
-{
-	return (((Aes *)hw)->AES_CTRR & AES_CTRR_CTR_Msk) >> AES_CTRR_CTR_Pos;
-}
-
-static inline hri_aes_ctrr_reg_t hri_aes_get_CTRR_reg(const void *const hw, hri_aes_ctrr_reg_t mask)
-{
-	uint32_t tmp;
-	tmp = ((Aes *)hw)->AES_CTRR;
-	tmp &= mask;
-	return tmp;
-}
-
-static inline hri_aes_ctrr_reg_t hri_aes_read_CTRR_reg(const void *const hw)
-{
-	return ((Aes *)hw)->AES_CTRR;
+	AES_CRITICAL_SECTION_ENTER();
+	((Aes *)hw)->AES_IVR[index] = data;
+	AES_CRITICAL_SECTION_LEAVE();
 }
 
 #ifdef __cplusplus

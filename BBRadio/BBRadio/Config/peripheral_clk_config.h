@@ -64,6 +64,24 @@
  */
 #define CONF_PCK6_FREQUENCY 12000000
 
+// <h> SPI0 Clock Settings
+// <y> SPI0 Clock source
+// <CONF_SRC_MCK"> Master Clock (MCK)
+// <i> This defines the clock source for the SPI0
+// <id> spi_clock_source
+#ifndef CONF_SPI0_SRC
+#define CONF_SPI0_SRC CONF_SRC_MCK
+#endif
+// </h>
+
+/**
+ * \def SPI0 FREQUENCY
+ * \brief SPI0's Clock frequency
+ */
+#ifndef CONF_SPI0_FREQUENCY
+#define CONF_SPI0_FREQUENCY 150000000
+#endif
+
 // <h> SPI1 Clock Settings
 // <y> SPI1 Clock source
 // <CONF_SRC_MCK"> Master Clock (MCK)
