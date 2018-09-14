@@ -53,87 +53,6 @@ drivers:
           input: Master Clock (MCK)
         configuration:
           dac_clock_source: Master Clock (MCK)
-  EXTERNAL_IRQ_0:
-    user_label: EXTERNAL_IRQ_0
-    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::PIOB::driver_config_definition::External.IRQ::HAL:Driver:Ext.IRQ
-    functionality: External_IRQ
-    api: HAL:Driver:Ext_IRQ
-    configuration:
-      gpio_ext_irq_sense0: Rising-edge detection
-      gpio_ext_irq_sense1: Any change detection
-      gpio_ext_irq_sense10: Any change detection
-      gpio_ext_irq_sense11: Any change detection
-      gpio_ext_irq_sense12: Any change detection
-      gpio_ext_irq_sense13: Any change detection
-      gpio_ext_irq_sense14: Any change detection
-      gpio_ext_irq_sense15: Any change detection
-      gpio_ext_irq_sense16: Any change detection
-      gpio_ext_irq_sense17: Any change detection
-      gpio_ext_irq_sense18: Any change detection
-      gpio_ext_irq_sense19: Any change detection
-      gpio_ext_irq_sense2: Any change detection
-      gpio_ext_irq_sense20: Any change detection
-      gpio_ext_irq_sense21: Any change detection
-      gpio_ext_irq_sense22: Any change detection
-      gpio_ext_irq_sense23: Any change detection
-      gpio_ext_irq_sense24: Any change detection
-      gpio_ext_irq_sense25: Any change detection
-      gpio_ext_irq_sense26: Any change detection
-      gpio_ext_irq_sense27: Any change detection
-      gpio_ext_irq_sense28: Any change detection
-      gpio_ext_irq_sense29: Any change detection
-      gpio_ext_irq_sense3: Any change detection
-      gpio_ext_irq_sense30: Any change detection
-      gpio_ext_irq_sense31: Any change detection
-      gpio_ext_irq_sense4: Any change detection
-      gpio_ext_irq_sense5: Any change detection
-      gpio_ext_irq_sense6: Any change detection
-      gpio_ext_irq_sense7: Any change detection
-      gpio_ext_irq_sense8: Any change detection
-      gpio_ext_irq_sense9: Any change detection
-      pio_ext_irq_enable_setting0: true
-      pio_ext_irq_enable_setting1: false
-      pio_ext_irq_enable_setting10: false
-      pio_ext_irq_enable_setting11: false
-      pio_ext_irq_enable_setting12: false
-      pio_ext_irq_enable_setting13: false
-      pio_ext_irq_enable_setting14: false
-      pio_ext_irq_enable_setting15: false
-      pio_ext_irq_enable_setting16: false
-      pio_ext_irq_enable_setting17: false
-      pio_ext_irq_enable_setting18: false
-      pio_ext_irq_enable_setting19: false
-      pio_ext_irq_enable_setting2: false
-      pio_ext_irq_enable_setting20: false
-      pio_ext_irq_enable_setting21: false
-      pio_ext_irq_enable_setting22: false
-      pio_ext_irq_enable_setting23: false
-      pio_ext_irq_enable_setting24: false
-      pio_ext_irq_enable_setting25: false
-      pio_ext_irq_enable_setting26: false
-      pio_ext_irq_enable_setting27: false
-      pio_ext_irq_enable_setting28: false
-      pio_ext_irq_enable_setting29: false
-      pio_ext_irq_enable_setting3: false
-      pio_ext_irq_enable_setting30: false
-      pio_ext_irq_enable_setting31: false
-      pio_ext_irq_enable_setting4: false
-      pio_ext_irq_enable_setting5: false
-      pio_ext_irq_enable_setting6: false
-      pio_ext_irq_enable_setting7: false
-      pio_ext_irq_enable_setting8: false
-      pio_ext_irq_enable_setting9: false
-    optional_signals:
-    - identifier: EXTERNAL_IRQ_0:P/32
-      pad: PB0
-      mode: Ext IRQ Enabled
-      configuration: null
-      definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::optional_signal_definition::PIOB.P.32
-      name: PIOB/P/32
-      label: P/32
-    variant: null
-    clocks:
-      domain_group: null
   EXTERNAL_IRQ_1:
     user_label: EXTERNAL_IRQ_1
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::PIOD::driver_config_definition::External.IRQ::HAL:Driver:Ext.IRQ
@@ -212,6 +131,87 @@ drivers:
       definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::optional_signal_definition::PIOD.P.119
       name: PIOD/P/119
       label: P/119
+    variant: null
+    clocks:
+      domain_group: null
+  EXTERNAL_IRQ_0:
+    user_label: EXTERNAL_IRQ_0
+    definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::PIOB::driver_config_definition::External.IRQ::HAL:Driver:Ext.IRQ
+    functionality: External_IRQ
+    api: HAL:Driver:Ext_IRQ
+    configuration:
+      gpio_ext_irq_sense0: Rising-edge detection
+      gpio_ext_irq_sense1: Any change detection
+      gpio_ext_irq_sense10: Any change detection
+      gpio_ext_irq_sense11: Any change detection
+      gpio_ext_irq_sense12: Any change detection
+      gpio_ext_irq_sense13: Any change detection
+      gpio_ext_irq_sense14: Any change detection
+      gpio_ext_irq_sense15: Any change detection
+      gpio_ext_irq_sense16: Any change detection
+      gpio_ext_irq_sense17: Any change detection
+      gpio_ext_irq_sense18: Any change detection
+      gpio_ext_irq_sense19: Any change detection
+      gpio_ext_irq_sense2: Any change detection
+      gpio_ext_irq_sense20: Any change detection
+      gpio_ext_irq_sense21: Any change detection
+      gpio_ext_irq_sense22: Any change detection
+      gpio_ext_irq_sense23: Any change detection
+      gpio_ext_irq_sense24: Any change detection
+      gpio_ext_irq_sense25: Any change detection
+      gpio_ext_irq_sense26: Any change detection
+      gpio_ext_irq_sense27: Any change detection
+      gpio_ext_irq_sense28: Any change detection
+      gpio_ext_irq_sense29: Any change detection
+      gpio_ext_irq_sense3: Any change detection
+      gpio_ext_irq_sense30: Any change detection
+      gpio_ext_irq_sense31: Any change detection
+      gpio_ext_irq_sense4: Any change detection
+      gpio_ext_irq_sense5: Any change detection
+      gpio_ext_irq_sense6: Any change detection
+      gpio_ext_irq_sense7: Any change detection
+      gpio_ext_irq_sense8: Any change detection
+      gpio_ext_irq_sense9: Any change detection
+      pio_ext_irq_enable_setting0: true
+      pio_ext_irq_enable_setting1: false
+      pio_ext_irq_enable_setting10: false
+      pio_ext_irq_enable_setting11: false
+      pio_ext_irq_enable_setting12: false
+      pio_ext_irq_enable_setting13: false
+      pio_ext_irq_enable_setting14: false
+      pio_ext_irq_enable_setting15: false
+      pio_ext_irq_enable_setting16: false
+      pio_ext_irq_enable_setting17: false
+      pio_ext_irq_enable_setting18: false
+      pio_ext_irq_enable_setting19: false
+      pio_ext_irq_enable_setting2: false
+      pio_ext_irq_enable_setting20: false
+      pio_ext_irq_enable_setting21: false
+      pio_ext_irq_enable_setting22: false
+      pio_ext_irq_enable_setting23: false
+      pio_ext_irq_enable_setting24: false
+      pio_ext_irq_enable_setting25: false
+      pio_ext_irq_enable_setting26: false
+      pio_ext_irq_enable_setting27: false
+      pio_ext_irq_enable_setting28: false
+      pio_ext_irq_enable_setting29: false
+      pio_ext_irq_enable_setting3: false
+      pio_ext_irq_enable_setting30: false
+      pio_ext_irq_enable_setting31: false
+      pio_ext_irq_enable_setting4: false
+      pio_ext_irq_enable_setting5: false
+      pio_ext_irq_enable_setting6: false
+      pio_ext_irq_enable_setting7: false
+      pio_ext_irq_enable_setting8: false
+      pio_ext_irq_enable_setting9: false
+    optional_signals:
+    - identifier: EXTERNAL_IRQ_0:P/32
+      pad: PB0
+      mode: Ext IRQ Enabled
+      configuration: null
+      definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::optional_signal_definition::PIOB.P.32
+      name: PIOB/P/32
+      label: P/32
     variant: null
     clocks:
       domain_group: null
@@ -379,7 +379,7 @@ drivers:
         on the following edge of SPCK.
       spi_master_arch_cpol: The inactive state value of SPCK is logic level zero.
       spi_master_baud_rate: 12000000
-      spi_master_character_size: 16 bits
+      spi_master_character_size: 8 bits
       spi_master_dlybct: 1000
       spi_master_dlybs: 1000
       spi_master_dma_rx_channel: 1
@@ -787,7 +787,7 @@ drivers:
       dmac_srcinc_8: false
       dmac_srcinc_9: false
       dmac_trifsrc_0: SPI1 TX Trigger
-      dmac_trifsrc_1: SPI1 TX Trigger
+      dmac_trifsrc_1: SPI1 RX Trigger
       dmac_trifsrc_10: Software Trigger
       dmac_trifsrc_11: Software Trigger
       dmac_trifsrc_12: Software Trigger
@@ -831,13 +831,9 @@ pads:
   CS:
     name: PC25
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PC25
-    mode: Advanced
+    mode: Digital output
     user_label: CS
-    configuration:
-      pad_direction: Out
-      pad_function: C
-      pad_initial_level: Low
-      pad_pull_config: 'Off'
+    configuration: null
   PD0:
     name: PD0
     definition: Atmel:SAMS70_Drivers:0.0.1::ATSAMS70Q21A-CN::pad::PD0

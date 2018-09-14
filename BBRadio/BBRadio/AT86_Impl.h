@@ -154,6 +154,7 @@ struct _AT86_Instance
 	at86_driver_state_t at86_state;
 	SpiDevice *spiDev;
 	IRQDevice *irqDev;
+	uint16_t numInterrupts;
 	uint8_t initialized;
 };
 

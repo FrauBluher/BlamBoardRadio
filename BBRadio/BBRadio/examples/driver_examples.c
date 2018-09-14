@@ -25,18 +25,6 @@ void DAC_0_example(void)
 	}
 }
 
-static void button_on_PB0_pressed(void)
-{
-}
-
-/**
- * Example of using EXTERNAL_IRQ_0
- */
-void EXTERNAL_IRQ_0_example(void)
-{
-	ext_irq_register(PIO_PB0_IDX, button_on_PB0_pressed);
-}
-
 static void button_on_PD23_pressed(void)
 {
 }
@@ -47,6 +35,18 @@ static void button_on_PD23_pressed(void)
 void EXTERNAL_IRQ_1_example(void)
 {
 	ext_irq_register(PIO_PD23_IDX, button_on_PD23_pressed);
+}
+
+static void button_on_PB0_pressed(void)
+{
+}
+
+/**
+ * Example of using EXTERNAL_IRQ_0
+ */
+void EXTERNAL_IRQ_0_example(void)
+{
+	ext_irq_register(PIO_PB0_IDX, button_on_PB0_pressed);
 }
 
 /**

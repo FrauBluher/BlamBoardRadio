@@ -52,23 +52,6 @@ void DAC_0_init(void)
 	DAC_0_PORT_init();
 }
 
-void EXTERNAL_IRQ_0_init(void)
-{
-
-	// Set pin direction to input
-	gpio_set_pin_direction(PB0, GPIO_DIRECTION_IN);
-
-	gpio_set_pin_pull_mode(PB0,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
-
-	gpio_set_pin_function(PB0, GPIO_PIN_FUNCTION_OFF);
-}
-
 void EXTERNAL_IRQ_1_init(void)
 {
 
@@ -84,6 +67,23 @@ void EXTERNAL_IRQ_1_init(void)
 	                       GPIO_PULL_OFF);
 
 	gpio_set_pin_function(PD23, GPIO_PIN_FUNCTION_OFF);
+}
+
+void EXTERNAL_IRQ_0_init(void)
+{
+
+	// Set pin direction to input
+	gpio_set_pin_direction(PB0, GPIO_DIRECTION_IN);
+
+	gpio_set_pin_pull_mode(PB0,
+	                       // <y> Pull configuration
+	                       // <id> pad_pull_config
+	                       // <GPIO_PULL_OFF"> Off
+	                       // <GPIO_PULL_UP"> Pull-up
+	                       // <GPIO_PULL_DOWN"> Pull-down
+	                       GPIO_PULL_OFF);
+
+	gpio_set_pin_function(PB0, GPIO_PIN_FUNCTION_OFF);
 }
 
 void SPI_1_PORT_init(void)
@@ -287,13 +287,8 @@ void system_init(void)
 
 	/* GPIO on PC25 */
 
-	gpio_set_pin_direction(CS,
-	                       // <y> Pin direction
-	                       // <id> pad_direction
-	                       // <GPIO_DIRECTION_OFF"> Off
-	                       // <GPIO_DIRECTION_IN"> In
-	                       // <GPIO_DIRECTION_OUT"> Out
-	                       GPIO_DIRECTION_OUT);
+	// Set pin direction to output
+	gpio_set_pin_direction(CS, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(CS,
 	                   // <y> Initial level
@@ -302,25 +297,7 @@ void system_init(void)
 	                   // <true"> High
 	                   false);
 
-	gpio_set_pin_pull_mode(CS,
-	                       // <y> Pull configuration
-	                       // <id> pad_pull_config
-	                       // <GPIO_PULL_OFF"> Off
-	                       // <GPIO_PULL_UP"> Pull-up
-	                       // <GPIO_PULL_DOWN"> Pull-down
-	                       GPIO_PULL_OFF);
-
-	gpio_set_pin_function(CS,
-	                      // <y> Pin function
-	                      // <id> pad_function
-	                      // <i> Auto : use driver pinmux if signal is imported by driver, else turn off function
-	                      // <GPIO_PIN_FUNCTION_OFF"> Auto
-	                      // <GPIO_PIN_FUNCTION_OFF"> Off
-	                      // <GPIO_PIN_FUNCTION_A"> A
-	                      // <GPIO_PIN_FUNCTION_B"> B
-	                      // <GPIO_PIN_FUNCTION_C"> C
-	                      // <GPIO_PIN_FUNCTION_D"> D
-	                      GPIO_PIN_FUNCTION_C);
+	gpio_set_pin_function(CS, GPIO_PIN_FUNCTION_OFF);
 
 	/* GPIO on PD17 */
 
@@ -351,8 +328,8 @@ void system_init(void)
 	gpio_set_pin_function(AT86_2_RST, GPIO_PIN_FUNCTION_OFF);
 
 	DAC_0_init();
-	EXTERNAL_IRQ_0_init();
 	EXTERNAL_IRQ_1_init();
+	EXTERNAL_IRQ_0_init();
 
 	SPI_1_init();
 

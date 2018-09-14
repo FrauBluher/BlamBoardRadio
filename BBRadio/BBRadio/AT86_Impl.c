@@ -29,12 +29,11 @@
  */
 static AT86_Instance Instance[MAX_AT86_INSTANCES] = {};
 static uint8_t currentInstances = 0;
-static volatile uint16_t interruptCounts;
 static uint8_t txBuf[2048] = {};
 static uint8_t rxBuf[2048] = {};
 	
 	
-void AT86_IRQ_Handler(uint8_t atDev);
+void AT86_IRQ_Handler(uint8_t pinNum);
 uint8_t AT86_BB_FSM(baseband_info_t *bb);
 uint8_t AT86_FSM(uint8_t atDevNum);
 	
@@ -98,6 +97,8 @@ uint8_t AT86_Init(SpiDevice *spi_dev, IRQDevice *irq_dev, uint8_t atDev)
 	at->baseband_2400.CSMA_EN = 0;
 	at->baseband_900.CSMA_EN = 0;
 	
+	at->numInterrupts = 0;
+	
 	at->baseband_2400.channel_power_assesment = 1; // Special baseband state.
 	at->baseband_900.channel_power_assesment = 1; // Special baseband state.
 
@@ -114,13 +115,21 @@ uint8_t AT86_Init(SpiDevice *spi_dev, IRQDevice *irq_dev, uint8_t atDev)
 
 	//This is most definitely wrong.
 	irq_dev->callback = (void *)(AT86_IRQ_Handler);
+	
+	//at->initialized = 1;
 
-	return AT86_OK;
+	return AT86_OK;  
 }
 
 uint8_t AT86_Tick(uint8_t atDev)
 {
 	AT86_Instance *at = &Instance[atDev];
+	
+	if (!at->initialized)
+	{
+		AT86_FSM(atDev);
+		at->initialized = 1;
+	}
 	
 	if (at->at86_state != AT86_STATE_INIT)
 	{
@@ -129,25 +138,21 @@ uint8_t AT86_Tick(uint8_t atDev)
 		txBuf[1] = 0x02;
 		//Just read from 0's for status.
 		glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 10);
-		while(glue_spi_in_process(at->spiDev));
-	
+		
 		txBuf[0] = 0x02;
 		txBuf[1] = 0x02;
 		txBuf[2] = 0x00;
 		//Just read from 0's for status.
 		glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 10);
-		while(glue_spi_in_process(at->spiDev));
 	}
 	
-	if (interruptCounts > 0)
+	if (at->numInterrupts > 0)
 	{
 		txBuf[0] = 0;
 		txBuf[1] = 0;
 		txBuf[2] = 0;
 		//Just read from 0's for status.
 		glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 8);
-		//TODO: Go do something else while we wait for the SPI/DMA to finish
-		while(glue_spi_in_process(at->spiDev));
 		
 		if (rxBuf[0] == 0x00 && rxBuf[1] == 0x00)
 		{
@@ -156,12 +161,14 @@ uint8_t AT86_Tick(uint8_t atDev)
 				at->baseband_900.lastIRQ = (rxBuf[2] << 8) & 0xFF00;
 				at->baseband_900.lastIRQ &= rxBuf[4] | 0xFF00;
 				at->baseband_900.gotIRQ = 1;
+				at->numInterrupts = 0;
 			}
 			if (rxBuf[3] != 0x00 || rxBuf[5] != 0x00)
 			{
 				at->baseband_2400.lastIRQ = (rxBuf[3] << 8) & 0xFF00;
 				at->baseband_2400.lastIRQ &= rxBuf[5] | 0xFF00;
 				at->baseband_2400.gotIRQ = 1;
+				at->numInterrupts = 0;
 			}
 		}
 		else if (rxBuf[1] == 0x00 && rxBuf[2] == 0x00)
@@ -171,27 +178,25 @@ uint8_t AT86_Tick(uint8_t atDev)
 				at->baseband_900.lastIRQ = (rxBuf[3] << 8) & 0xFF00;
 				at->baseband_900.lastIRQ &= rxBuf[5] | 0xFF00;
 				at->baseband_900.gotIRQ = 1;
+				at->numInterrupts = 0;
 			}
 			if (rxBuf[4] != 0x00 || rxBuf[6] != 0x00)
 			{
 				at->baseband_2400.lastIRQ = (rxBuf[4] << 8) & 0xFF00;
 				at->baseband_2400.lastIRQ &= rxBuf[6] | 0xFF00;
 				at->baseband_2400.gotIRQ = 1;
+				at->numInterrupts = 0;
 			}
 		}
 		else
 		{
 			//Something bad happened...
 		}
-
-		uint8_t i = 0;
-		interruptCounts = 0;
 	}
-	
-	//TODO: Check current BB state against actual state in register.
-	
+
 	AT86_FSM(atDev);
-	
+
+	//TODO: Check current BB state against actual state in register.
 	return(AT86_OK);
 }
 
@@ -275,7 +280,6 @@ uint8_t AT86_FSM(uint8_t atDevNum)
 			AT86_write_reg(RF24_CCF0L, 0xD8, atDev);
 			AT86_write_reg(RF24_CNM, 0x00, atDev);
 			
-			glue_spi0_dma_transfer(atDev->spiDev, txBuf, rxBuf, 3);
 			AT86_write_reg(0x0114, 0x60, atDev);
 			AT86_write_reg(0x0214, 0x60, atDev);
 			
@@ -490,6 +494,7 @@ txprep:
 			if (bb->lastIRQ & EDC)
 			{
 				bb->lastIRQ &= ~EDC;
+				uint16_t edv;
 				//Got energy detection results.
 				
 				//If we are still in the power assessment override state,
@@ -599,11 +604,20 @@ txprep:
 		}
 }
 
-void AT86_IRQ_Handler(uint8_t atDev)
+//TODO: Define pin number when initing the atDev in Glue and don't
+//      put the real pin numbers here in the irq handler.
+void AT86_IRQ_Handler(uint8_t pinNum)
 {
 	//Increment the number of interrupts that occurred
 	//since the last time the FSM was run.
-	interruptCounts++;
+	if (pinNum == 32)
+	{
+		Instance[AT86_INSTANCE0].numInterrupts++;;
+	}
+	if (pinNum == 119)
+	{
+		Instance[AT86_INSTANCE1].numInterrupts++;;
+	}
 }
 
 void AT86_write_reg(uint16_t reg, uint8_t val, AT86_Instance *at)
@@ -612,13 +626,11 @@ void AT86_write_reg(uint16_t reg, uint8_t val, AT86_Instance *at)
 	txBuf[1] = reg & 0x00FF;
 	txBuf[2] = val;
 	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 3);
-	while(glue_spi_in_process(at->spiDev));		
 }
 
 void AT86_read_bytes_from_reg(uint16_t reg, uint16_t numBytes, AT86_Instance *at)
 {
 	txBuf[0] = 0x00 | (reg >> 8);
 	txBuf[1] = reg & 0x00FF;
-	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 2 + numBytes);
-	while(glue_spi_in_process(at->spiDev));		
+	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 2 + numBytes);	
 }

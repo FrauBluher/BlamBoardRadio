@@ -319,12 +319,12 @@ static void _ext_irq_handler(void)
 	}
 }
 
-void PIOB_Handler(void)
+void PIOD_Handler(void)
 {
 	_ext_irq_handler();
 }
 
-void PIOD_Handler(void)
+void PIOB_Handler(void)
 {
 	_ext_irq_handler();
 }

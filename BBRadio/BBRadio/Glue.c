@@ -47,6 +47,9 @@ void glue_init(void)
 	SPI_ONE.halSpiDriver = &SPI_1;
 	//IRQ_ZERO.halIRQDriver = IRQ0;
 	
+	AT86_Init(&SPI_ZERO, &IRQ_ZERO, AT86_INSTANCE0);
+	AT86_Init(&SPI_ONE, &IRQ_ONE, AT86_INSTANCE1);
+	
 	//Set call-backs for spi here.
 	spi_m_dma_register_callback(SPI_ZERO.halSpiDriver, SPI_M_DMA_CB_TX_DONE, glue_spi0_cb_tx_done);
 	spi_m_dma_register_callback(SPI_ZERO.halSpiDriver, SPI_M_DMA_CB_RX_DONE, glue_spi0_cb_rx_done);
@@ -56,23 +59,34 @@ void glue_init(void)
 	spi_m_dma_register_callback(SPI_ONE.halSpiDriver, SPI_M_DMA_CB_TX_DONE, glue_spi1_cb_tx_done);
 	spi_m_dma_register_callback(SPI_ONE.halSpiDriver, SPI_M_DMA_CB_RX_DONE, glue_spi1_cb_rx_done);
 	spi_m_dma_register_callback(SPI_ONE.halSpiDriver, SPI_M_DMA_CB_ERROR, glue_spi1_cb_error);
-
-	AT86_Init(&SPI_ZERO, &IRQ_ZERO, AT86_INSTANCE0);
-	AT86_Init(&SPI_ONE, &IRQ_ONE, AT86_INSTANCE1);
 	
 	ext_irq_register(PIO_PB0_IDX, IRQ_ZERO.callback);
 	ext_irq_register(PIO_PD23_IDX, IRQ_ONE.callback);
 	
 	spi_m_dma_set_mode(&SPI_0, SPI_MODE_0);
-	spi_m_dma_set_baudrate(&SPI_0, 10000000);
+	spi_m_dma_set_baudrate(&SPI_0, 1000000);
 	spi_m_dma_set_char_size(&SPI_0, SPI_CHAR_SIZE_8);
 	
 	spi_m_dma_set_mode(&SPI_1, SPI_MODE_0);
-	spi_m_dma_set_baudrate(&SPI_1, 10000000);
+	spi_m_dma_set_baudrate(&SPI_1, 1000000);
 	spi_m_dma_set_char_size(&SPI_1, SPI_CHAR_SIZE_8);
 	
 	spi_m_dma_enable(&SPI_0);
 	spi_m_dma_enable(&SPI_1);
+	
+	gpio_set_pin_level(CS, true);
+	gpio_set_pin_level(CS_2, true);
+	
+	gpio_set_pin_level(LED0, false);
+	gpio_set_pin_level(AT86_1_RST, false);	
+	delay_us(100000);
+	gpio_set_pin_level(AT86_1_RST, true);
+	
+	gpio_set_pin_level(AT86_2_RST, false);
+	delay_us(100000);
+	gpio_set_pin_level(AT86_2_RST, true);
+	
+	gpio_set_pin_level(LED0, true);
 }
 
 void glue_set_peripherals_inited(void)
@@ -91,9 +105,6 @@ void glue_enforce_driver_init(void)
 
 void glue_spi0_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint16_t numBytes)
 {
-	gpio_set_pin_level(CS, false);
-	delay_us(2);
-	
 	if (txBuf != NULL)
 	{
 		spi0_dma_tx_in_process = true;
@@ -130,9 +141,6 @@ void glue_spi0_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint
 
 void glue_spi1_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint16_t numBytes)
 {
-	gpio_set_pin_level(CS_2, false);
-	delay_us(2);
-	
 	if (txBuf != NULL)
 	{
 		spi1_dma_tx_in_process = true;
@@ -169,25 +177,48 @@ void glue_spi1_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint
 
 void glue_spi_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint16_t numBytes)
 {
+	//TODO: Go do something else while we wait for the SPI/DMA to finish
 	if (spi->halSpiDriver == &SPI_0)
 	{
+		gpio_set_pin_level(CS, false);
+		delay_us(10);
 		glue_spi0_dma_transfer(spi, txBuf, rxBuf, numBytes);
+		while(glue_spi_in_process(spi));
+		//Interrupt fires before all bits shifted in...
+		//TODO: Find workaround.
+		delay_us(20);
+		gpio_set_pin_level(CS, true);
+		delay_us(20);
 	}
 	else if (spi->halSpiDriver == &SPI_1)
 	{
+		gpio_set_pin_level(CS_2, false);
+		delay_us(10);
 		glue_spi1_dma_transfer(spi, txBuf, rxBuf, numBytes);
+		while(glue_spi_in_process(spi));
+				//The interrupt fires before all bits are shifted out.  See if we can fix that later.
+		//For now we just waste some cycles waiting for it to figure itself out
+		delay_us(20);
+		gpio_set_pin_level(CS_2, true);
+		delay_us(20);
 	}
 }
 
 bool glue_spi_in_process(SpiDevice* spi)
 {
-	if ((spi->halSpiDriver == &SPI_0) && (spi0_dma_tx_in_process || spi0_dma_rx_in_process))
+	if (spi->halSpiDriver == &SPI_0)
 	{
-		return(true);
+		if (spi0_dma_tx_in_process || spi0_dma_rx_in_process)
+		{
+			return(true);
+		}
 	}
-	else if ((spi->halSpiDriver == &SPI_1) && (spi1_dma_tx_in_process || spi1_dma_rx_in_process))
+	else if (spi->halSpiDriver == &SPI_1)
 	{
-		return(true);
+		if (spi1_dma_tx_in_process || spi1_dma_rx_in_process)
+		{
+			return(true);
+		}
 	}
 	else
 	{
@@ -203,13 +234,6 @@ bool glue_spi_in_process(SpiDevice* spi)
 
 void glue_spi0_cb_tx_done(struct _dma_resource *resource)
 {
-	//The interrupt fires before all bits are shifted out.  See if we can fix that later.
-	//For now we just waste some cycles waiting for it to figure itself out.
-	delay_us(30);
-	if (!spi0_dma_rx_in_process)
-	{
-		gpio_set_pin_level(CS, true);
-	}
 	spi0_dma_tx_in_process = false;
 	txInts++;
 }
@@ -235,32 +259,18 @@ void glue_spi0_cb_rx_done(struct _dma_resource *resource)
 		current_spi0_transfer_size = 0;
 	}
 	*/
-	
-	//The interrupt fires before all bits are shifted out.  See if we can fix that later.
-	//For now we just waste some cycles waiting for it to figure itself out
-	delay_us(30);
-	gpio_set_pin_level(CS, true);
 	spi0_dma_rx_in_process = false;
 	rxInts++;
 }
 
 void glue_spi0_cb_error(struct _dma_resource *resource)
 {
-	//TODO: Reset flags based on the dma channel.
-	gpio_set_pin_level(CS, true);
 	spi0_dma_tx_in_process = false;
 	spi0_dma_rx_in_process = false;
 }
 
 void glue_spi1_cb_tx_done(struct _dma_resource *resource)
 {
-	//The interrupt fires before all bits are shifted out.  See if we can fix that later.
-	//For now we just waste some cycles waiting for it to figure itself out.
-	delay_us(30);
-	if (!spi1_dma_rx_in_process)
-	{
-		gpio_set_pin_level(CS_2, true);
-	}
 	spi1_dma_tx_in_process = false;
 	txInts++;
 }
@@ -286,19 +296,12 @@ void glue_spi1_cb_rx_done(struct _dma_resource *resource)
 		current_spi0_transfer_size = 0;
 	}
 	*/
-	
-	//The interrupt fires before all bits are shifted out.  See if we can fix that later.
-	//For now we just waste some cycles waiting for it to figure itself out
-	delay_us(30);
-	gpio_set_pin_level(CS_2, true);
 	spi1_dma_rx_in_process = false;
 	rxInts++;
 }
 
 void glue_spi1_cb_error(struct _dma_resource *resource)
 {
-	//TODO: Reset flags based on the dma channel.
-	gpio_set_pin_level(CS_2, true);
 	spi1_dma_tx_in_process = false;
 	spi1_dma_rx_in_process = false;
 }

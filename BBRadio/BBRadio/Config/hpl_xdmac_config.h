@@ -330,7 +330,7 @@
 // <i> Define the DMA trigger source
 // <id> dmac_trifsrc_1
 #ifndef CONF_DMAC_TRIGSRC_1
-#define CONF_DMAC_TRIGSRC_1 0x3
+#define CONF_DMAC_TRIGSRC_1 0x4
 #endif
 
 // </e>

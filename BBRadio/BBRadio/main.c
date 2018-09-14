@@ -2,28 +2,28 @@
 #include "Glue.h"
 #include "AT86_Impl.h"
 
+uint8_t started = 0;
+
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
-	SCB_EnableICache();
-	SCB_EnableDCache();
 	
+	/*
+	if (!started)
+	{
+		SCB_EnableICache();
+		SCB_EnableDCache();
+	}
+	*/
+
 	glue_set_peripherals_inited();
 	
-	glue_enforce_driver_init();
+	glue_enforce_driver_init();	
 	
-    gpio_set_pin_level(AT86_1_RST, false);	
-	delay_us(100000);
-	gpio_set_pin_level(AT86_1_RST, true);
+	glue_init();
 	
-	gpio_set_pin_level(AT86_2_RST, false);
-	delay_us(100000);
-	gpio_set_pin_level(AT86_2_RST, true);
-	
-	delay_us(500000);
-	
-	glue_init();	
+	delay_ms(100);
 	
 	/* Replace with your application code */
 	while (1)

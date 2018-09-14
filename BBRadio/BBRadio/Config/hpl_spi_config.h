@@ -206,7 +206,7 @@
 // <0x8=>16 bits
 // <id> spi_master_character_size
 #ifndef CONF_SPI_1_CHSIZE
-#define CONF_SPI_1_CHSIZE 0x8
+#define CONF_SPI_1_CHSIZE 0x0
 #endif
 
 // <o> Baud rate <1-12000000>
