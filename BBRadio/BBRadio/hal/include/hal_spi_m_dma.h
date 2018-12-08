@@ -134,6 +134,10 @@ void spi_m_dma_disable(struct spi_m_dma_descriptor *spi);
  *  \return Operation status.
  *  \retval ERR_NONE Success.
  *  \retval ERR_BUSY Busy.
+ *
+ *  note: This api should be used to write the baudrate register with the given baud_val
+ *  paramter, the user has to calculate the baud_val for required baud rate and pass it as
+ *  argument(baud_val) to this api
  */
 int32_t spi_m_dma_set_baudrate(struct spi_m_dma_descriptor *spi, const uint32_t baud_val);
 

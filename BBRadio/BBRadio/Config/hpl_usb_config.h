@@ -64,7 +64,7 @@
 // <USB_SPEED_LS"> Low Speed
 // <id> usbd_arch_speed
 #ifndef CONF_USB_D_SPEED
-#define CONF_USB_D_SPEED USB_SPEED_HS
+#define CONF_USB_D_SPEED USB_SPEED_FS
 #endif
 
 // <q> USB Device DMA Operation Enable

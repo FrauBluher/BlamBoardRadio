@@ -26,6 +26,8 @@
 
 #include <driver_init.h>
 #include "atmel_start_pins.h"
+#include "atmel_start.h"
+#include "usb_start.h"
 
 //Glue together the generic External Interrupt IRQCallbackFcn.
 typedef ext_irq_cb_t IrqCallbackFcn;
@@ -54,6 +56,8 @@ void glue_set_peripherals_inited(void);
 
 //Returns if glue_set_peripherals_inited was called before.  Crashes otherwise.
 void glue_enforce_driver_init(void);
+
+void glue_i2c0_read(uint8_t reg, uint8_t *buffer, uint8_t readNum);
 
 bool glue_spi_in_process(SpiDevice *spi_dev);
 

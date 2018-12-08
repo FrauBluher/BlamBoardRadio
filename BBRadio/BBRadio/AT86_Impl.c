@@ -29,14 +29,17 @@
  */
 static AT86_Instance Instance[MAX_AT86_INSTANCES] = {};
 static uint8_t currentInstances = 0;
-static uint8_t txBuf[2048] = {};
+static uint8_t testTxBuf[] = "00Hello computer-man.";
+static uint8_t testTxBufLen = 19;
+static uint8_t txBuf[2050] = {};
 static uint8_t rxBuf[2048] = {};
-	
 	
 void AT86_IRQ_Handler(uint8_t pinNum);
 uint8_t AT86_BB_FSM(baseband_info_t *bb);
 uint8_t AT86_FSM(uint8_t atDevNum);
-	
+
+void AT86_fill_BBC0_frame_buffer(uint8_t *buf, uint16_t numBytes, AT86_Instance *at);
+void AT86_fill_BBC1_frame_buffer(uint8_t *buf, uint16_t numBytes, AT86_Instance *at);
 
 /**
  * @brief      { function_description }
@@ -99,8 +102,21 @@ uint8_t AT86_Init(SpiDevice *spi_dev, IRQDevice *irq_dev, uint8_t atDev)
 	
 	at->numInterrupts = 0;
 	
-	at->baseband_2400.channel_power_assesment = 1; // Special baseband state.
-	at->baseband_900.channel_power_assesment = 1; // Special baseband state.
+	at->baseband_2400.channel_power_assesment = 0; // Special baseband state.
+	at->baseband_900.channel_power_assesment = 0; // Special baseband state.
+	
+	//TODO: Connect this logic to configuration parameters.
+	//THIS IS JUST FOR TESTING LOOPBACK.
+	if (atDev == 0)
+	{
+		at->baseband_2400.pendingTransmit = 0;
+		at->baseband_900.pendingTransmit = 0;
+	}
+	else
+	{
+		at->baseband_2400.pendingTransmit = 1;
+		at->baseband_900.pendingTransmit = 1;
+	}
 
 	at->baseband_900.parent = at;
 	at->baseband_2400.parent = at;
@@ -159,14 +175,14 @@ uint8_t AT86_Tick(uint8_t atDev)
 			if (rxBuf[2] != 0x00 || rxBuf[4] != 0x00)
 			{
 				at->baseband_900.lastIRQ = (rxBuf[2] << 8) & 0xFF00;
-				at->baseband_900.lastIRQ &= rxBuf[4] | 0xFF00;
+				at->baseband_900.lastIRQ |= rxBuf[4] & 0x00FF;
 				at->baseband_900.gotIRQ = 1;
 				at->numInterrupts = 0;
 			}
 			if (rxBuf[3] != 0x00 || rxBuf[5] != 0x00)
 			{
 				at->baseband_2400.lastIRQ = (rxBuf[3] << 8) & 0xFF00;
-				at->baseband_2400.lastIRQ &= rxBuf[5] | 0xFF00;
+				at->baseband_2400.lastIRQ |= rxBuf[5] & 0x00FF;
 				at->baseband_2400.gotIRQ = 1;
 				at->numInterrupts = 0;
 			}
@@ -176,14 +192,14 @@ uint8_t AT86_Tick(uint8_t atDev)
 			if (rxBuf[3] != 0x00 || rxBuf[5] != 0x00)
 			{
 				at->baseband_900.lastIRQ = (rxBuf[3] << 8) & 0xFF00;
-				at->baseband_900.lastIRQ &= rxBuf[5] | 0xFF00;
+				at->baseband_900.lastIRQ |= rxBuf[5] & 0x00FF;
 				at->baseband_900.gotIRQ = 1;
 				at->numInterrupts = 0;
 			}
 			if (rxBuf[4] != 0x00 || rxBuf[6] != 0x00)
 			{
 				at->baseband_2400.lastIRQ = (rxBuf[4] << 8) & 0xFF00;
-				at->baseband_2400.lastIRQ &= rxBuf[6] | 0xFF00;
+				at->baseband_2400.lastIRQ |= rxBuf[6] & 0x00FF;
 				at->baseband_2400.gotIRQ = 1;
 				at->numInterrupts = 0;
 			}
@@ -280,8 +296,35 @@ uint8_t AT86_FSM(uint8_t atDevNum)
 			AT86_write_reg(RF24_CCF0L, 0xD8, atDev);
 			AT86_write_reg(RF24_CNM, 0x00, atDev);
 			
-			AT86_write_reg(0x0114, 0x60, atDev);
-			AT86_write_reg(0x0214, 0x60, atDev);
+			AT86_write_reg(0x0104, 0x30, atDev);
+			AT86_write_reg(0x0105, 0x20, atDev);
+			AT86_write_reg(0x0106, 0x8D, atDev);
+			AT86_write_reg(0x0107, 0x03, atDev);
+			AT86_write_reg(0x0109, 0x09, atDev);
+			AT86_write_reg(0x010A, 0x83, atDev);
+			AT86_write_reg(0x010F, 0x7A, atDev);
+			
+			AT86_write_reg(0x0112, 0x0B, atDev);
+			AT86_write_reg(0x0113, 0x83, atDev);
+			AT86_write_reg(0x0114, 0x7C, atDev);
+			
+			AT86_write_reg(0x0301, 0x56, atDev);
+			AT86_write_reg(0x030C, 0x03, atDev);
+			
+			AT86_write_reg(0x0204, 0x30, atDev);
+			AT86_write_reg(0x0205, 0x20, atDev);
+			AT86_write_reg(0x0206, 0x8D, atDev);
+			AT86_write_reg(0x0207, 0x03, atDev);
+			AT86_write_reg(0x0209, 0x09, atDev);
+			AT86_write_reg(0x020A, 0x83, atDev);
+			AT86_write_reg(0x020F, 0x7A, atDev);
+			
+			AT86_write_reg(0x0212, 0x0B, atDev);
+			AT86_write_reg(0x0213, 0x83, atDev);
+			AT86_write_reg(0x0214, 0x7C, atDev);
+			
+			AT86_write_reg(0x0401, 0x56, atDev);
+			AT86_write_reg(0x040C, 0x03, atDev);
 			
 			atDev->at86_state = AT86_STATE_IDLE;
 			break;
@@ -292,7 +335,7 @@ uint8_t AT86_FSM(uint8_t atDevNum)
 		case (AT86_STATE_IDLE):
 			//Poll for data?
 			asm("");
-			if (atDev->baseband_900.gotIRQ && atDev->baseband_2400.gotIRQ)
+			if (atDev->baseband_900.gotIRQ && atDev->baseband_2400.gotIRQ || atDev->baseband_900.pendingTransmit && atDev->baseband_2400.pendingTransmit)
 			{
 				atDev->baseband_900.gotIRQ = 0;
 				atDev->baseband_2400.gotIRQ = 0;
@@ -300,14 +343,14 @@ uint8_t AT86_FSM(uint8_t atDevNum)
 				atDev->at86_state = AT86_STATE_ALL_UPDATE;
 				break;
 			}
-			else if (atDev->baseband_900.gotIRQ)
+			else if (atDev->baseband_900.gotIRQ || atDev->baseband_900.pendingTransmit)
 			{
 				atDev->baseband_900.gotIRQ = 0;
 
 				atDev->at86_state = AT86_STATE_0900_UPDATE;
 				break;
 			}
-			else if (atDev->baseband_2400.gotIRQ)
+			else if (atDev->baseband_2400.gotIRQ || atDev->baseband_2400.pendingTransmit)
 			{
 				atDev->baseband_2400.gotIRQ = 0;
 
@@ -443,7 +486,7 @@ txprep:
 				bb->lastIRQ &= ~TRXRDY;
 				bb->baseband_state = AFE_STATE_TXPREP;
 			}
-
+			
 			{
 				//If we need to send data, which the AT86 top-level-fsm handles, we will do so here.
 				//
@@ -476,17 +519,49 @@ txprep:
 					bb->baseband_state = AFE_STATE_RX;
 					break;
 				}
+				else if (bb->pendingTransmit == 0)
+				{
+					if (bb->parent->at86_state == AT86_STATE_0900_UPDATE)
+					{
+						AT86_write_reg(RF09_CMD, RF_CMD_RX, bb->parent);
+					}
+					else if (bb->parent->at86_state == AT86_STATE_2400_UPDATE)
+					{
+						AT86_write_reg(RF24_CMD, RF_CMD_RX, bb->parent);
+					}
+					
+					bb->baseband_state = AFE_STATE_RX;
+					break;
+				}
+				else if (bb->pendingTransmit)
+				{
+					//Take what's in the pending buffer from the application layer
+					//and load it into the baseband buffer vector.
+					// Send SPI command to get us into TXPREP
+					if (bb->parent->at86_state == AT86_STATE_0900_UPDATE)
+					{
+						AT86_fill_BBC0_frame_buffer(testTxBuf, testTxBufLen, bb->parent);
+						AT86_write_reg(RF09_CMD, RF_CMD_TX, bb->parent);
+					}
+					else if (bb->parent->at86_state == AT86_STATE_2400_UPDATE)
+					{
+						AT86_fill_BBC1_frame_buffer(testTxBuf, testTxBufLen, bb->parent);
+						AT86_write_reg(RF24_CMD, RF_CMD_TX, bb->parent);
+					}
+					
+					bb->baseband_state = AFE_STATE_TX;
+					break;
+				}
 			}
 
 			break;
 
 		case (AFE_STATE_TX):
+			asm("");
 			if (bb->lastIRQ & TXFE)
 			{
 				bb->lastIRQ &= ~TXFE;
 				bb->baseband_state = AFE_STATE_TXPREP;
-
-				//return transmission complete, which will be handled in AT86 state machine, where the frame will be dequeued.
 			}
 			break;
 
@@ -633,4 +708,30 @@ void AT86_read_bytes_from_reg(uint16_t reg, uint16_t numBytes, AT86_Instance *at
 	txBuf[0] = 0x00 | (reg >> 8);
 	txBuf[1] = reg & 0x00FF;
 	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 2 + numBytes);	
+}
+
+void AT86_fill_BBC0_frame_buffer(uint8_t *buf, uint16_t numBytes, AT86_Instance *at)
+{
+	txBuf[0] = 0x80 | (BBC0_TXFLL >> 8);
+	txBuf[1] = BBC0_TXFLL & 0x00FF;
+	txBuf[2] = 19;
+	txBuf[3] = 0;
+	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 4);
+	
+	buf[0] = 0x80 | (BBC0_FBTXS >> 8);
+	buf[1] = BBC0_FBTXS & 0x00FF;
+	glue_spi_dma_transfer(at->spiDev, buf, rxBuf, 2 + numBytes);
+}
+
+void AT86_fill_BBC1_frame_buffer(uint8_t *buf, uint16_t numBytes, AT86_Instance *at)
+{
+	txBuf[0] = 0x80 | (BBC1_TXFLL >> 8);
+	txBuf[1] = BBC1_TXFLL & 0x00FF;
+	txBuf[2] = 19;
+	txBuf[3] = 0;
+	glue_spi_dma_transfer(at->spiDev, txBuf, rxBuf, 4);
+		
+	buf[0] = 0x80 | (BBC1_FBTXS >> 8);
+	buf[1] = BBC1_FBTXS & 0x00FF;
+	glue_spi_dma_transfer(at->spiDev, buf, rxBuf, 2 + numBytes);
 }

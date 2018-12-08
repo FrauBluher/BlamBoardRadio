@@ -233,14 +233,14 @@ void USART_1_init(void)
 #endif
 #endif
 
-void USB_0_CLOCK_init(void)
+void USB_DEVICE_INSTANCE_CLOCK_init(void)
 {
 	_pmc_enable_periph_clock(ID_USBHS);
 }
 
-void USB_0_init(void)
+void USB_DEVICE_INSTANCE_init(void)
 {
-	USB_0_CLOCK_init();
+	USB_DEVICE_INSTANCE_CLOCK_init();
 	usb_d_init();
 }
 
@@ -259,9 +259,6 @@ void system_init(void)
 
 	/* GPIO on PB1 */
 
-	// Set pin direction to output
-	gpio_set_pin_direction(AT86_1_RST, GPIO_DIRECTION_OUT);
-
 	gpio_set_pin_level(AT86_1_RST,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
@@ -269,12 +266,12 @@ void system_init(void)
 	                   // <true"> High
 	                   false);
 
+	// Set pin direction to output
+	gpio_set_pin_direction(AT86_1_RST, GPIO_DIRECTION_OUT);
+
 	gpio_set_pin_function(AT86_1_RST, GPIO_PIN_FUNCTION_OFF);
 
 	/* GPIO on PC7 */
-
-	// Set pin direction to output
-	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(LED0,
 	                   // <y> Initial level
@@ -283,12 +280,12 @@ void system_init(void)
 	                   // <true"> High
 	                   false);
 
+	// Set pin direction to output
+	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
+
 	gpio_set_pin_function(LED0, GPIO_PIN_FUNCTION_OFF);
 
 	/* GPIO on PC25 */
-
-	// Set pin direction to output
-	gpio_set_pin_direction(CS, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(CS,
 	                   // <y> Initial level
@@ -297,12 +294,12 @@ void system_init(void)
 	                   // <true"> High
 	                   false);
 
+	// Set pin direction to output
+	gpio_set_pin_direction(CS, GPIO_DIRECTION_OUT);
+
 	gpio_set_pin_function(CS, GPIO_PIN_FUNCTION_OFF);
 
 	/* GPIO on PD17 */
-
-	// Set pin direction to output
-	gpio_set_pin_direction(CS_2, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(CS_2,
 	                   // <y> Initial level
@@ -311,12 +308,12 @@ void system_init(void)
 	                   // <true"> High
 	                   false);
 
+	// Set pin direction to output
+	gpio_set_pin_direction(CS_2, GPIO_DIRECTION_OUT);
+
 	gpio_set_pin_function(CS_2, GPIO_PIN_FUNCTION_OFF);
 
 	/* GPIO on PD24 */
-
-	// Set pin direction to output
-	gpio_set_pin_direction(AT86_2_RST, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_level(AT86_2_RST,
 	                   // <y> Initial level
@@ -324,6 +321,9 @@ void system_init(void)
 	                   // <false"> Low
 	                   // <true"> High
 	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(AT86_2_RST, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(AT86_2_RST, GPIO_PIN_FUNCTION_OFF);
 
@@ -342,7 +342,7 @@ void system_init(void)
 	USART_0_init();
 	USART_1_init();
 
-	USB_0_init();
+	USB_DEVICE_INSTANCE_init();
 
 	ext_irq_init();
 }

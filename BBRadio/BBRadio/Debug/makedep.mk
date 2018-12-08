@@ -76,3 +76,11 @@ hpl\xdmac\hpl_xdmac.c
 
 main.c
 
+usb\class\cdc\device\cdcdf_acm.c
+
+usb\device\usbdc.c
+
+usb\usb_protocol.c
+
+usb_start.c
+

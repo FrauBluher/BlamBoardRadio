@@ -7,6 +7,13 @@
 #include <stdint.h>
 #include <driver_init.h>
 
+/** Ctrl endpoint buffer */
+static uint8_t ctrl_buffer[64];
+
+/** Loop back buffer for data validation */
+COMPILER_ALIGNED(4)
+static uint8_t main_buf_loopback[1024];
+
 static volatile bool peripherals_inited = false;
 static volatile bool spi0_dma_tx_in_process = false;
 static volatile bool spi0_dma_rx_in_process = false;
@@ -27,6 +34,7 @@ static SpiDevice SPI_ZERO;
 static IRQDevice IRQ_ZERO;
 static SpiDevice SPI_ONE;
 static IRQDevice IRQ_ONE;
+static 
 
 //SPI0
 //uint16_t spiTxBuf[] Lives in AT86_Impl.  We don't double buffer it in here.
@@ -39,8 +47,47 @@ static void glue_spi1_cb_tx_done(struct _dma_resource *resource);
 static void glue_spi1_cb_rx_done(struct _dma_resource *resource);
 static void glue_spi1_cb_error(struct _dma_resource *resource);
 
+//USB0 local static functions
+void init_usb_stack(void);
+static bool glue_usb_device_cb_iso_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static bool glue_usb_device_cb_iso_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static glue_usb_device_cb_bulk_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static bool glue_usb_device_cb_bulk_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static bool glue_usb_device_cb_int_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static bool glue_usb_device_cb_int_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count);
+static void glue_usb_device_cb_ctrl_in(uint16_t count);
+static void glue_usb_device_cb_ctrl_out(uint16_t count);
+
+/*
+void init_usb_stack(void)
+{
+		usbdc_init(ctrl_buffer);
+
+		vendordf_init();
+		vendordf_register_callback(VENDORDF_CB_CTRL_READ_REQ, (FUNC_PTR)glue_usb_device_cb_ctrl_out);
+		vendordf_register_callback(VENDORDF_CB_CTRL_WRITE_REQ, (FUNC_PTR)glue_usb_device_cb_ctrl_in);
+		vendordf_register_callback(VENDORDF_CB_INT_READ, (FUNC_PTR)glue_usb_device_cb_int_out);
+		vendordf_register_callback(VENDORDF_CB_INT_WRITE, (FUNC_PTR)glue_usb_device_cb_int_in);
+		vendordf_register_callback(VENDORDF_CB_BULK_READ, (FUNC_PTR)glue_usb_device_cb_bulk_out);
+		vendordf_register_callback(VENDORDF_CB_BULK_WRITE, (FUNC_PTR)glue_usb_device_cb_bulk_in);
+		vendordf_register_callback(VENDORDF_CB_ISO_READ, (FUNC_PTR)glue_usb_device_cb_iso_out);
+		vendordf_register_callback(VENDORDF_CB_ISO_WRITE, (FUNC_PTR)glue_usb_device_cb_iso_in);
+
+		//usbdc_check_desces(single_desc);
+		//usbdc_start(single_desc);
+		usbdc_attach();
+
+		//while (!vendordf_is_enabled()) {
+		//	// wait vendor application to be installed
+		//};
+}
+*/
+
 void glue_init(void)
 {
+	//Set up USB communications
+	//init_usb_stack();
+	
 	//Set up SPI0
 	//Set up IRQ0
 	SPI_ZERO.halSpiDriver = &SPI_0;
@@ -101,6 +148,11 @@ void glue_enforce_driver_init(void)
 	{
 		glue_crash_and_burn();
 	}
+}
+
+void glue_i2c0_read(uint8_t reg, uint8_t *buffer, uint8_t readNum)
+{
+	i2c_m_sync_cmd_write(&I2C_0, reg, buffer, readNum);
 }
 
 void glue_spi0_dma_transfer(SpiDevice* spi, uint8_t *txBuf, uint8_t *rxBuf, uint16_t numBytes)
@@ -304,4 +356,71 @@ void glue_spi1_cb_error(struct _dma_resource *resource)
 {
 	spi1_dma_tx_in_process = false;
 	spi1_dma_rx_in_process = false;
+}
+
+//////////////////////////////////////////////////////////////
+//////////////////// USB GLUE BELOW //////////////////////////
+//////////////////////////////////////////////////////////////
+
+static void glue_usb_device_cb_ctrl_out(uint16_t count)
+{
+	uint16_t recv_cnt = 1024;
+
+	if (recv_cnt > count) {
+		recv_cnt = count;
+	}
+	vendordf_read(USB_EP_TYPE_CONTROL, main_buf_loopback, recv_cnt);
+	vendordf_read(USB_EP_TYPE_INTERRUPT, main_buf_loopback, 1024);
+	vendordf_read(USB_EP_TYPE_BULK, main_buf_loopback, 1024);
+	vendordf_read(USB_EP_TYPE_ISOCHRONOUS, main_buf_loopback, 1024);
+}
+
+static void glue_usb_device_cb_ctrl_in(uint16_t count)
+{
+	uint16_t recv_cnt = 1024;
+
+	if (recv_cnt > count) {
+		recv_cnt = count;
+	}
+	vendordf_write(USB_EP_TYPE_CONTROL, main_buf_loopback, recv_cnt);
+}
+
+static bool glue_usb_device_cb_int_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_write(USB_EP_TYPE_INTERRUPT, main_buf_loopback, count);
+	return false;
+}
+
+static bool glue_usb_device_cb_int_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_read(USB_EP_TYPE_INTERRUPT, main_buf_loopback, count);
+	return false;
+}
+
+static bool glue_usb_device_cb_bulk_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_write(USB_EP_TYPE_BULK, main_buf_loopback, count);
+
+	return false;
+}
+
+static glue_usb_device_cb_bulk_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_read(USB_EP_TYPE_BULK, main_buf_loopback, count);
+
+	return false;
+}
+
+static bool glue_usb_device_cb_iso_out(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_write(USB_EP_TYPE_ISOCHRONOUS, main_buf_loopback, count);
+
+	return false;
+}
+
+static bool glue_usb_device_cb_iso_in(const uint8_t ep, const enum usb_xfer_code rc, const uint32_t count)
+{
+	vendordf_read(USB_EP_TYPE_ISOCHRONOUS, main_buf_loopback, count);
+
+	return false;
 }

@@ -40,11 +40,13 @@
 #define TRXERR 0x10 << 8
 #define IQIFSF 0x20 << 8
 #define RXFS 0x01
-#define TXFE 0x00
-
-#define RXAM 0x00
-#define AGCH 0x00
-#define RXFE 0x00
+#define RXFE 0x02
+#define RXAM 0x04
+#define RXEM 0x08
+#define TXFE 0x10
+#define AGCH 0x20
+#define AGCR 0x40
+#define FBLI 0x80
 
 #define BBC0_PC 0x0301
 #define BBC1_PC 0x0401
@@ -69,10 +71,14 @@
 #define BBC0_FBRXE 0x27FE
 #define BBC0_FBTXS 0x2800
 #define BBC0_FBTXE 0x2FFE
+#define BBC0_TXFLL 0x0306
+#define BBC0_TXFLH 0x0307
 #define BBC1_FBRXS 0x3000
 #define BBC1_FBRXE 0x37FE
 #define BBC1_FBTXS 0x3800
 #define BBC1_FBTXE 0x3FFE
+#define BBC1_TXFLL 0x0406
+#define BBC1_TXFLH 0x0407
 
 #define RF09_CMD 0x0103
 #define RF24_CMD 0x0203
@@ -138,6 +144,7 @@ typedef struct
 	uint16_t lastIRQ;
 	uint8_t CSMA_EN;
 	uint8_t channel_power_assesment;
+	uint8_t pendingTransmit;
 	uint8_t initialized;
 	AT86_Instance *parent;
 } baseband_info_t;
